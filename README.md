@@ -12,11 +12,12 @@ Our real world client for the application is Issac, Rob's friend. He has just st
 
 #### **[ Features ]**
 
-- A cart interface, that allows customers to purchase multiple records at once.
 - Allow his customers to browse his stock online.
+- Allow his customers to filter stock based on attributes.
 - Allow his customers to place orders online.
+- A cart interface, that allows customers to purchase multiple records at once.
 - Keep his catalog and inventory synced with his physical stock.
-- An opt in newsletter where Issac can send out news to his customer base.
+- An opt in newsletter where Issac can send out information about new stock to his customer base.
 - Ability to upload an invoice file and automagically update his inventory in Square.
 
 #### **[ Target Audience ]**
@@ -40,11 +41,15 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 ---
 
-### Dataflow Diagram ---
+### Application Architecture Diagram ---
+
+![Application Architecture Diagram](./docs/AAD-mern_capstone.png)
 
 ---
 
-### Application Architecture Diagram ---
+### Dataflow Diagram ---
+
+![Dataflow Diagram](./docs/DFD-mern_capstone.png)
 
 ---
 
