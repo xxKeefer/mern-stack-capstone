@@ -15,8 +15,17 @@ const createUser = async (req, res, next) => {
 
   const { username, email, password } = req.body;
   try {
-    const user = await User.create({ username, email, password });
-    handleNewUser(user);
+    // check to see if username or email has been taken
+    const userExists = await User.findOne({
+      $or: [{ email }, { username }],
+    });
+
+    if (!userExists) {
+      const user = await User.create({ username, email, password });
+      handleNewUser(user);
+    } else {
+      throw new Error("user already exists.");
+    }
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

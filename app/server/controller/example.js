@@ -7,4 +7,12 @@ const examplePrivate = (req, res) => {
   res.status(200).json({ message: "You hit the private route." });
 };
 
-module.exports = { examplePublic, examplePrivate };
+const exampleAdmin = (req, res) => {
+  res.status(200).json({ message: "You hit the admin route." });
+};
+
+const exampleSuper = (req, res) => {
+  res.status(200).json({ message: "You hit the super route." });
+};
+
+module.exports = { examplePublic, examplePrivate, exampleAdmin, exampleSuper };
