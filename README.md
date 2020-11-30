@@ -38,6 +38,7 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 - Heroku
 - Discogs API
 - Square API
+- Cloudinary
 
 ---
 
