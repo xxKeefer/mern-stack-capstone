@@ -81,6 +81,12 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 5. As a **Business Owner** I want to **have a website designed to reflect the style and ethos of my business**, so that **it aligns with and strengthens my business's branding.**
 
+6. As a **Business Owner** I want to **have a section on the website where I can share more expertise and thoughts**, so that **customers can read my blog and be informed on the news I want to tell them.**
+
+7. As a **Business Owner** I want to **have a section on the website that is a curated list of my stock**, so that **I can make recommendations on a broad scale to my customers.**
+
+8. As a **Business Owner** I want to **be able to leave reviews on my on stock that are visible to my customers**, so that **customers can get a summary of the item based on my expert opinion.**
+
 ---
 
 ### Wireframes ---
