@@ -1,27 +1,15 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
-
+import theme from "../theme";
 import Navbar from "../Navbar/Navbar";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#333",
-    },
-    secondary: {
-      main: "#EEE",
-    },
-  },
-});
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const App = () => {
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <Navbar></Navbar>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Navbar />
+    </ThemeProvider>
   );
 };
 
