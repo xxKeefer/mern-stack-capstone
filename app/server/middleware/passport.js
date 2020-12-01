@@ -25,7 +25,9 @@ const canLogin = (user, password) => {
 
 const verifyCallback = async (email, password, done) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      $or: [{ email }, { username: email }],
+    });
     if (canLogin(user, password)) {
       return done(null, user);
     } else {
