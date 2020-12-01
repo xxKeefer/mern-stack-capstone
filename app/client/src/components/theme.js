@@ -1,5 +1,21 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
+import Coolvetica from "../fonts/coolvetica-rg.ttf";
+
+const coolvetica = {
+  fontFamily: "Coolvetica",
+  fontStyle: "regular",
+  fontDisplay: "swap",
+  fontWeight: 400,
+  src: `
+    local('Coolvetica'),
+    local('Coolvetica-Regular'),
+    url(${Coolvetica}) format('ttf')
+  `,
+  unicodeRange:
+    "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF",
+};
+
 const theme = createMuiTheme({
   palette: {
     background: {
@@ -12,16 +28,8 @@ const theme = createMuiTheme({
       main: "#333",
     },
   },
-  breakpoints: {
-    values: {
-      phone: 411,
-      tablet: 640,
-      laptop: 1024,
-      desktop: 1280,
-    },
-  },
   typography: {
-    
+    fontFamilyCoolvetica: "Coolvetica, Arial",
   },
 });
 
