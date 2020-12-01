@@ -70,6 +70,8 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 6. As a **User** I want to **be emailed an invoice after purchasing my items**, so that **I can have a record of the purchase.**
 
+7. As a **User** I want to **click on the track names of a record I'm browsing**, so that **I can view/listen to the track before I purchase.**
+
 #### **[ Business Owner ]**
 
 1. As a **Business Owner** I want to **make it easier for customers to share their purchases to their social media**, so that **I can attract more business by word of mouth.**
@@ -87,6 +89,10 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 7. As a **Business Owner** I want to **have a section on the website that is a curated list of my stock**, so that **I can make recommendations on a broad scale to my customers.**
 
 8. As a **Business Owner** I want to **be able to leave reviews on my on stock that are visible to my customers**, so that **customers can get a summary of the item based on my expert opinion.**
+
+9. As a **Business Owner** I want to **integrate PayPal as a payment option my customers**, so that **customers have more flexibility with their purchasing.**
+
+10. As a **Business Owner** I want to **recommend customers additional products based on their current cart**, so that **encourage larger purchases from my consumers.**
 
 ---
 
