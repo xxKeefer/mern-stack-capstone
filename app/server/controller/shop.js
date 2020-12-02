@@ -1,9 +1,5 @@
-const { v4: uuidv4 } = require("uuid");
-const { SQUARE_API_CONFIG } = require("../utils/squareApi");
-const { abbreviate, describe } = require("../utils/shopController/utils");
+const square = require("../utils/shopController/squareUtils");
 const Vinyl = require("../models/vinyl");
-const axios = require("axios").default;
-require("../utils/squareApi");
 
 const addItem = async (req, res, next) => {
   const {
@@ -12,37 +8,29 @@ const addItem = async (req, res, next) => {
     track_list,
     format,
     label,
+    preloved,
     catalog_number,
     release_date,
     description,
     review,
   } = req.body;
   try {
-    const item = await axios.post(
-      "/catalog/object",
-      {
-        idempotency_key: uuidv4(),
-        object: {
-          id: `#${release_title}_${artists[0]}`,
-          type: "ITEM",
-          item_data: {
-            abbreviation: abbreviate(release_title, artists),
-            description: describe(release_title, artists, format, label),
-            name: `${release_title} ${artists[0]}`,
-          },
-        },
-      },
-      SQUARE_API_CONFIG
+    const item = await square.addItem(
+      release_title,
+      artists,
+      format,
+      label,
+      preloved
     );
-    console.log(item.data);
 
     const newVinyl = await Vinyl.create({
-      square_id: item.data.catalog_object.id,
+      square_id: item.catalog_object.id,
       release_title,
       artists,
       track_list,
       format,
       label,
+      preloved,
       catalog_number,
       release_date,
       description,
@@ -55,4 +43,38 @@ const addItem = async (req, res, next) => {
   }
 };
 
-module.exports = { addItem };
+const getSquareCatalog = async (req, res, next) => {
+  const type = "item";
+  try {
+    const catalogList = await square.listItems(type);
+
+    res.status(200).json(catalogList);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+const deleteSquareItem = async (req, res, next) => {
+  try {
+    const deleted = await square.deleteItem(req.body.item);
+    res.status(200).json(deleted);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+const deleteSquareItems = async (req, res, next) => {
+  try {
+    const deleted = await square.deleteItems(req.body.items);
+    res.status(200).json(deleted);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+module.exports = {
+  addItem,
+  getSquareCatalog,
+  deleteSquareItem,
+  deleteSquareItems,
+};
