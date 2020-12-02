@@ -2,11 +2,14 @@ import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
+import { Link, List, ListItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -25,61 +28,70 @@ const useStyles = makeStyles((theme) => {
         width: "80vw",
       },
     },
-    toolBar: {
-      height: "10vh",
+    toolBarUpper: {
+      maxHeight: "6.25vh",
       justifyContent: "space-between",
-      border: "2px solid red;",
+      // border: "2px solid red;",
     },
     toolBarLower: {
       [breakpoints.down("sm")]: {
         display: "none",
       },
-      height: "10vh",
-      border: "2px solid red;",
+      height: "6.25vh",
+      // border: "2px solid red;",
     },
-    menuButton: {
-      paddingLeft: 0,
-      [breakpoints.up("md")]: {
-        display: "none",
-      },
-    },
-    accountButton: {
-      marginRight: "1rem",
-    },
-    accountIcon: {
+    navIcons: {
       fontSize: "3rem",
       color: secondary.main,
-    },
-    menuIcon: {
-      fontSize: "3rem",
-      color: secondary.main,
+      margin: "0.5rem",
     },
     catalogHeading: {
       fontFamily: typography.fontFamilyCoolvetica,
       fontSize: "2rem",
       padding: 0,
     },
+    navLinks: {
+      fontSize: "1.5rem",
+      color: secondary.main,
+      textDecoration: "none",
+      marginRight: "1.5rem",
+      cursor: "pointer",
+    },
   };
 });
 
 export default function Navbar() {
   const classes = useStyles();
+  const theme = useTheme();
+  const matchTabletDown = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <div>
       <AppBar position="static" className={classes.root}>
-        <Toolbar className={classes.toolBar}>
-          <IconButton edge="start" className={classes.menuButton}>
-            <MenuIcon className={classes.menuIcon} />
-          </IconButton>
-          <h1 className={classes.catalogHeading}>catalog</h1>
-          <div>
-            <h2 style={{ display: "inline-block" }}>log in</h2>
-
-            <IconButton className={classes.accountButton}>
-              <AccountCircleIcon className={classes.menuIcon} />
+        <Toolbar className={classes.toolBarUpper}>
+          {matchTabletDown && (
+            <IconButton edge="start" className={classes.menuButton}>
+              <MenuIcon className={classes.navIcons} />
             </IconButton>
-            <h2 style={{ display: "inline-block" }}>cart</h2>
+          )}
+
+          <h1 className={classes.catalogHeading}>
+            {matchDesktopUp ? "catalogmusic" : "catalog"}
+          </h1>
+          <div>
+            {matchDesktopUp && (
+              <React.Fragment>
+                <h2 style={{ display: "inline-block" }}>log in</h2>
+                <IconButton className={classes.accountButton}>
+                  <AccountCircleIcon className={classes.navIcons} />
+                </IconButton>
+              </React.Fragment>
+            )}
+
+            {matchDesktopUp && (
+              <h2 style={{ display: "inline-block" }}>cart</h2>
+            )}
 
             <IconButton edge="end">
               <BoxEmptyDark
@@ -90,7 +102,16 @@ export default function Navbar() {
             </IconButton>
           </div>
         </Toolbar>
-        <Toolbar className={classes.toolBarLower}></Toolbar>
+        <Toolbar className={classes.toolBarLower}>
+          <div>
+            <Link className={classes.navLinks}>new vinyl</Link>
+            <Link className={classes.navLinks}>genres</Link>
+            <Link className={classes.navLinks}>news</Link>
+            <Link className={classes.navLinks}>staff picks</Link>
+            <Link className={classes.navLinks}>contact</Link>
+          </div>
+          
+        </Toolbar>
       </AppBar>
     </div>
   );
