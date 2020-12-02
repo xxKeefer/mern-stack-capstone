@@ -44,13 +44,13 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 ### Application Architecture Diagram ---
 
-![Application Architecture Diagram](./docs/AAD-mern_capstone.png)
+![Application Architecture Diagram](./docs/diagrams/application_arch.png)
 
 ---
 
 ### Dataflow Diagram ---
 
-![Dataflow Diagram](./docs/DFD-mern_capstone.png)
+![Dataflow Diagram](./docs/diagrams/data_flow.png)
 
 ---
 
@@ -125,3 +125,11 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 ---
 
 ### Devlog Screenshots ---
+
+#### [Link to Trello](https://trello.com/b/ggfHDspf/mern-stak-capstone)
+
+We have managed to plan very rapidly, which is why there isn't many screen shots. We imagine it will get more use during Part B.
+
+![Day One](./docs/devlog/day_one.png)
+![Day Four](./docs/devlog/day_four.png)
+![Day Five](./docs/devlog/day_five.png)
