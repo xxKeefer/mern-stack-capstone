@@ -44,13 +44,13 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 ### Application Architecture Diagram ---
 
-![Application Architecture Diagram](./docs/AAD-mern_capstone.png)
+![Application Architecture Diagram](./docs/diagrams/application_arch.png)
 
 ---
 
 ### Dataflow Diagram ---
 
-![Dataflow Diagram](./docs/DFD-mern_capstone.png)
+![Dataflow Diagram](./docs/diagrams/data_flow.png)
 
 ---
 
@@ -70,6 +70,8 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 6. As a **User** I want to **be emailed an invoice after purchasing my items**, so that **I can have a record of the purchase.**
 
+7. As a **User** I want to **click on the track names of a record I'm browsing**, so that **I can view/listen to the track before I purchase.**
+
 #### **[ Business Owner ]**
 
 1. As a **Business Owner** I want to **make it easier for customers to share their purchases to their social media**, so that **I can attract more business by word of mouth.**
@@ -88,10 +90,46 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 8. As a **Business Owner** I want to **be able to leave reviews on my on stock that are visible to my customers**, so that **customers can get a summary of the item based on my expert opinion.**
 
+9. As a **Business Owner** I want to **integrate PayPal as a payment option my customers**, so that **customers have more flexibility with their purchasing.**
+
+10. As a **Business Owner** I want to **recommend customers additional products based on their current cart**, so that **encourage larger purchases from my consumers.**
+
 ---
 
 ### Wireframes ---
 
+#### Mobile
+
+![Mobile Wireframes 1](./docs/wireframes/mobile-wireframes-1.png)
+![Mobile Wireframes 2](./docs/wireframes/mobile-wireframes-2.png)
+![Mobile Wireframes 3](./docs/wireframes/mobile-wireframes-3.png)
+
+#### Desktop
+
+![Desktop Wireframes 1](./docs/wireframes/desktop-wireframes-1.png)
+![Desktop Wireframes 2](./docs/wireframes/desktop-wireframes-2.png)
+![Desktop Wireframes 3](./docs/wireframes/desktop-wireframes-3.png)
+![Desktop Wireframes 4](./docs/wireframes/desktop-wireframes-4.png)
+![Desktop Wireframes 5](./docs/wireframes/desktop-wireframes-5.png)
+![Desktop Wireframes 6](./docs/wireframes/desktop-wireframes-6.png)
+![Desktop Wireframes 7](./docs/wireframes/desktop-wireframes-7.png)
+![Desktop Wireframes 8](./docs/wireframes/desktop-wireframes-8.png)
+
+#### Tablet
+
+![Tablet Wireframes 1](./docs/wireframes/tablet-wireframes-1.png)
+![Tablet Wireframes 2](./docs/wireframes/tablet-wireframes-2.png)
+![Tablet Wireframes 3](./docs/wireframes/tablet-wireframes-3.png)
+![Tablet Wireframes 4](./docs/wireframes/tablet-wireframes-4.png)
+
 ---
 
 ### Devlog Screenshots ---
+
+#### [Link to Trello](https://trello.com/b/ggfHDspf/mern-stak-capstone)
+
+We have managed to plan very rapidly, which is why there isn't many screen shots. We imagine it will get more use during Part B.
+
+![Day One](./docs/devlog/day_one.png)
+![Day Four](./docs/devlog/day_four.png)
+![Day Five](./docs/devlog/day_five.png)
