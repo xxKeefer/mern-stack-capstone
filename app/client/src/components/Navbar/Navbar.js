@@ -8,8 +8,10 @@ import { useTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/SearchOutlined";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
-import { Link, List, ListItem } from "@material-ui/core";
+import { Link, List, ListItem, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => {
       },
       height: "6.25vh",
       // border: "2px solid red;",
+      justifyContent: "space-between",
     },
     navIcons: {
       fontSize: "3rem",
@@ -54,7 +57,7 @@ const useStyles = makeStyles((theme) => {
       fontSize: "1.5rem",
       color: secondary.main,
       textDecoration: "none",
-      marginRight: "1.5rem",
+      marginRight: "3vw",
       cursor: "pointer",
     },
   };
@@ -110,7 +113,19 @@ export default function Navbar() {
             <Link className={classes.navLinks}>staff picks</Link>
             <Link className={classes.navLinks}>contact</Link>
           </div>
-          
+          <TextField
+            className={classes.searchField}
+            placeholder="search..."
+            size="small"
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          ></TextField>
         </Toolbar>
       </AppBar>
     </div>
