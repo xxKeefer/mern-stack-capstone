@@ -24,13 +24,32 @@ const describe = (release_title, artists, format, label) => {
   return `${desc_string}.`;
 };
 
-const preloved = (price) => {
-  //TODO: some discount here or something
-  return price;
+const buildVariation = (type, release_title, artists, price) => {
+  return {
+    id: `#${type}::${uuidv4()}`,
+    type: "ITEM_VARIATION",
+    item_variation_data: {
+      item_id: `#${release_title}_${artists[0]}`,
+      name: type.toUpperCase(),
+      price_money: {
+        amount: price,
+        currency: "AUD",
+      },
+      pricing_type: "FIXED_PRICING",
+      track_inventory: true,
+    },
+  };
 };
 
 //EXPORTS -- CATALOG
-const addItem = async (release_title, artists, format, label, price) => {
+const addItem = async (
+  release_title,
+  artists,
+  format,
+  label,
+  price,
+  prelovedPrice
+) => {
   const item = await axios.post(
     "/catalog/object",
     {
@@ -48,36 +67,8 @@ const addItem = async (release_title, artists, format, label, price) => {
           description: describe(release_title, artists, format, label),
           name: `${release_title} ${artists[0]}`,
           variations: [
-            {
-              id: "#sealed",
-              type: "ITEM_VARIATION",
-              is_deleted: false,
-              item_variation_data: {
-                item_id: `#${release_title}_${artists[0]}`,
-                name: "SEALED",
-                pricing_type: "FIXED_PRICING",
-                price_money: {
-                  amount: price,
-                  currency: "AUD",
-                },
-                track_inventory: true,
-              },
-            },
-            {
-              id: "#preloved",
-              type: "ITEM_VARIATION",
-              is_deleted: false,
-              item_variation_data: {
-                item_id: `#${release_title}_${artists[0]}`,
-                name: "PRELOVED",
-                pricing_type: "FIXED_PRICING",
-                price_money: {
-                  amount: preloved(price),
-                  currency: "AUD",
-                },
-                track_inventory: true,
-              },
-            },
+            buildVariation("sealed", release_title, artists, price),
+            buildVariation("preloved", release_title, artists, prelovedPrice),
           ],
         },
       },
@@ -94,43 +85,24 @@ const addItems = async (itemInfoArray) => {
 
   let batch = [];
   itemInfoArray.forEach((item) => {
-    const { release_title, artists, format, label, price } = item;
+    const {
+      release_title,
+      artists,
+      format,
+      label,
+      price,
+      prelovedPrice,
+    } = item;
     batch.push({
       id: `#${release_title}_${artists[0]}`,
       type: "ITEM",
       item_data: {
         abbreviation: abbreviate(release_title, artists),
         description: describe(release_title, artists, format, label),
-        name: "Test Obj One",
+        name: `${release_title} ${artists[0]}`,
         variations: [
-          {
-            id: `#${release_title}_${artists[0]}-sealed`,
-            type: "ITEM_VARIATION",
-            item_variation_data: {
-              item_id: `#${release_title}_${artists[0]}`,
-              name: "SEALED",
-              price_money: {
-                amount: price,
-                currency: "AUD",
-              },
-              pricing_type: "FIXED_PRICING",
-              track_inventory: true,
-            },
-          },
-          {
-            id: `#${release_title}_${artists[0]}-preloved`,
-            type: "ITEM_VARIATION",
-            item_variation_data: {
-              item_id: `#${release_title}_${artists[0]}`,
-              name: "PRELOVED",
-              price_money: {
-                amount: preloved(price),
-                currency: "AUD",
-              },
-              pricing_type: "FIXED_PRICING",
-              track_inventory: true,
-            },
-          },
+          buildVariation("sealed", release_title, artists, price),
+          buildVariation("preloved", release_title, artists, prelovedPrice),
         ],
         available_electronically: true,
         available_for_pickup: true,
@@ -145,24 +117,12 @@ const addItems = async (itemInfoArray) => {
     "/catalog/batch-upsert",
     {
       idempotency_key: uuidv4(),
-      batches: [
-        {
-          objects: batch,
-        },
-      ],
+      batches: [{ objects: batch }],
     },
     SQUARE_API_CONFIG
   );
 
   return batchUpsert.data;
-  //   return {
-  //     idempotency_key: uuidv4(),
-  //     batches: [
-  //       {
-  //         objects: batch,
-  //       },
-  //     ],
-  //   };
 };
 
 const deleteItems = async (squareIdsArray) => {
