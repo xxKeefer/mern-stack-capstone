@@ -4,9 +4,10 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import React from "react";
+import React, { useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import MenuDrawer from "./MenuDrawer";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -43,15 +44,7 @@ export default function ToolBarUpper() {
 
   return (
     <Toolbar className={classes.toolBarUpper}>
-      {matchTabletDown && (
-        <IconButton
-          aria-label="menu"
-          edge="start"
-          className={classes.menuButton}
-        >
-          <MenuIcon className={classes.navIcons} />
-        </IconButton>
-      )}
+      {matchTabletDown && <MenuDrawer />}
       <h1 className={classes.catalogHeading}>
         {matchDesktopUp ? "catalogmusic" : "catalog"}
       </h1>
@@ -70,7 +63,7 @@ export default function ToolBarUpper() {
             style={{ fontSize: "2.5rem" }}
           />
         </IconButton>
-      </div>
+      </div>{" "}
     </Toolbar>
   );
 }
