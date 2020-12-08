@@ -8,7 +8,7 @@ const addItem = async (req, res, next) => {
     track_list,
     format,
     label,
-    preloved,
+    price,
     catalog_number,
     release_date,
     description,
@@ -20,7 +20,7 @@ const addItem = async (req, res, next) => {
       artists,
       format,
       label,
-      preloved
+      price
     );
 
     const newVinyl = await Vinyl.create({
@@ -30,7 +30,16 @@ const addItem = async (req, res, next) => {
       track_list,
       format,
       label,
-      preloved,
+      variations: {
+        sealed: {
+          variation_id: item.catalog_object.item_data.variations[0].id,
+          price,
+        },
+        preloved: {
+          variation_id: item.catalog_object.item_data.variations[1].id,
+          price,
+        },
+      },
       catalog_number,
       release_date,
       description,
@@ -43,12 +52,45 @@ const addItem = async (req, res, next) => {
   }
 };
 
+const addItems = async (req, res, next) => {
+  const { upload_items: itemInfoArray } = req.body;
+  try {
+    const uploadedItems = await square.addItems(itemInfoArray);
+
+    let uploadedVinyls = [];
+
+    res.status(201).json(uploadedItems);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
 const getSquareCatalog = async (req, res, next) => {
   const type = "item";
   try {
-    const catalogList = await square.listItems(type);
+    const catalogList = await square.getCatalog(type);
 
     res.status(200).json(catalogList);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+const listItem = async (req, res, next) => {
+  const { square_id: squareId } = req.body;
+  try {
+    const item = await square.getItem(squareId);
+    res.status(200).json(item);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+const listItems = async (req, res, next) => {
+  const { square_ids: squareIdsArray } = req.body;
+  try {
+    const item = await square.getItems(squareIdsArray);
+    res.status(200).json(item);
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -74,7 +116,10 @@ const deleteSquareItems = async (req, res, next) => {
 
 module.exports = {
   addItem,
+  addItems,
   getSquareCatalog,
+  listItem,
+  listItems,
   deleteSquareItem,
   deleteSquareItems,
 };
