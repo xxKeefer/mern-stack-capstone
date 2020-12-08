@@ -1,4 +1,3 @@
-const { admin } = require("../middleware/auth");
 const User = require("../models/user");
 
 const findUser = async (username, email) => {
