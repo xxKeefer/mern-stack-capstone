@@ -1,35 +1,47 @@
 import React, { useState } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
-import { TextField } from "@material-ui/core";
+import { Popper, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => {
+  const {
+    breakpoints,
+    palette: { primary, secondary },
+  } = theme;
   return {
     root: {
       width: "25vw",
+      [breakpoints.down("md")]: {
+        width: "100vw",
+        margin: "auto",
+        borderRadius: "0px",
+        border: 0,
+        backgroundColor: primary.main,
+      },
     },
     paper: {
-      backgroundColor: theme.palette.secondary.main,
-      color: theme.palette.primary.main,
+      backgroundColor: secondary.main,
+      color: primary.main,
     },
     groupLabel: {
       textTransform: "uppercase",
       textAlign: "center",
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: secondary.main,
       color: "#777",
-      margin: "0px auto",
+      margin: "10px auto",
       width: "80%",
       letterSpacing: 2,
       padding: 0,
       lineHeight: "normal",
     },
     noOptions: {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: secondary.main,
+      color: primary.main,
     },
     focused: {
-      outline: "2px solid blue",
+      outline: `3px solid ${secondary.main}`,
     },
   };
 });
@@ -53,6 +65,12 @@ export default function SearchField() {
   const handleOpen = () => {
     inputValue.length > 0 && setOpen(true);
   };
+
+  // const customPopper = function (props) {
+  //   return (
+  //     <Popper {...props} className={classes.popper} placement="bottom-start" />
+  //   );
+  // };
 
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
