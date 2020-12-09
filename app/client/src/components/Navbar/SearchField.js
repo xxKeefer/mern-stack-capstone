@@ -14,16 +14,16 @@ const useStyles = makeStyles((theme) => {
     root: {
       width: "25vw",
       [breakpoints.down("md")]: {
-        width: "100vw",
+        width: "80vw",
         margin: "auto",
-        borderRadius: "0px",
-        border: 0,
-        backgroundColor: primary.main,
+        color: primary.main,
+        // backgroundColor: primary.main,
       },
     },
     paper: {
       backgroundColor: secondary.main,
       color: primary.main,
+      height: "100%",
     },
     groupLabel: {
       textTransform: "uppercase",
@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => {
     },
     focused: {
       outline: `3px solid ${secondary.main}`,
+      borderRadius: "0px",
+    },
+    searchTextField: {
+      backgroundColor: primary.main,
+      borderRadius: "none",
     },
   };
 });
@@ -100,10 +105,8 @@ export default function SearchField() {
           paper: classes.paper,
           options: classes.options,
           noOptions: classes.noOptions,
-          groupUl: classes.groupUl,
           focused: classes.focused,
         }}
-        className={classes.root}
         options={options}
         groupBy={(option) => option.group}
         getOptionLabel={(option) => option.title}
@@ -124,6 +127,7 @@ export default function SearchField() {
             placeholder="search..."
             size="small"
             variant="outlined"
+            className={classes.searchTextField}
           ></TextField>
         )}
       ></Autocomplete>
