@@ -1,7 +1,8 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 
-let transporter = nodemailer.createTransport({
+//HELPERS
+const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.GMAIL_USER,
@@ -16,10 +17,17 @@ let mailOptions = {
   text: "This is a test. Mic check 1 2, 1 2.",
 };
 
-transporter.sendMail(mailOptions, (err, data) => {
-  if (err) {
-    console.log(`Error sending mail to: ${mailOptions.to}\n`, err.message);
-  } else {
-    console.log(`Mail sent to: ${mailOptions.to}`);
-  }
-});
+//EXPORTS
+
+const sendNewsletter = (req, res) => {
+  const { from, to, subject, text } = req.body;
+  transporter.sendMail({ from, to, subject, text }, (err, data) => {
+    if (err) {
+      res.status(500).json({ message: err.message });
+    } else {
+      res.status(200).json({ message: `mail sent to: ${to}` });
+    }
+  });
+};
+
+module.exports = { sendNewsletter };

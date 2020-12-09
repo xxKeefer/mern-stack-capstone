@@ -1,7 +1,9 @@
 const express = require("express");
-let router = express.Router();
-const { sendNewsletter } = require("../../controller/shop");
+const auth = require("../../middleware/auth");
 
-router.route("/send").post(sendNewsletter);
+let router = express.Router();
+const { sendNewsletter } = require("../../controller/mailer");
+
+router.route("/send").post(auth.admin, sendNewsletter);
 
 module.exports = router;
