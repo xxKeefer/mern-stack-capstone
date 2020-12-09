@@ -3,6 +3,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../theme";
 import Navbar from "../Navbar/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import MenuDrawer from "../Navbar/MenuDrawer";
 
 const App = () => {
   return (
