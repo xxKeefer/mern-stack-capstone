@@ -63,7 +63,7 @@ export default function ToolBarUpper() {
             style={{ fontSize: "2.5rem" }}
           />
         </IconButton>
-      </div>{" "}
+      </div>
     </Toolbar>
   );
 }

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => {
     paper: {
       backgroundColor: secondary.main,
       color: primary.main,
-      height: "100%",
+      height: "100vh",
     },
     groupLabel: {
       textTransform: "uppercase",
@@ -94,6 +94,7 @@ export default function SearchField() {
         onClose={() => {
           setOpen(false);
         }}
+        freeSolo={true}
         noOptionsText={"No Results"}
         inputValue={inputValue}
         onInputChange={handleInputChange}

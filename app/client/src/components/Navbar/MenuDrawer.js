@@ -1,3 +1,8 @@
+// border on search bar
+// extend search bar down as much as possible
+// catalog word jumping
+//
+
 import React, { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import {
@@ -26,16 +31,6 @@ const useStyles = makeStyles((theme) => {
       fontSize: "2.5rem",
       color: secondary.main,
     },
-    topBar: {
-      paddingLeft: "0.5rem",
-      maxHeight: "7vh",
-      width: "90vw",
-      margin: "auto",
-      marginBottom: "1rem",
-      borderBottom: `3px solid ${primary.main}`,
-      boxShadow: `0px 3px 2px -2px ${primary.main}`,
-      display: "flex",
-    },
     searchListItem: {
       padding: 0,
       width: "100vw",
@@ -62,6 +57,13 @@ const useStyles = makeStyles((theme) => {
       width: "90vw",
       margin: "1rem auto 0px auto",
       background: primary.main,
+    },
+    toolBarContainer: {
+      borderBottom: `3px solid ${primary.main}`,
+      boxShadow: `0px 3px 2px -2px ${primary.main}`,
+      width: "90vw",
+      margin: "auto",
+      padding: "0px",
     },
   };
 });
@@ -129,7 +131,7 @@ export default function MenuDrawer(props) {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <IconButton
         aria-label="menu"
         edge="start"
@@ -149,7 +151,7 @@ export default function MenuDrawer(props) {
         classes={{ paper: classes.paper }}
       >
         <List style={{ padding: "0px" }}>
-          <ListItem style={{ padding: "0px" }}>
+          <ListItem className={classes.toolBarContainer}>
             <ToolBarDrawer
               state={isOpen}
               handleClick={(e) => {
@@ -180,6 +182,6 @@ export default function MenuDrawer(props) {
           </ListItem>
         </List>
       </Drawer>
-    </div>
+    </React.Fragment>
   );
 }
