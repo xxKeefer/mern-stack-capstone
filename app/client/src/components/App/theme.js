@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-import Coolvetica from "../fonts/coolvetica-rg.ttf";
+import Coolvetica from "../../fonts/coolvetica-rg.ttf";
 
 const coolvetica = {
   fontFamily: "Coolvetica",

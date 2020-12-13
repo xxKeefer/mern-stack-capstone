@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
-import { Popper, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -12,8 +12,9 @@ const useStyles = makeStyles((theme) => {
   } = theme;
   return {
     root: {
+      height: "1.5rem",
       width: "25vw",
-      [breakpoints.down("md")]: {
+      [breakpoints.down("sm")]: {
         width: "80vw",
         margin: "auto",
         color: primary.main,
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme) => {
     paper: {
       backgroundColor: secondary.main,
       color: primary.main,
-      height: "100vh",
     },
     groupLabel: {
       textTransform: "uppercase",
@@ -111,6 +111,9 @@ export default function SearchField() {
         options={options}
         groupBy={(option) => option.group}
         getOptionLabel={(option) => option.title}
+        ListboxProps={{
+          style: { height: "15rem", border: "solid 2px white", margin: "0px" },
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -127,7 +130,6 @@ export default function SearchField() {
             }}
             placeholder="search..."
             size="small"
-            variant="outlined"
             className={classes.searchTextField}
           ></TextField>
         )}

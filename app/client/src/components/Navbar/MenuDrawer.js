@@ -1,7 +1,4 @@
-// border on search bar
 // extend search bar down as much as possible
-// catalog word jumping
-//
 
 import React, { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
@@ -65,6 +62,10 @@ const useStyles = makeStyles((theme) => {
       margin: "auto",
       padding: "0px",
     },
+    genresChevron: {
+      fontSize: "1.5rem",
+      marginRight: "2rem",
+    },
   };
 });
 
@@ -110,7 +111,11 @@ export default function MenuDrawer(props) {
             primary="genres"
             classes={{ primary: classes.listItemText }}
           />
-          {genresOpen ? <ExpandLess /> : <ExpandMore />}
+          {genresOpen ? (
+            <ExpandLess className={classes.genresChevron} />
+          ) : (
+            <ExpandMore className={classes.genresChevron} />
+          )}
         </ListItem>
         <Collapse in={genresOpen} timeout="auto" unmountOnExit>
           <List>
