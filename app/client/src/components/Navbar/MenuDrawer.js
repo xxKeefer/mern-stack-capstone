@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function MenuDrawer(props) {
+export default function MenuDrawer() {
   const [isOpen, setOpen] = useState(false);
   const classes = useStyles();
 

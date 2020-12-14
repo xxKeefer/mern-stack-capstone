@@ -41,8 +41,8 @@ export default function ToolBarDrawer(props) {
   const theme = useTheme();
   const matchMobileOnly = useMediaQuery(theme.breakpoints.only("xs"));
 
-  const closeClick = (event) => {
-    props.handleClick(!event);
+  const closeClick = (state) => {
+    props.handleClick(!state);
   };
 
   return (

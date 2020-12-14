@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { Link, makeStyles } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuDrawer from "./MenuDrawer";
+import LoginModal from "../LoginModal/LoginModal";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => {
     toolBarUpper: {
       maxHeight: "6.25vh",
       justifyContent: "space-between",
+      alignItems: "center",
       paddingLeft: "0.5rem",
       paddingRight: "0.5rem",
     },
@@ -31,6 +33,10 @@ const useStyles = makeStyles((theme) => {
       fontFamily: typography.fontFamilyCoolvetica,
       fontSize: "2.5rem",
       marginBottom: "2rem",
+      color: secondary.main,
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
     },
   };
 });
@@ -42,21 +48,38 @@ export default function ToolBarUpper() {
   const matchTabletUp = useMediaQuery(theme.breakpoints.up("sm"));
   const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
 
+  const [modalState, setModalState] = useState(false);
+
+  const handleClick = (state) => {
+    setModalState(state);
+  };
+
   return (
     <Toolbar className={classes.toolBarUpper}>
       {matchTabletDown && <MenuDrawer />}
-      <h1 className={classes.catalogHeading}>
-        {matchDesktopUp ? "catalogmusic" : "catalog"}
-      </h1>
+      <Link href="/">
+        <h1 className={classes.catalogHeading}>
+          {matchDesktopUp ? "catalogmusic" : "catalog"}
+        </h1>
+      </Link>
       <div>
-        {matchDesktopUp && <h2 style={{ display: "inline-block" }}>log in</h2>}
-        {matchTabletUp && (
-          <IconButton aria-label="account" className={classes.accountButton}>
-            <AccountCircleIcon className={classes.navIcons} />
-          </IconButton>
-        )}
+        <Link component="button" onClick={() => setModalState(!modalState)}>
+          {matchDesktopUp && (
+            <h2 style={{ color: "#333", display: "inline-block" }}>log in</h2>
+          )}
+          {matchTabletUp && (
+            <IconButton aria-label="account" className={classes.accountButton}>
+              <AccountCircleIcon className={classes.navIcons} />
+            </IconButton>
+          )}
+        </Link>
+
         {matchDesktopUp && <h2 style={{ display: "inline-block" }}>cart</h2>}
         <IconButton edge="end" aria-label="cart">
+          <LoginModal
+            state={modalState}
+            handleClick={(e) => handleClick(e)}
+          ></LoginModal>
           <BoxEmptyDark
             color="secondary"
             viewBox="0 0 60 60"

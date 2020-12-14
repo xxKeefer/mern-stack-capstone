@@ -4,8 +4,9 @@ import theme from "./theme";
 import Navbar from "../Navbar/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MainContainer from "../MainContainer/MainContainer";
-import RecordCard from "../RecordCard/RecordCard";
-import { Grid, GridList, GridListTile } from "@material-ui/core";
+import Home from "../../pages/Home";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginModal from "../LoginModal/LoginModal";
 
 const App = () => {
   return (
@@ -13,13 +14,12 @@ const App = () => {
       <CssBaseline />
       <Navbar />
       <MainContainer>
-        <Grid container style={{ margin: "auto" }}>
-          <Grid container justify="space-evenly" alignItems="center">
-            <Grid item>
-              <RecordCard />
-            </Grid>
-          </Grid>
-        </Grid>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={LoginModal} />
+          </Switch>
+        </Router>
       </MainContainer>
     </ThemeProvider>
   );

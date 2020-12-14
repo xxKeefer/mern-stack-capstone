@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => {
       minHeight: "70vh",
       margin: "5vh auto",
       borderRadius: 0,
+      border: "1px solid #808080",
     },
   };
 });
