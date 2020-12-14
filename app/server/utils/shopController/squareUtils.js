@@ -12,24 +12,29 @@ const SQUARE_API_CONFIG = {
   },
 };
 
-const abbreviate = (release_title, artists) => {
+const abbreviate = (release_title, artist, year) => {
   const abr1 = release_title.slice(0, 3).toUpperCase();
-  const abr2 = artists[0].slice(0, 3).toUpperCase();
-  return abr1 + abr2;
+  const abr2 = artist.slice(0, 3).toUpperCase();
+  return abr1 + abr2 + year;
 };
 
-const describe = (release_title, artists, format, label) => {
-  const artist_string = artists.join(", ");
-  const desc_string = `Title: ${release_title}, Artists: ${artist_string}, Format:${format}, Label: ${label}`;
-  return `${desc_string}.`;
+const describe = (release_title, artist, genres, styles) => {
+  const arrayStringifier = (arr) => {
+    if (arr.length < 2) return arr[0];
+    return arr.join(", ");
+  };
+  const aS = arrayStringifier;
+  return `${release_title} - ${artist} | Genres: ${aS(genres)} | Styles: ${aS(
+    styles
+  )}`;
 };
 
-const buildVariation = (type, release_title, artists, price) => {
+const buildVariation = (type, release_title, artist, price) => {
   return {
     id: `#${type}::${uuidv4()}`,
     type: "ITEM_VARIATION",
     item_variation_data: {
-      item_id: `#${release_title}_${artists[0]}`,
+      item_id: `#${release_title}_${artist}`,
       name: type.toUpperCase(),
       price_money: {
         amount: price,
@@ -42,20 +47,13 @@ const buildVariation = (type, release_title, artists, price) => {
 };
 
 //EXPORTS -- CATALOG
-const addItem = async (
-  release_title,
-  artists,
-  format,
-  label,
-  price,
-  prelovedPrice
-) => {
+const addItem = async (release_title, artist, genres, styles, price) => {
   const item = await axios.post(
     "/catalog/object",
     {
       idempotency_key: uuidv4(),
       object: {
-        id: `#${release_title}_${artists[0]}`,
+        id: `#${release_title}_${artist}`,
         type: "ITEM",
         item_data: {
           available_electronically: true,
@@ -63,13 +61,10 @@ const addItem = async (
           available_online: true,
           product_type: "REGULAR",
           skip_modifier_screen: true,
-          abbreviation: abbreviate(release_title, artists),
-          description: describe(release_title, artists, format, label),
-          name: `${release_title} ${artists[0]}`,
-          variations: [
-            buildVariation("sealed", release_title, artists, price),
-            buildVariation("preloved", release_title, artists, prelovedPrice),
-          ],
+          abbreviation: abbreviate(release_title, artist),
+          description: describe(release_title, artist, genres, styles),
+          name: `${release_title} - ${artist}`,
+          variations: [buildVariation("stock", release_title, artist, price)],
         },
       },
     },

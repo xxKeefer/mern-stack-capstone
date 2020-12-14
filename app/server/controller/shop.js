@@ -1,47 +1,55 @@
 const square = require("../utils/shopController/squareUtils");
+const Discogs = require("../utils/shopController/discogsUtils");
 const Vinyl = require("../models/vinyl");
 
-const addItem = async (req, res, next) => {
+const addItem = async (req, res) => {
   const {
-    release_title,
-    artists,
-    track_list,
-    format,
-    label,
-    price,
-    catalog_number,
-    release_date,
-    description,
-    review,
+    release_id, // from Discogs
+    price, // manual entry
+    description, // manual entry, long form review
+    review, // manual entry, summary review
   } = req.body;
   try {
+    const data = await Discogs.getReleaseInfo(release_id);
+    const {
+      id,
+      year,
+      artists,
+      artists_sort,
+      title: release_title,
+      released,
+      genres,
+      styles,
+      tracklist,
+      images,
+    } = data;
+
     const item = await square.addItem(
       release_title,
-      artists,
-      format,
-      label,
+      artists[0].name,
+      genres,
+      styles,
       price
     );
 
     const newVinyl = await Vinyl.create({
+      discogs_id: id,
       square_id: item.catalog_object.id,
       release_title,
-      artists,
-      track_list,
-      format,
-      label,
+      artists_sort,
+      artists: artists.map((a) => a.name),
+      track_list: tracklist,
+      genres,
+      styles,
+      image: images[0].uri,
       variations: {
-        sealed: {
+        stock: {
           variation_id: item.catalog_object.item_data.variations[0].id,
           price,
         },
-        preloved: {
-          variation_id: item.catalog_object.item_data.variations[1].id,
-          price,
-        },
       },
-      catalog_number,
-      release_date,
+      release_date: released,
+      year,
       description,
       review,
     });
