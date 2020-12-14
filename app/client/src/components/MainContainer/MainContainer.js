@@ -1,6 +1,6 @@
 import React from "react";
-import PaperComponent from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -17,20 +17,12 @@ const useStyles = makeStyles((theme) => {
       },
       minHeight: "70vh",
       margin: "5vh auto",
-      //   borderRight: "none",
-      //   borderLeft: "none",
       borderRadius: 0,
     },
   };
 });
 
-export default function Paper() {
+export default function MainContainer({ children }) {
   const classes = useStyles();
-  return (
-    <PaperComponent
-      className={classes.root}
-      variant="outlined"
-      elevation={3}
-    ></PaperComponent>
-  );
+  return <Box className={classes.root}>{children}</Box>;
 }
