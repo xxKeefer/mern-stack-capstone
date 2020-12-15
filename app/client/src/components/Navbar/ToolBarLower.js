@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => {
       [breakpoints.down("sm")]: {
         display: "none",
       },
-      height: "6.25vh",
+      height: "5.5vh",
       justifyContent: "space-between",
     },
     navLinks: {

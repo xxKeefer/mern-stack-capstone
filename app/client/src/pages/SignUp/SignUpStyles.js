@@ -6,34 +6,13 @@ const useStyles = makeStyles((theme) => {
     breakpoints,
   } = theme;
   return {
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    card: {
-      padding: "2rem",
-      display: "flex",
-      justifyContent: "center",
-      position: "relative",
-      borderRadius: "0px",
-      border: `3px solid ${primary.main}`,
+    signUpContainer: {
       backgroundColor: secondary.main,
-      [breakpoints.only("sm")]: {
-        padding: "2rem 3rem",
-      },
-      [breakpoints.up("md")]: {
-        padding: "2rem 5rem",
-      },
+      width: "100%",
+      position: "absolute",
     },
     formTitle: {
-      marginBottom: "0px",
-      color: primary.main,
-    },
-    closeButton: {
-      position: "absolute",
-      top: 0,
-      left: 0,
+      margin: "2rem",
       color: primary.main,
     },
     formContainer: {

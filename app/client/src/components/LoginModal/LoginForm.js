@@ -12,7 +12,7 @@ export default function LoginModal(props) {
 
   return (
     <div className={classes.formContainer}>
-      <h1 className={classes.cardTitle}>login</h1>
+      <h1 className={classes.formTitle}>log in</h1>
       <form onSubmit={handleSubmit(onSubmit)} id="loginForm">
         <div className={classes.formGroup}>
           <label className={classes.formLabel} htmlFor="email">
@@ -54,7 +54,7 @@ export default function LoginModal(props) {
       </form>
       <p className={classes.signUpMessage}>
         Don't have an account?{" "}
-        <Link className={classes.bottomLinks} color="secondary">
+        <Link href="/signup" className={classes.bottomLinks} color="secondary">
           Sign Up
         </Link>
       </p>

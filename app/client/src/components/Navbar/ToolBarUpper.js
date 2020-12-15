@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {},
     toolBarUpper: {
-      maxHeight: "6.25vh",
+      maxHeight: "5vh",
       justifyContent: "space-between",
       alignItems: "center",
       paddingLeft: "0.5rem",

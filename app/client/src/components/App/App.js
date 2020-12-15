@@ -4,9 +4,10 @@ import theme from "./theme";
 import Navbar from "../Navbar/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MainContainer from "../MainContainer/MainContainer";
-import Home from "../../pages/Home";
+import Home from "../../pages/Home/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginModal from "../LoginModal/LoginModal";
+import SignUp from "../../pages/SignUp/SignUp";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
           <Router>
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/login" component={LoginModal} />
+              <Route path="/signup" component={SignUp} />
             </Switch>
           </Router>
         </MainContainer>
