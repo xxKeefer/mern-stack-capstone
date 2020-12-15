@@ -8,6 +8,7 @@ const addItem = async (req, res) => {
     price, // manual entry
     description, // manual entry, long form review
     review, // manual entry, summary review
+    preloved = false,
   } = req.body;
   try {
     const data = await Discogs.getReleaseInfo(release_id);
@@ -17,7 +18,7 @@ const addItem = async (req, res) => {
       artists,
       artists_sort,
       title: release_title,
-      released,
+      released: release_date,
       genres,
       styles,
       tracklist,
@@ -38,7 +39,7 @@ const addItem = async (req, res) => {
       release_title,
       artists_sort,
       artists: artists.map((a) => a.name),
-      track_list: tracklist,
+      tracklist,
       genres,
       styles,
       image: images[0].uri,
@@ -48,10 +49,11 @@ const addItem = async (req, res) => {
           price,
         },
       },
-      release_date: released,
+      release_date,
       year,
       description,
       review,
+      preloved,
     });
 
     res.status(201).json(newVinyl);
@@ -61,13 +63,18 @@ const addItem = async (req, res) => {
 };
 
 const addItems = async (req, res, next) => {
-  const { upload_items: itemInfoArray } = req.body;
+  const { upload_items: batchArray } = req.body;
   try {
-    const uploadedItems = await square.addItems(itemInfoArray);
+    const processedByDiscogs = await Discogs.batchGetInfo(batchArray);
 
-    let uploadedVinyls = [];
+    const uploadedItems = await square.addItems(processedByDiscogs);
 
-    res.status(201).json(uploadedItems);
+    // bind square_id to items processed by discogs
+    const completedBatch = processedByDiscogs.map((item, i) => {
+      item.square_id = uploadedItems[i].catalog_object.id;
+    });
+
+    res.status(201).json(completedBatch);
   } catch (e) {
     res.status(400).json(e.message);
   }

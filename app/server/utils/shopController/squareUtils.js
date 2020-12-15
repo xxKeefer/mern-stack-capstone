@@ -80,30 +80,20 @@ const addItems = async (itemInfoArray) => {
 
   let batch = [];
   itemInfoArray.forEach((item) => {
-    const {
-      release_title,
-      artists,
-      format,
-      label,
-      price,
-      prelovedPrice,
-    } = item;
+    const { release_title, artist, genres, styles, price } = item;
     batch.push({
-      id: `#${release_title}_${artists[0]}`,
+      id: `#${release_title}_${artist}`,
       type: "ITEM",
       item_data: {
-        abbreviation: abbreviate(release_title, artists),
-        description: describe(release_title, artists, format, label),
-        name: `${release_title} ${artists[0]}`,
-        variations: [
-          buildVariation("sealed", release_title, artists, price),
-          buildVariation("preloved", release_title, artists, prelovedPrice),
-        ],
         available_electronically: true,
         available_for_pickup: true,
         available_online: true,
         product_type: "REGULAR",
         skip_modifier_screen: true,
+        abbreviation: abbreviate(release_title, artist),
+        description: describe(release_title, artist, genres, styles),
+        name: `${release_title} - ${artist}`,
+        variations: [buildVariation("stock", release_title, artist, price)],
       },
     });
   });

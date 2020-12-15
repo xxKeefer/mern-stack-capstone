@@ -6,10 +6,11 @@ const vinylSchema = new mongoose.Schema({
   release_title: { type: String, required: true },
   artists_sort: { type: String, required: true },
   artists: { type: Array, required: true },
-  track_list: { type: Array, required: true },
+  tracklist: { type: Array, required: true },
   genres: { type: Array, required: true },
   styles: { type: Array, required: true },
   image: { type: String, required: true },
+  preloved: { type: Boolean, required: true, default: false },
   variations: {
     stock: {
       variation_id: { type: String, required: true },
