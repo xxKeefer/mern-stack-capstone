@@ -1,18 +1,14 @@
 const { Discogs } = require("../discogsConfig");
 
 //HELPERS
-const delay = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
 const processRaw = (raw) => {
   const {
     id,
     year,
     artists,
     artists_sort,
-    title,
-    released,
+    title: release_title,
+    released: release_date,
     genres,
     styles,
     tracklist,
@@ -23,8 +19,8 @@ const processRaw = (raw) => {
     year,
     artists,
     artists_sort,
-    title,
-    released,
+    release_title,
+    release_date,
     genres,
     styles,
     tracklist,
@@ -34,7 +30,7 @@ const processRaw = (raw) => {
 
 const splitBatches = (array) => {
   // Discogs rate limits requests to 60 per minute
-  const size = 2;
+  const size = 55;
   let [...arr] = array;
   const res = [];
   while (arr.length) {
@@ -73,10 +69,12 @@ const batchGetInfo = async (items) => {
   // Discogs rate limits requests to 60 per minute
   const batches = splitBatches(items);
   const promises = [];
-  const delay = 10 * 1000;
+  let delay = 65000;
   let prom = Promise.resolve();
 
-  batches.forEach((b) => {
+  batches.forEach((b, index) => {
+    // bybass delay for first batch
+    index === 0 ? (delay = 0) : (delay = 65000);
     prom = prom.then(() => {
       promises.push(processBatch(b));
       return new Promise((resolve) => {
@@ -89,7 +87,6 @@ const batchGetInfo = async (items) => {
 
   await prom;
   const completed = await Promise.all(promises);
-  console.log(completed.flat());
   console.log(`completed ${completed.length} batches`);
 
   return completed.flat();

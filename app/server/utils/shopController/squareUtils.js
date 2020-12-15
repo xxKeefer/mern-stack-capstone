@@ -29,12 +29,12 @@ const describe = (release_title, artist, genres, styles) => {
   )}`;
 };
 
-const buildVariation = (type, release_title, artist, price) => {
+const buildVariation = (type, idRef, release_title, artist, price) => {
   return {
     id: `#${type}::${uuidv4()}`,
     type: "ITEM_VARIATION",
     item_variation_data: {
-      item_id: `#${release_title}_${artist}`,
+      item_id: idRef,
       name: type.toUpperCase(),
       price_money: {
         amount: price,
@@ -47,13 +47,14 @@ const buildVariation = (type, release_title, artist, price) => {
 };
 
 //EXPORTS -- CATALOG
-const addItem = async (release_title, artist, genres, styles, price) => {
+const addItem = async (release_title, artist, genres, styles, price, year) => {
+  const catalogId = `#${release_title}_${artist}::${uuidv4()}`;
   const item = await axios.post(
     "/catalog/object",
     {
       idempotency_key: uuidv4(),
       object: {
-        id: `#${release_title}_${artist}`,
+        id: catalogId,
         type: "ITEM",
         item_data: {
           available_electronically: true,
@@ -61,10 +62,12 @@ const addItem = async (release_title, artist, genres, styles, price) => {
           available_online: true,
           product_type: "REGULAR",
           skip_modifier_screen: true,
-          abbreviation: abbreviate(release_title, artist),
+          abbreviation: abbreviate(release_title, artist, year),
           description: describe(release_title, artist, genres, styles),
           name: `${release_title} - ${artist}`,
-          variations: [buildVariation("stock", release_title, artist, price)],
+          variations: [
+            buildVariation("stock", catalogId, release_title, artist, price),
+          ],
         },
       },
     },
@@ -80,9 +83,20 @@ const addItems = async (itemInfoArray) => {
 
   let batch = [];
   itemInfoArray.forEach((item) => {
-    const { release_title, artist, genres, styles, price } = item;
+    const {
+      release_title,
+      artists_sort: artist,
+      genres,
+      styles,
+      price,
+      year,
+    } = item;
+
+    //in batch upserts the id needs to be unique and also match in the variation reference
+    let catalogId = `#${release_title}_${artist}::${uuidv4()}`;
+
     batch.push({
-      id: `#${release_title}_${artist}`,
+      id: catalogId,
       type: "ITEM",
       item_data: {
         available_electronically: true,
@@ -90,14 +104,17 @@ const addItems = async (itemInfoArray) => {
         available_online: true,
         product_type: "REGULAR",
         skip_modifier_screen: true,
-        abbreviation: abbreviate(release_title, artist),
+        abbreviation: abbreviate(release_title, artist, year),
         description: describe(release_title, artist, genres, styles),
         name: `${release_title} - ${artist}`,
-        variations: [buildVariation("stock", release_title, artist, price)],
+        variations: [
+          buildVariation("stock", catalogId, release_title, artist, price),
+        ],
       },
     });
   });
 
+  console.log(batch[3].item_data.variations[0].item_variation_data);
   const batchUpsert = await axios.post(
     "/catalog/batch-upsert",
     {
@@ -106,6 +123,7 @@ const addItems = async (itemInfoArray) => {
     },
     SQUARE_API_CONFIG
   );
+  console.log(batchUpsert.data);
 
   return batchUpsert.data;
 };
