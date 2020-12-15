@@ -70,9 +70,10 @@ const addItems = async (req, res, next) => {
     const uploadedItems = await square.addItems(processedByDiscogs);
 
     // bind square_id to items processed by discogs
-    const completedBatch = processedByDiscogs.map((item, i) => {
-      item.square_id = uploadedItems[i].catalog_object.id;
-    });
+    const completedBatch = [...processedByDiscogs];
+    completedBatch.map(
+      (item, i) => (item.square_id = uploadedItems.objects[i].id)
+    );
 
     res.status(201).json(completedBatch);
   } catch (e) {

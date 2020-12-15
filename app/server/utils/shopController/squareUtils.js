@@ -114,7 +114,6 @@ const addItems = async (itemInfoArray) => {
     });
   });
 
-  console.log(batch[3].item_data.variations[0].item_variation_data);
   const batchUpsert = await axios.post(
     "/catalog/batch-upsert",
     {
@@ -123,7 +122,7 @@ const addItems = async (itemInfoArray) => {
     },
     SQUARE_API_CONFIG
   );
-  console.log(batchUpsert.data);
+  // console.log(batchUpsert.data);
 
   return batchUpsert.data;
 };
