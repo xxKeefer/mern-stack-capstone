@@ -177,6 +177,7 @@ export default function MenuDrawer() {
                   inset={true}
                   primary={`${item}`}
                   classes={{ primary: classes.listItemText }}
+                  key={item}
                 />
               </ListItem>
             );

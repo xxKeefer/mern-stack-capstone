@@ -1,10 +1,8 @@
-import { Card, makeStyles, Modal } from "@material-ui/core";
+import { Card, IconButton, Modal } from "@material-ui/core";
 import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
-
-const useStyles = makeStyles((theme) => {
-  return { card: { width: "20vw", height: "40vh", margin: "auto" } };
-});
+import LoginForm from "./LoginForm";
+import useStyles from "./LoginModalStyles";
 
 export default function LoginModal(props) {
   const classes = useStyles();
@@ -14,9 +12,12 @@ export default function LoginModal(props) {
 
   return (
     <div>
-      <Modal open={props.state}>
+      <Modal className={classes.modal} open={props.state}>
         <Card className={classes.card}>
-          <CloseIcon onClick={closeClick} />
+          <IconButton className={classes.closeButton}>
+            <CloseIcon onClick={closeClick} />
+          </IconButton>
+          <LoginForm />
         </Card>
       </Modal>
     </div>

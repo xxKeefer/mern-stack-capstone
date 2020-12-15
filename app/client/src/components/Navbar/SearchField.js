@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => {
     searchTextField: {
       backgroundColor: primary.main,
       borderRadius: "none",
+      outline: `1px solid ${secondary.main}`,
     },
   };
 });

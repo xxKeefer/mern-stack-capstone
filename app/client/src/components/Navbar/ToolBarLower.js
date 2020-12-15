@@ -1,6 +1,6 @@
 import { Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useState } from "react";
+import React from "react";
 import SearchField from "./SearchField";
 import Toolbar from "@material-ui/core/Toolbar";
 

@@ -3,7 +3,6 @@ import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import React, { useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -76,16 +75,16 @@ export default function ToolBarUpper() {
 
         {matchDesktopUp && <h2 style={{ display: "inline-block" }}>cart</h2>}
         <IconButton edge="end" aria-label="cart">
-          <LoginModal
-            state={modalState}
-            handleClick={(e) => handleClick(e)}
-          ></LoginModal>
           <BoxEmptyDark
             color="secondary"
             viewBox="0 0 60 60"
             style={{ fontSize: "2.5rem" }}
           />
         </IconButton>
+        <LoginModal
+          state={modalState}
+          handleClick={(e) => handleClick(e)}
+        ></LoginModal>
       </div>
     </Toolbar>
   );
