@@ -15,19 +15,20 @@ const useStyles = makeStyles((theme) => {
       [breakpoints.down("sm")]: {
         display: "none",
       },
-      height: "5.5vh",
       justifyContent: "space-between",
     },
     navLinks: {
       color: secondary.main,
-      cursor: "pointer",
       fontSize: "1.5rem",
       letterSpacing: 1,
       marginRight: "3vw",
       textDecoration: "none",
-    },
-    searchField: {
-      width: "25vw",
+      cursor: "pointer",
+      "&:hover": {
+        textDecoration: "none",
+        borderTop: "1px solid #EdFF00",
+        borderBottom: "1px solid #Edff00",
+      },
     },
   };
 });

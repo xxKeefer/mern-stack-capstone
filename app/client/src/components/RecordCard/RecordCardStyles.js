@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       [breakpoints.up("md")]: {
-        width: "150px",
+        width: "170px",
       },
       minHeight: "220px",
       borderRadius: 0,

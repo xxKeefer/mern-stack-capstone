@@ -36,6 +36,15 @@ const useStyles = makeStyles((theme) => {
       textDecoration: "none",
       display: "flex",
       alignItems: "center",
+      "&:hover": {
+        textDecoration: "none",
+        borderBottom: "2px solid #Edff00",
+      },
+    },
+    navLinks: {
+      color: "#333",
+      display: "inline-block",
+      cursor: "pointer",
     },
   };
 });
@@ -62,25 +71,24 @@ export default function ToolBarUpper() {
         </h1>
       </Link>
       <div>
-        <Link component="button" onClick={() => setModalState(!modalState)}>
-          {matchDesktopUp && (
-            <h2 style={{ color: "#333", display: "inline-block" }}>log in</h2>
-          )}
+        <Link onClick={() => setModalState(!modalState)}>
+          {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
           {matchTabletUp && (
             <IconButton aria-label="account" className={classes.accountButton}>
               <AccountCircleIcon className={classes.navIcons} />
             </IconButton>
           )}
         </Link>
-
-        {matchDesktopUp && <h2 style={{ display: "inline-block" }}>cart</h2>}
-        <IconButton edge="end" aria-label="cart">
-          <BoxEmptyDark
-            color="secondary"
-            viewBox="0 0 60 60"
-            style={{ fontSize: "2.5rem" }}
-          />
-        </IconButton>
+        <Link href="/cart">
+          {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
+          <IconButton edge="end" aria-label="cart">
+            <BoxEmptyDark
+              color="secondary"
+              viewBox="0 0 60 60"
+              style={{ fontSize: "2.5rem" }}
+            />
+          </IconButton>
+        </Link>
         <LoginModal
           state={modalState}
           handleClick={(e) => handleClick(e)}
