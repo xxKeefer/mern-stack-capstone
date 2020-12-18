@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => {
     cartContainer: {
       backgroundColor: secondary.main,
       width: "100%",
-      position: "absolute",
       height: "100%",
       padding: "2rem",
     },

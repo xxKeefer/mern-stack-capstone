@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => {
       cursor: "pointer",
       "&:hover": {
         textDecoration: "none",
-        borderTop: "1px solid #EdFF00",
-        borderBottom: "1px solid #Edff00",
+        borderTop: "3px solid #EdFF00",
+        borderBottom: "3px solid #Edff00",
       },
     },
   };

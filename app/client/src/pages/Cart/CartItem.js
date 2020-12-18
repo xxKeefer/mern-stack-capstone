@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => {
       width: "40vw",
       borderRadius: 0,
       backgroundColor: primary.main,
-      marginBottom: "1rem",
+      margin: "1rem",
     },
     details: {
       display: "flex",
@@ -56,11 +56,14 @@ const useStyles = makeStyles((theme) => {
     },
     removeItem: {
       textAlign: "right",
+      fontSize: "1rem",
     },
     quantityContainer: {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      color: secondary.main,
+      fontSize: "1rem",
     },
   };
 });
@@ -80,7 +83,7 @@ export default function CartItem() {
   };
 
   return (
-    <Card className={classes.card} variant="outlined" raised>
+    <Card className={classes.card}>
       <CardMedia
         image={placeholderImage}
         className={classes.coverImage}
@@ -104,13 +107,21 @@ export default function CartItem() {
                 <AddIcon />
               </IconButton>
               <h3>{quantity}</h3>
-              <IconButton onClick={() => handleDecrement()}>
-                <RemoveIcon />
-              </IconButton>
+              {quantity > 1 ? (
+                <IconButton onClick={() => handleDecrement()}>
+                  <RemoveIcon />
+                </IconButton>
+              ) : (
+                <IconButton onClick={() => handleDecrement()} disabled={true}>
+                  <RemoveIcon />
+                </IconButton>
+              )}
             </div>
           </div>
           <div className={classes.flexedColumn}>
-            <Typography className={classes.recordPrice}>$99</Typography>
+            <Typography className={classes.recordPrice}>
+              ${99 * quantity}
+            </Typography>
             <Typography className={classes.removeItem}>Remove Item</Typography>
           </div>
         </CardContent>
