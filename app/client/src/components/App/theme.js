@@ -30,6 +30,9 @@ const theme = createMuiTheme({
     fluro: {
       main: "#EdFF00",
     },
+    light: {
+      main: "#BAA99C",
+    },
     text: {
       primary: "#2D2926",
       gray: "#808080",

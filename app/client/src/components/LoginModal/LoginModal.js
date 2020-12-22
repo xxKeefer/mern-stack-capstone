@@ -12,7 +12,7 @@ export default function LoginModal(props) {
 
   return (
     <div>
-      <Modal className={classes.modal} open={props.state}>
+      <Modal className={classes.modal} open={props.state} onClose={closeClick}>
         <Card className={classes.card}>
           <IconButton className={classes.closeButton}>
             <CloseIcon onClick={closeClick} />

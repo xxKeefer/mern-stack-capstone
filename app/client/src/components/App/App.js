@@ -8,6 +8,8 @@ import Home from "../../pages/Home/Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUp from "../../pages/SignUp/SignUp";
 import Cart from "../../pages/Cart/Cart";
+import Contact from "../../pages/Contact/Contact";
+import Footer from "../Footer/Footer";
 
 const App = () => {
   return (
@@ -20,10 +22,12 @@ const App = () => {
             <Switch>
               <Route path="/signup" component={SignUp} />
               <Route path="/cart" component={Cart} />
+              <Route path="/contact" component={Contact} />
               <Route exact path="/" component={Home} />
             </Switch>
           </Router>
         </MainContainer>
+        <Footer />
       </ThemeProvider>
     </React.Fragment>
   );

@@ -14,7 +14,7 @@ export default function Contact() {
   return (
     <div className={classes.signUpContainer}>
       <div className={classes.formContainer}>
-        <h1 className={classes.formTitle}>sign up</h1>
+        <h1 className={classes.formTitle}>contact</h1>
         <form onSubmit={handleSubmit(onSubmit)} id="signUpForm">
           <div className={classes.formGroup}>
             <label className={classes.formLabel} htmlFor="firstName">

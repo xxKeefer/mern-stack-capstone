@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       margin: "1rem",
-      width: "30vw",
       borderRadius: 0,
       backgroundColor: primary.main,
       padding: "1rem",

@@ -11,10 +11,11 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: primary.main,
       width: "90vw",
       position: "relative",
+      display: "flex",
       [breakpoints.up("md")]: {
         width: "80vw",
       },
-      minHeight: "70vh",
+      height: "100%",
       margin: "5vh auto",
       borderRadius: 0,
     },
