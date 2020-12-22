@@ -16,7 +16,7 @@ export default function SignUp() {
   return (
     <div className={classes.cartContainer}>
       <h1 className={classes.formTitle}>your cart</h1>
-      <Box style={{ display: "flex" }}>
+      <Box className={classes.cartInfoBox}>
         <Box
           style={{
             display: "inline-flex",

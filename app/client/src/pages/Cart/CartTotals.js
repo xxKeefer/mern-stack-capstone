@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => {
   const {
+    breakpoints,
     palette: { primary, secondary, fluro },
   } = theme;
   return {
@@ -15,6 +16,11 @@ const useStyles = makeStyles((theme) => {
       borderRadius: 0,
       backgroundColor: primary.main,
       padding: "1rem",
+      [breakpoints.only("xs")]: {
+        width: "100%",
+        margin: 0,
+        marginTop: "1rem",
+      },
     },
     totalContainer: {
       display: "flex",

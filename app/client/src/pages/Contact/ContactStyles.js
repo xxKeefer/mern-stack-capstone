@@ -6,13 +6,13 @@ const useStyles = makeStyles((theme) => {
     breakpoints,
   } = theme;
   return {
-    cartContainer: {
+    signUpContainer: {
       backgroundColor: secondary.main,
       width: "100%",
-      height: "100%",
-      padding: "2rem",
+      position: "absolute",
     },
     formTitle: {
+      margin: "2rem",
       color: primary.main,
     },
     formContainer: {
@@ -48,13 +48,6 @@ const useStyles = makeStyles((theme) => {
       textDecoration: "underline",
     },
     signUpMessage: { color: primary.main },
-    cartInfoBox: {
-      display: "flex",
-      [breakpoints.only("xs")]: {
-        flexDirection: "column",
-        padding: 0,
-      },
-    },
   };
 });
 export default useStyles;

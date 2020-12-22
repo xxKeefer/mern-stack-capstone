@@ -13,6 +13,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 
 const useStyles = makeStyles((theme) => {
   const {
+    breakpoints,
     palette: { secondary, primary },
   } = theme;
   return {
@@ -22,20 +23,27 @@ const useStyles = makeStyles((theme) => {
       width: "40vw",
       borderRadius: 0,
       backgroundColor: primary.main,
-      margin: "1rem",
+      marginTop: "1rem",
+      [breakpoints.only("xs")]: {
+        height: "20vw",
+        width: "100%",
+      },
     },
     details: {
       display: "flex",
-      flexGrow: "1",
     },
     content: {
       display: "flex",
       justifyContent: "space-between",
       width: "100%",
-      padding: "1rem",
+      padding: "0.5rem",
     },
     coverImage: {
       width: "10vw",
+      height: "100%",
+      [breakpoints.only("xs")]: {
+        width: "20vw",
+      },
     },
     flexedColumn: {
       display: "flex",
@@ -45,18 +53,30 @@ const useStyles = makeStyles((theme) => {
     },
     artistName: {
       fontSize: "1.5rem",
+      [breakpoints.only("xs")]: {
+        fontSize: "1rem",
+      },
     },
     recordTitle: {
+      [breakpoints.only("xs")]: {
+        fontSize: "0.8rem",
+      },
       fontSize: "1rem",
       fontWeight: "200",
     },
     recordPrice: {
       fontSize: "1.5rem",
       textAlign: "right",
+      [breakpoints.only("xs")]: {
+        fontSize: "1rem",
+      },
     },
     removeItem: {
       textAlign: "right",
       fontSize: "1rem",
+      [breakpoints.only("xs")]: {
+        fontSize: "0.8rem",
+      },
     },
     quantityContainer: {
       display: "flex",
@@ -64,6 +84,16 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
       color: secondary.main,
       fontSize: "1rem",
+      padding: 0,
+      [breakpoints.only("xs")]: {
+        flexDirection: "column",
+      },
+    },
+    quantityIcons: {
+      fontSize: "1rem",
+      [breakpoints.only("xs")]: {},
+      padding: 0,
+      margin: 0,
     },
   };
 });
@@ -84,11 +114,13 @@ export default function CartItem() {
 
   return (
     <Card className={classes.card}>
-      <CardMedia
-        image={placeholderImage}
-        className={classes.coverImage}
-        title="placeholder"
-      ></CardMedia>
+      <div style={{ height: "100%", width: "20vw" }}>
+        <CardMedia
+          image={placeholderImage}
+          className={classes.coverImage}
+          title="placeholder"
+        ></CardMedia>
+      </div>
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <div className={classes.flexedColumn}>
@@ -102,18 +134,28 @@ export default function CartItem() {
             </Typography>
           </div>
           <div className={classes.flexedColumn}>
-            <div className={classes.quantityContainer}>
-              <IconButton onClick={() => handleIncrement()}>
-                <AddIcon />
+            <div className={classes.quantityContainer} style={{ padding: 0 }}>
+              <IconButton
+                onClick={() => handleIncrement()}
+                style={{ height: "1rem" }}
+              >
+                <AddIcon className={classes.quantityIcons} />
               </IconButton>
-              <h3>{quantity}</h3>
+              <h3 className={classes.quantityIcons}>{quantity}</h3>
               {quantity > 1 ? (
-                <IconButton onClick={() => handleDecrement()}>
-                  <RemoveIcon />
+                <IconButton
+                  onClick={() => handleDecrement()}
+                  style={{ height: "1rem" }}
+                >
+                  <RemoveIcon className={classes.quantityIcons} />
                 </IconButton>
               ) : (
-                <IconButton onClick={() => handleDecrement()} disabled={true}>
-                  <RemoveIcon />
+                <IconButton
+                  onClick={() => handleDecrement()}
+                  style={{ height: "1rem" }}
+                  disabled={true}
+                >
+                  <RemoveIcon className={classes.quantityIcons} />
                 </IconButton>
               )}
             </div>
