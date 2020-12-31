@@ -69,13 +69,25 @@ const addItems = async (req, res, next) => {
 
     const uploadedItems = await square.addItems(processedByDiscogs);
 
-    // bind square_id to items processed by discogs
+    // bind square_id to items processed by discogs and make data fit model
     const completedBatch = [...processedByDiscogs];
-    completedBatch.map(
-      (item, i) => (item.square_id = uploadedItems.objects[i].id)
-    );
+    completedBatch.map((item, i) => {
+      item.square_id = uploadedItems.objects[i].id;
+      item.discogs_id = item.id;
+      item.image = item.images[0].uri;
+      item.variations = {
+        stock: {
+          variation_id: uploadedItems.objects[i].item_data.variations[0].id,
+          price: item.price,
+        },
+      };
+    });
 
-    res.status(201).json(completedBatch);
+    const newVinyls = await Vinyl.insertMany(completedBatch);
+
+    // res.status(201).json(uploadedItems);
+    // res.status(201).json(completedBatch);
+    res.status(201).json(newVinyls);
   } catch (e) {
     res.status(400).json(e.message);
   }
