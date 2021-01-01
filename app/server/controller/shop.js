@@ -62,7 +62,7 @@ const addItem = async (req, res) => {
   }
 };
 
-const addItems = async (req, res, next) => {
+const addItems = async (req, res) => {
   const { upload_items: batchArray } = req.body;
   try {
     const processedByDiscogs = await Discogs.batchGetInfo(batchArray);
@@ -91,32 +91,59 @@ const addItems = async (req, res, next) => {
   }
 };
 
-const getSquareCatalog = async (req, res, next) => {
-  const type = "item";
-  try {
-    const catalogList = await square.getCatalog(type);
+//DEPRECATED
+// const getSquareCatalog = async (req, res) => {
+//   const type = "item";
+//   try {
+//     const catalogList = await square.getCatalog(type);
 
-    res.status(200).json(catalogList);
+//     res.status(200).json(catalogList);
+//   } catch (e) {
+//     res.status(400).json(e.message);
+//   }
+// };
+
+const getMongoCatalog = async (req, res) => {
+  try {
+    const catalogList = await Vinyl.find();
+    const ids = [];
+    catalogList.forEach((item) =>
+      ids.push({
+        _id: item._id,
+        square_id: item.square_id,
+        discogs_id: item.discogs_id,
+      })
+    );
+
+    res.status(200).json({ ids: ids, detailed: catalogList });
   } catch (e) {
     res.status(400).json(e.message);
   }
 };
 
-const listItem = async (req, res, next) => {
-  const { square_id: squareId } = req.body;
+const listItem = async (req, res) => {
+  const { square_id } = req.body;
   try {
-    const item = await square.getItem(squareId);
+    const item = await Vinyl.findOne({ square_id });
     res.status(200).json(item);
   } catch (e) {
     res.status(400).json(e.message);
   }
 };
 
-const listItems = async (req, res, next) => {
-  const { square_ids: squareIdsArray } = req.body;
+const listItems = async (req, res) => {
+  const { square_ids } = req.body;
   try {
-    const item = await square.getItems(squareIdsArray);
-    res.status(200).json(item);
+    const items = await Vinyl.find({ square_id: { $in: square_ids } });
+    const ids = [];
+    items.forEach((item) =>
+      ids.push({
+        _id: item._id,
+        square_id: item.square_id,
+        discogs_id: item.discogs_id,
+      })
+    );
+    res.status(200).json({ ids: ids, detailed: items });
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -134,7 +161,7 @@ const deleteItem = async (req, res) => {
   }
 };
 
-const deleteItems = async (req, res, next) => {
+const deleteItems = async (req, res) => {
   try {
     const deleted = await square.deleteItems(req.body.items);
     const deletedVinyls = await Vinyl.deleteMany({
@@ -151,7 +178,7 @@ const deleteItems = async (req, res, next) => {
 module.exports = {
   addItem,
   addItems,
-  getSquareCatalog,
+  getMongoCatalog,
   listItem,
   listItems,
   deleteItem,

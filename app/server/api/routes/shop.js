@@ -3,7 +3,7 @@ let router = express.Router();
 const {
   addItem,
   addItems,
-  getSquareCatalog,
+  getMongoCatalog,
   listItems,
   listItem,
   deleteItem,
@@ -14,7 +14,7 @@ router.route("/add").post(addItem);
 
 router.route("/add-multi").post(addItems);
 
-router.route("/list").get(getSquareCatalog);
+router.route("/list").get(getMongoCatalog);
 
 router.route("/list-subset").get(listItems);
 
