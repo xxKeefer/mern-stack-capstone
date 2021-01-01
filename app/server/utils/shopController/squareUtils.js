@@ -152,9 +152,12 @@ const getCatalog = async (type = "item") => {
     SQUARE_API_CONFIG
   );
 
-  const ids = list.data.objects.map((item) => item.id);
-
-  return { ids: ids, detailed: list.data };
+  if (list.data.objects) {
+    const ids = list.data.objects.map((item) => item.id);
+    return { ids: ids, detailed: list.data };
+  } else {
+    return { ids: [], detailed: {} };
+  }
 };
 
 const getItem = async (squareId) => {

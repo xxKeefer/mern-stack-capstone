@@ -6,7 +6,7 @@ const {
   getSquareCatalog,
   listItems,
   listItem,
-  deleteSquareItem,
+  deleteItem,
   deleteSquareItems,
 } = require("../../controller/shop");
 
@@ -20,8 +20,8 @@ router.route("/list-subset").get(listItems);
 
 router.route("/list-one").get(listItem);
 
-router.route("/delete").post(deleteSquareItem);
+router.route("/delete").delete(deleteItem);
 
-router.route("/delete-multi").post(deleteSquareItems);
+router.route("/delete-multi").delete(deleteSquareItems);
 
 module.exports = router;

@@ -85,8 +85,6 @@ const addItems = async (req, res, next) => {
 
     const newVinyls = await Vinyl.insertMany(completedBatch);
 
-    // res.status(201).json(uploadedItems);
-    // res.status(201).json(completedBatch);
     res.status(201).json(newVinyls);
   } catch (e) {
     res.status(400).json(e.message);
@@ -124,10 +122,13 @@ const listItems = async (req, res, next) => {
   }
 };
 
-const deleteSquareItem = async (req, res, next) => {
+const deleteItem = async (req, res) => {
   try {
     const deleted = await square.deleteItem(req.body.item);
-    res.status(200).json(deleted);
+    const deletedVinyl = await Vinyl.findOneAndDelete({
+      square_id: req.body.item,
+    });
+    res.status(200).json({ deletedVinyl, deleted });
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -148,6 +149,6 @@ module.exports = {
   getSquareCatalog,
   listItem,
   listItems,
-  deleteSquareItem,
+  deleteItem,
   deleteSquareItems,
 };
