@@ -7,7 +7,7 @@ const {
   listItems,
   listItem,
   deleteItem,
-  deleteSquareItems,
+  deleteItems,
 } = require("../../controller/shop");
 
 router.route("/add").post(addItem);
@@ -22,6 +22,6 @@ router.route("/list-one").get(listItem);
 
 router.route("/delete").delete(deleteItem);
 
-router.route("/delete-multi").delete(deleteSquareItems);
+router.route("/delete-multi").delete(deleteItems);
 
 module.exports = router;

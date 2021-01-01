@@ -128,16 +128,21 @@ const deleteItem = async (req, res) => {
     const deletedVinyl = await Vinyl.findOneAndDelete({
       square_id: req.body.item,
     });
-    res.status(200).json({ deletedVinyl, deleted });
+    res.status(200).json({ deleted, deletedVinyl });
   } catch (e) {
     res.status(400).json(e.message);
   }
 };
 
-const deleteSquareItems = async (req, res, next) => {
+const deleteItems = async (req, res, next) => {
   try {
     const deleted = await square.deleteItems(req.body.items);
-    res.status(200).json(deleted);
+    const deletedVinyls = await Vinyl.deleteMany({
+      square_id: {
+        $in: req.body.items,
+      },
+    });
+    res.status(200).json({ deleted, deletedVinyls });
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -150,5 +155,5 @@ module.exports = {
   listItem,
   listItems,
   deleteItem,
-  deleteSquareItems,
+  deleteItems,
 };
