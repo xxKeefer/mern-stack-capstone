@@ -8,6 +8,8 @@ const {
   listItem,
   deleteItem,
   deleteItems,
+  getStockCount,
+  setStockCount,
 } = require("../../controller/shop");
 
 router.route("/add").post(addItem);
@@ -23,5 +25,9 @@ router.route("/list-one").get(listItem);
 router.route("/delete").delete(deleteItem);
 
 router.route("/delete-multi").delete(deleteItems);
+
+router.route("/item-count").get(getStockCount);
+
+router.route("/item-stock-in").post(setStockCount);
 
 module.exports = router;

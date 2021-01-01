@@ -2,7 +2,7 @@ require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 const axios = require("axios").default;
 
-//HELPERS
+//HELPERS -- CATALOG
 const SQUARE_API_CONFIG = {
   baseURL: "https://connect.squareupsandbox.com/v2",
   headers: {
@@ -29,7 +29,7 @@ const describe = (release_title, artist, genres, styles) => {
   )}`;
 };
 
-const buildVariation = (type, idRef, release_title, artist, price) => {
+const buildVariation = (type, idRef, price) => {
   return {
     id: `#${type}::${uuidv4()}`,
     type: "ITEM_VARIATION",
@@ -180,7 +180,55 @@ const getItems = async (squareIdsArray) => {
   return items.data;
 };
 
+//HELPERS -- INVENTORY
+
+// right now there is only one location
+const LOC_ID = "LWB7HW6Z45KS9";
+
 //EXPORTS -- INVENTORY
+
+const getStockCount = async (SqVariationId, locId = LOC_ID) => {
+  const count = await axios.get(
+    `/inventory/${SqVariationId}0?location_ids=${locId}`,
+    SQUARE_API_CONFIG
+  );
+
+  return count.data;
+};
+
+//TODO: fix this fuhnction
+const setStockCount = async (counts, locId = LOC_ID) => {
+  const changes = [];
+
+  counts.forEach((count) => {
+    changes.push({
+      type: "PHYSICAL_COUNT",
+      physical_count: {
+        catalog_object_id: count.variation_id,
+        state: "IN_STOCK",
+        location_id: locId,
+        quantity: count.qty,
+        occurred_at: new Date(Date.now()).toISOString(),
+      },
+    });
+  });
+
+  console.log({ changes });
+
+  const count = await axios.post(
+    "/inventory/batch-change",
+    {
+      idempotency_key: uuidv4(),
+      changes: changes,
+      ignore_unchanged_counts: true,
+    },
+    SQUARE_API_CONFIG
+  );
+
+  console.log(count.data);
+
+  return count.data;
+};
 
 module.exports = {
   addItem,
@@ -190,4 +238,6 @@ module.exports = {
   getCatalog,
   getItem,
   getItems,
+  getStockCount,
+  setStockCount,
 };

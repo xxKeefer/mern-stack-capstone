@@ -91,18 +91,6 @@ const addItems = async (req, res) => {
   }
 };
 
-//DEPRECATED
-// const getSquareCatalog = async (req, res) => {
-//   const type = "item";
-//   try {
-//     const catalogList = await square.getCatalog(type);
-
-//     res.status(200).json(catalogList);
-//   } catch (e) {
-//     res.status(400).json(e.message);
-//   }
-// };
-
 const getMongoCatalog = async (req, res) => {
   try {
     const catalogList = await Vinyl.find();
@@ -175,6 +163,46 @@ const deleteItems = async (req, res) => {
   }
 };
 
+const getStockCount = async (req, res) => {
+  const { square_id } = req.body;
+  try {
+    const item = await Vinyl.findOne({ square_id });
+    const stock = await square.getStockCount(
+      item.variations.stock.variation_id
+    );
+    res.status(200).json({ stock });
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+const setStockCount = async (req, res) => {
+  const { counts } = req.body;
+  const ids = [...counts].map((item) => item.square_id);
+  try {
+    const items = await Vinyl.find({ square_id: { $in: ids } });
+    counts.map((item, i) => {
+      item.variation_id = items[i].variations.stock.variation_id;
+    });
+    const stock = await square.setStockCount(counts);
+    res.status(200).json({ stock });
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+//DEPRECATED
+// const getSquareCatalog = async (req, res) => {
+//   const type = "item";
+//   try {
+//     const catalogList = await square.getCatalog(type);
+
+//     res.status(200).json(catalogList);
+//   } catch (e) {
+//     res.status(400).json(e.message);
+//   }
+// };
+
 module.exports = {
   addItem,
   addItems,
@@ -183,4 +211,6 @@ module.exports = {
   listItems,
   deleteItem,
   deleteItems,
+  getStockCount,
+  setStockCount,
 };
