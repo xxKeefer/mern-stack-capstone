@@ -62,7 +62,11 @@ const useStyles = makeStyles((theme) => {
       fontSize: "1rem",
     },
     formLabel: { fontSize: "1rem", color: primary.main },
-    errorMessage: { color: "#ed2e38" },
+    errorMessage: {
+      color: "#ed2e38",
+      padding: "0.3rem 1rem",
+      border: `3px double ${primary.main}`,
+    },
     bottomLinks: {
       color: primary.main,
       fontSize: "1rem",

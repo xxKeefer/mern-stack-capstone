@@ -52,16 +52,10 @@ const useStyles = makeStyles((theme) => {
       fontSize: "1.5rem",
     },
     artistName: {
-      fontSize: "1.5rem",
-      [breakpoints.only("xs")]: {
-        fontSize: "1rem",
-      },
+      fontSize: "1rem",
     },
     recordTitle: {
-      [breakpoints.only("xs")]: {
-        fontSize: "0.8rem",
-      },
-      fontSize: "1rem",
+      fontSize: "0.8rem",
       fontWeight: "200",
     },
     recordPrice: {
@@ -73,10 +67,7 @@ const useStyles = makeStyles((theme) => {
     },
     removeItem: {
       textAlign: "right",
-      fontSize: "1rem",
-      [breakpoints.only("xs")]: {
-        fontSize: "0.8rem",
-      },
+      fontSize: "0.8rem",
     },
     quantityContainer: {
       display: "flex",

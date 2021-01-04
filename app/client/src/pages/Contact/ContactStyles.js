@@ -6,14 +6,13 @@ const useStyles = makeStyles((theme) => {
     breakpoints,
   } = theme;
   return {
-    signUpContainer: {
+    contactContainer: {
       backgroundColor: secondary.main,
       width: "100%",
+      paddingBottom: "5vh",
     },
     formTitle: {
-      //   border: `5px double ${primary.main}`,
-      //   padding: "0.5rem 2rem",
-      margin: "2rem",
+      margin: "1rem",
       color: primary.main,
     },
     formContainer: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => {
       height: "2rem",
       fontSize: "1rem",
     },
-
+    messageInput: { fontSize: "1rem" },
     formGroup: {
       display: "flex",
       flexDirection: "column",
@@ -42,7 +41,11 @@ const useStyles = makeStyles((theme) => {
       fontSize: "1rem",
     },
     formLabel: { fontSize: "1rem", color: primary.main },
-    errorMessage: { color: "#ed2e38" },
+    errorMessage: {
+      color: "#ed2e38",
+      padding: "0.3rem 1rem",
+      border: `3px double ${primary.main}`,
+    },
     bottomLinks: {
       color: primary.main,
       fontSize: "1rem",

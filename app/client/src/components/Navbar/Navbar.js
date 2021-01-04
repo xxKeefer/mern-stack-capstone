@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => {
 
   return {
     root: {
-      borderBottom: `3px solid ${secondary.main}`,
-      boxShadow: `0px 3px 2px -2px ${secondary.main}`,
+      borderBottom: `1px solid ${secondary.main}`,
+      boxShadow: `0px 2px 1px -1px ${secondary.main}`,
       margin: "0px auto",
       width: "90vw",
-      [breakpoints.up("md")]: {
+      [breakpoints.up("lg")]: {
         width: "80vw",
       },
     },

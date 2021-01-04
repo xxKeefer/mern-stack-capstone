@@ -10,18 +10,26 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       [breakpoints.up("md")]: {
-        width: "170px",
+        width: "15vw",
       },
-      minHeight: "220px",
+      maxWidth: "200px",
       borderRadius: 0,
-      margin: "5vh auto",
     },
     artistName: { margin: "0px", fontSize: "14px" },
     recordPrice: { fontSize: "14px" },
     recordTitle: { fontSize: "12px" },
     labelAndYear: { fontSize: "12px", color: "#808080" },
     cardGenres: { textTransform: "uppercase", fontSize: "10px" },
-    coverImage: { height: "170px", width: "170px" },
+    coverImage: {
+      height: "42.5vw",
+      width: "42.5vw",
+      maxWidth: "200px",
+      maxHeight: "200px",
+      [breakpoints.up("sm")]: {
+        height: "15vw",
+        width: "15vw",
+      },
+    },
     flexedRow: {
       display: "flex",
       justifyContent: "space-between",

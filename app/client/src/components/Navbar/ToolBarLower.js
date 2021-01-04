@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => {
     },
     navLinks: {
       color: secondary.main,
-      fontSize: "1.5rem",
+      fontSize: "1.25rem",
       letterSpacing: 1,
       marginRight: "3vw",
       textDecoration: "none",
@@ -41,7 +41,9 @@ export default function ToolBarLower() {
       <div>
         <Link className={classes.navLinks}>new vinyl</Link>
         <Link className={classes.navLinks}>genres</Link>
-        <Link className={classes.navLinks}>news</Link>
+        <Link href="/news" className={classes.navLinks}>
+          news
+        </Link>
         <Link className={classes.navLinks}>staff picks</Link>
         <Link href="/contact" className={classes.navLinks}>
           contact

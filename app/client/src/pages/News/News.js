@@ -1,0 +1,30 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core";
+import NewsHero from "./NewsHero";
+
+const useStyles = makeStyles((theme) => {
+  const {
+    palette: { primary, secondary },
+  } = theme;
+
+  return {
+    newsContainer: {
+      width: "100%",
+      paddingBottom: "5vh",
+    },
+    pageTitle: {
+      color: secondary.main,
+      margin: "1rem",
+    },
+  };
+});
+
+export default function News() {
+  const classes = useStyles();
+  return (
+    <div className={classes.newsContainer}>
+      <h1 className={classes.pageTitle}>news</h1>
+      <NewsHero></NewsHero>
+    </div>
+  );
+}

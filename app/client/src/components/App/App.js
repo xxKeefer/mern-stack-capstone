@@ -10,6 +10,7 @@ import SignUp from "../../pages/SignUp/SignUp";
 import Cart from "../../pages/Cart/Cart";
 import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
+import News from "../../pages/News/News";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
               <Route path="/signup" component={SignUp} />
               <Route path="/cart" component={Cart} />
               <Route path="/contact" component={Contact} />
+              <Route path="/news" component={News} />
               <Route exact path="/" component={Home} />
             </Switch>
           </Router>

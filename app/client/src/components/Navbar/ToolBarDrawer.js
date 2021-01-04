@@ -6,6 +6,7 @@ import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CloseIcon from "@material-ui/icons/Close";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => {
 export default function ToolBarDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const matchMobileOnly = useMediaQuery(theme.breakpoints.only("xs"));
+  const matchTabletOnly = useMediaQuery(theme.breakpoints.only("sm"));
 
   const closeClick = (state) => {
     props.handleClick(!state);
@@ -50,9 +51,13 @@ export default function ToolBarDrawer(props) {
       <IconButton edge="start" aria-label="menuClose">
         <CloseIcon className={classes.closeIcon} onClick={closeClick} />
       </IconButton>
-      <h1 className={classes.catalogHeading}>
-        {matchMobileOnly ? "catalog" : "catalogmusic"}
-      </h1>
+      <h1 className={classes.catalogHeading}>catalog</h1>
+
+      {matchTabletOnly && (
+        <IconButton aria-label="account" className={classes.accountButton}>
+          <AccountCircleIcon className={classes.navIcons} />
+        </IconButton>
+      )}
 
       <IconButton edge="end" aria-label="cart">
         {/*! Change to BoxEmpty instead of Dark/Light*/}

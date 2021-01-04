@@ -75,7 +75,10 @@ export default function ToolBarUpper() {
           {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
           {matchTabletUp && (
             <IconButton aria-label="account" className={classes.accountButton}>
-              <AccountCircleIcon className={classes.navIcons} />
+              <AccountCircleIcon
+                color="secondary"
+                className={classes.navIcons}
+              />
             </IconButton>
           )}
         </Link>
