@@ -10,7 +10,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { primary },
+    palette: { secondary, primary },
     typography,
   } = theme;
 
@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => {
       fontSize: "2.5rem",
       marginBottom: "2rem",
     },
+    navIcons: {
+      fontSize: "2.5rem",
+      color: primary.main,
+    },
   };
 });
 
@@ -52,21 +56,21 @@ export default function ToolBarDrawer(props) {
         <CloseIcon className={classes.closeIcon} onClick={closeClick} />
       </IconButton>
       <h1 className={classes.catalogHeading}>catalog</h1>
+      <div>
+        {matchTabletOnly && (
+          <IconButton aria-label="account" className={classes.accountButton}>
+            <AccountCircleIcon className={classes.navIcons} />
+          </IconButton>
+        )}
 
-      {matchTabletOnly && (
-        <IconButton aria-label="account" className={classes.accountButton}>
-          <AccountCircleIcon className={classes.navIcons} />
+        <IconButton edge="end" aria-label="cart">
+          {/*! Change to BoxEmpty instead of Dark/Light*/}
+          <BoxEmptyDark
+            className={classes.navIcons}
+            viewBox="0 0 60 60"
+          />
         </IconButton>
-      )}
-
-      <IconButton edge="end" aria-label="cart">
-        {/*! Change to BoxEmpty instead of Dark/Light*/}
-        <BoxEmptyDark
-          color="primary"
-          viewBox="0 0 60 60"
-          style={{ fontSize: "2.5rem" }}
-        />
-      </IconButton>
+      </div>
     </Toolbar>
   );
 }
