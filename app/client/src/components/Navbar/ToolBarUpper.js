@@ -85,11 +85,7 @@ export default function ToolBarUpper() {
         <Link href="/cart">
           {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
           <IconButton edge="end" aria-label="cart">
-            <BoxEmptyDark
-              color="secondary"
-              viewBox="0 0 60 60"
-              style={{ fontSize: "2.5rem" }}
-            />
+            <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
           </IconButton>
         </Link>
         <LoginModal

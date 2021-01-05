@@ -3,16 +3,19 @@ import { Link, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
+    breakpoints,
     palette: { primary, secondary },
   } = theme;
   return {
     root: {
       display: "flex",
       margin: "auto",
-      width: "80vw",
+      width: "90vw",
       borderTop: `2px solid ${secondary.light}`,
-      //   backgroundColor: secondary.light,
       paddingBottom: "5vh",
+      [breakpoints.up("lg")]: {
+        width: "80vw",
+      },
     },
     footerContainer: {
       display: "flex",

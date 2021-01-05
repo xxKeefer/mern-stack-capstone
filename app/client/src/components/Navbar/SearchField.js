@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => {
       height: "1.5rem",
       width: "25vw",
       [breakpoints.down("sm")]: {
-        width: "80vw",
+        width: "70vw",
         margin: "auto",
         color: primary.main,
-        // backgroundColor: primary.main,
       },
     },
     paper: {
@@ -71,12 +70,6 @@ export default function SearchField() {
   const handleOpen = () => {
     inputValue.length > 0 && setOpen(true);
   };
-
-  // const customPopper = function (props) {
-  //   return (
-  //     <Popper {...props} className={classes.popper} placement="bottom-start" />
-  //   );
-  // };
 
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);

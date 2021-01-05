@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
     recordsGrid: {
-      padding: "3rem 0rem",
+      padding: "2rem 0rem",
     },
   };
 });
@@ -27,50 +27,44 @@ export default function Home() {
 
       <Grid
         className={classes.recordsGrid}
+        justify="space-evenly"
         container
-        justify="center"
         spacing={2}
       >
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
-        <Grid item sm={4} md="auto">
-          <RecordCard />
-        </Grid>
-        <Grid item sm={4} md="auto">
-          <RecordCard />
-        </Grid>
-        <Grid item sm={4} md="auto">
+        <Grid item md="auto">
           <RecordCard />
         </Grid>
       </Grid>

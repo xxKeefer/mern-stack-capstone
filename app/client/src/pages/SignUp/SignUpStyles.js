@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => {
     signUpContainer: {
       backgroundColor: secondary.main,
       width: "100%",
-      position: "absolute",
     },
     formTitle: {
       margin: "2rem",
