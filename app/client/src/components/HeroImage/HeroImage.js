@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) => {
     imageContainer: {
       margin: "auto",
       width: "100%",
-      height: "35vw",
+      height: "45vw",
       [breakpoints.up("md")]: {
-        width: "80vw",
-        height: "20vw",
+        width: "90vw",
+        height: "30vw",
       },
     },
   };

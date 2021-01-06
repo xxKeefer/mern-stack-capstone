@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { primary },
+    palette: { secondary, primary },
     breakpoints,
   } = theme;
 
@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       width: "42.5vw",
-
+      boxShadow: "none",
+      border: `1px solid ${secondary.main}`,
       [breakpoints.up("md")]: {
         width: "15vw",
       },
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => {
       borderRadius: 0,
     },
     artistName: { margin: "0px", fontSize: "14px" },
-    recordPrice: { fontSize: "14px" },
+    recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
     recordTitle: { fontSize: "12px" },
     labelAndYear: { fontSize: "12px", color: "#808080" },
     cardGenres: { textTransform: "uppercase", fontSize: "10px" },

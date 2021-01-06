@@ -15,6 +15,8 @@ export default function RecordCard() {
     releaseYear: "1988",
     genres: ["genre", "genre"],
     coverImage: placeholderImage,
+    description:
+      "This is a record that has been created for whatever reason etc. If this were a long description it would be about this long.",
   };
 
   const {
@@ -25,17 +27,20 @@ export default function RecordCard() {
     releaseYear,
     genres,
     coverImage,
+    description,
   } = recordInfo;
 
   const [blur, setBlur] = useState("blur(0px)");
   const [display, setDisplay] = useState("none");
 
   const handleHover = (blurState, displayState) => {
-    setBlur(blurState);
-    
-    setTimeout(() => {
-      setDisplay(displayState);
-    }, 300);
+    if (description.length > 0) {
+      setBlur(blurState);
+
+      setTimeout(() => {
+        setDisplay(displayState);
+      }, 300);
+    }
   };
 
   return (
@@ -57,12 +62,12 @@ export default function RecordCard() {
 
         {blur && (
           <p
-            className = {classes.recordDescription}
+            className={classes.recordDescription}
             style={{
               display: display,
             }}
           >
-            This is a record that has been created for whatever reason etc. If this were a long description it would be about this long.
+            {description}
           </p>
         )}
       </Box>

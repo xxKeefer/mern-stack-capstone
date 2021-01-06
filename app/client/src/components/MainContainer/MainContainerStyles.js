@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => {
       width: "90vw",
       position: "relative",
       display: "flex",
-      [breakpoints.up("md")]: {
+      [breakpoints.up("lg")]: {
         width: "80vw",
       },
       height: "100%",
