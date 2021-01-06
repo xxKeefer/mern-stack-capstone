@@ -1,35 +1,32 @@
 require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 const axios = require("axios").default;
+const { SQUARE_API_CONFIG } = require("../squareConfig");
 
-//HELPERS
-const SQUARE_API_CONFIG = {
-  baseURL: "https://connect.squareupsandbox.com/v2",
-  headers: {
-    "Square-Version": "2020-05-28",
-    Authorization: `Bearer ${process.env.SQUARE_ACCESS_TOKEN}`,
-    "Content-Type": "application/json",
-  },
-};
-
-const abbreviate = (release_title, artists) => {
+//HELPERS -- CATALOG
+const abbreviate = (release_title, artist, year) => {
   const abr1 = release_title.slice(0, 3).toUpperCase();
-  const abr2 = artists[0].slice(0, 3).toUpperCase();
-  return abr1 + abr2;
+  const abr2 = artist.slice(0, 3).toUpperCase();
+  return abr1 + abr2 + year;
 };
 
-const describe = (release_title, artists, format, label) => {
-  const artist_string = artists.join(", ");
-  const desc_string = `Title: ${release_title}, Artists: ${artist_string}, Format:${format}, Label: ${label}`;
-  return `${desc_string}.`;
+const describe = (release_title, artist, genres, styles) => {
+  const arrayStringifier = (arr) => {
+    if (arr.length < 2) return arr[0];
+    return arr.join(", ");
+  };
+  const aS = arrayStringifier;
+  return `${release_title} - ${artist} | Genres: ${aS(genres)} | Styles: ${aS(
+    styles
+  )}`;
 };
 
-const buildVariation = (type, release_title, artists, price) => {
+const buildVariation = (type, idRef, price) => {
   return {
     id: `#${type}::${uuidv4()}`,
     type: "ITEM_VARIATION",
     item_variation_data: {
-      item_id: `#${release_title}_${artists[0]}`,
+      item_id: idRef,
       name: type.toUpperCase(),
       price_money: {
         amount: price,
@@ -42,20 +39,15 @@ const buildVariation = (type, release_title, artists, price) => {
 };
 
 //EXPORTS -- CATALOG
-const addItem = async (
-  release_title,
-  artists,
-  format,
-  label,
-  price,
-  prelovedPrice
-) => {
+const addItem = async (release_title, artist, genres, styles, price, year) => {
+  const catalogId = `#${release_title}_${artist}::${uuidv4()}`;
+
   const item = await axios.post(
     "/catalog/object",
     {
       idempotency_key: uuidv4(),
       object: {
-        id: `#${release_title}_${artists[0]}`,
+        id: catalogId,
         type: "ITEM",
         item_data: {
           available_electronically: true,
@@ -63,18 +55,16 @@ const addItem = async (
           available_online: true,
           product_type: "REGULAR",
           skip_modifier_screen: true,
-          abbreviation: abbreviate(release_title, artists),
-          description: describe(release_title, artists, format, label),
-          name: `${release_title} ${artists[0]}`,
-          variations: [
-            buildVariation("sealed", release_title, artists, price),
-            buildVariation("preloved", release_title, artists, prelovedPrice),
-          ],
+          abbreviation: abbreviate(release_title, artist, year),
+          description: describe(release_title, artist, genres, styles),
+          name: `${release_title} - ${artist}`,
+          variations: [buildVariation("stock", catalogId, price)],
         },
       },
     },
     SQUARE_API_CONFIG
   );
+
   return item.data;
 };
 
@@ -87,28 +77,29 @@ const addItems = async (itemInfoArray) => {
   itemInfoArray.forEach((item) => {
     const {
       release_title,
-      artists,
-      format,
-      label,
+      artists_sort: artist,
+      genres,
+      styles,
       price,
-      prelovedPrice,
+      year,
     } = item;
+
+    //in batch upserts the id needs to be unique and also match in the variation reference
+    let catalogId = `#${release_title}_${artist}::${uuidv4()}`;
+
     batch.push({
-      id: `#${release_title}_${artists[0]}`,
+      id: catalogId,
       type: "ITEM",
       item_data: {
-        abbreviation: abbreviate(release_title, artists),
-        description: describe(release_title, artists, format, label),
-        name: `${release_title} ${artists[0]}`,
-        variations: [
-          buildVariation("sealed", release_title, artists, price),
-          buildVariation("preloved", release_title, artists, prelovedPrice),
-        ],
         available_electronically: true,
         available_for_pickup: true,
         available_online: true,
         product_type: "REGULAR",
         skip_modifier_screen: true,
+        abbreviation: abbreviate(release_title, artist, year),
+        description: describe(release_title, artist, genres, styles),
+        name: `${release_title} - ${artist}`,
+        variations: [buildVariation("stock", catalogId, price)],
       },
     });
   });
@@ -121,6 +112,7 @@ const addItems = async (itemInfoArray) => {
     },
     SQUARE_API_CONFIG
   );
+  // console.log(batchUpsert.data);
 
   return batchUpsert.data;
 };
@@ -150,9 +142,12 @@ const getCatalog = async (type = "item") => {
     SQUARE_API_CONFIG
   );
 
-  const ids = list.data.objects.map((item) => item.id);
-
-  return { ids: ids, detailed: list.data };
+  if (list.data.objects) {
+    const ids = list.data.objects.map((item) => item.id);
+    return { ids: ids, detailed: list.data };
+  } else {
+    return { ids: [], detailed: {} };
+  }
 };
 
 const getItem = async (squareId) => {
@@ -175,7 +170,52 @@ const getItems = async (squareIdsArray) => {
   return items.data;
 };
 
+//HELPERS -- INVENTORY
+
+// right now there is only one location
+const LOC_ID = "LWB7HW6Z45KS9";
+
 //EXPORTS -- INVENTORY
+
+const getStockCount = async (SqVariationId, locId = LOC_ID) => {
+  const count = await axios.get(
+    `/inventory/${SqVariationId}?location_ids=${locId}`,
+    SQUARE_API_CONFIG
+  );
+
+  return count.data;
+};
+
+const setStockCount = async (counts, locId = LOC_ID) => {
+  const changes = [];
+
+  counts.forEach((count) => {
+    changes.push({
+      type: "PHYSICAL_COUNT",
+      physical_count: {
+        catalog_object_id: count.variation_id,
+        state: "IN_STOCK",
+        location_id: locId,
+        quantity: count.qty.toString(),
+        occurred_at: new Date(Date.now()).toISOString(),
+      },
+    });
+  });
+
+  const count = await axios.post(
+    "/inventory/batch-change",
+    {
+      idempotency_key: uuidv4(),
+      changes: changes,
+      ignore_unchanged_counts: true,
+    },
+    SQUARE_API_CONFIG
+  );
+
+  console.log(count.data);
+
+  return count.data;
+};
 
 module.exports = {
   addItem,
@@ -185,4 +225,6 @@ module.exports = {
   getCatalog,
   getItem,
   getItems,
+  getStockCount,
+  setStockCount,
 };

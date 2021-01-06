@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true, bcrypt: true },
   roles: { type: Array, required: true, default: ["user"] },
+  square_id: { type: String, required: false },
 });
 
 userSchema.plugin(require("mongoose-bcrypt"));
