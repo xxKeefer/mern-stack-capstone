@@ -10,7 +10,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { secondary, primary },
+    palette: { primary },
     typography,
   } = theme;
 
@@ -65,10 +65,7 @@ export default function ToolBarDrawer(props) {
 
         <IconButton edge="end" aria-label="cart">
           {/*! Change to BoxEmpty instead of Dark/Light*/}
-          <BoxEmptyDark
-            className={classes.navIcons}
-            viewBox="0 0 60 60"
-          />
+          <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
         </IconButton>
       </div>
     </Toolbar>

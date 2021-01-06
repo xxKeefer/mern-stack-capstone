@@ -48,6 +48,17 @@ const useStyles = makeStyles((theme) => {
       textAlign: "justify",
       cursor: "pointer",
     },
+    iconContainer: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    cartIcon: {
+      fontSize: "1.5rem",
+    },
+    addIcon: {
+      fontSize: "0.5rem",
+      color: secondary.main,
+    },
   };
 });
 

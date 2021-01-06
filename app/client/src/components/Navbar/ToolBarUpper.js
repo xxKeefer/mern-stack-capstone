@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => {
       maxHeight: "5vh",
       justifyContent: "space-between",
       alignItems: "center",
-      paddingLeft: "0.5rem",
-      paddingRight: "0.5rem",
+      padding: "0rem 0.5rem",
     },
     navIcons: {
       fontSize: "2.5rem",
@@ -30,12 +29,12 @@ const useStyles = makeStyles((theme) => {
     },
     catalogHeading: {
       fontFamily: typography.fontFamilyCoolvetica,
-      fontSize: "2.5rem",
-      marginBottom: "2rem",
+      fontSize: "2.2rem",
       color: secondary.main,
       textDecoration: "none",
       display: "flex",
       alignItems: "center",
+
       "&:hover": {
         textDecoration: "none",
         borderBottom: "2px solid #Edff00",
