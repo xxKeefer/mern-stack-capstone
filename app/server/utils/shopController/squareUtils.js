@@ -49,6 +49,7 @@ const buildVariation = (type, idRef, price) => {
 //EXPORTS -- CATALOG
 const addItem = async (release_title, artist, genres, styles, price, year) => {
   const catalogId = `#${release_title}_${artist}::${uuidv4()}`;
+
   const item = await axios.post(
     "/catalog/object",
     {
@@ -65,14 +66,13 @@ const addItem = async (release_title, artist, genres, styles, price, year) => {
           abbreviation: abbreviate(release_title, artist, year),
           description: describe(release_title, artist, genres, styles),
           name: `${release_title} - ${artist}`,
-          variations: [
-            buildVariation("stock", catalogId, release_title, artist, price),
-          ],
+          variations: [buildVariation("stock", catalogId, price)],
         },
       },
     },
     SQUARE_API_CONFIG
   );
+
   return item.data;
 };
 
@@ -107,9 +107,7 @@ const addItems = async (itemInfoArray) => {
         abbreviation: abbreviate(release_title, artist, year),
         description: describe(release_title, artist, genres, styles),
         name: `${release_title} - ${artist}`,
-        variations: [
-          buildVariation("stock", catalogId, release_title, artist, price),
-        ],
+        variations: [buildVariation("stock", catalogId, price)],
       },
     });
   });

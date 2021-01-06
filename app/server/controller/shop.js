@@ -17,7 +17,7 @@ const addItem = async (req, res) => {
       year,
       artists,
       artists_sort,
-      title: release_title,
+      release_title,
       released: release_date,
       genres,
       styles,
