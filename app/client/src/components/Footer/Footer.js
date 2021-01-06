@@ -4,7 +4,7 @@ import { Link, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   const {
     breakpoints,
-    palette: { primary, secondary },
+    palette: { secondary },
   } = theme;
   return {
     root: {

@@ -1,15 +1,13 @@
 import React from "react";
 import RecordCard from "../../components/RecordCard/RecordCard";
-import { Box, Grid, Paper } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import HeroImage from "../../components/HeroImage/HeroImage";
-import catalogLogo from "../../images/catalog-long-logo.jpg";
 import shopImage from "../../images/shop-image.jpg";
 import { makeStyles } from "@material-ui/core";
-import { lightGreen } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { light, primary, secondary },
+    palette: { primary, secondary },
   } = theme;
   return {
     recordsGrid: {

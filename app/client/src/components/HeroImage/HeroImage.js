@@ -1,11 +1,8 @@
 import React from "react";
-import { Container, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
-  const {
-    breakpoints,
-    palette: { primary, secondary },
-  } = theme;
+  const { breakpoints } = theme;
   return {
     imageContainer: {
       margin: "auto",

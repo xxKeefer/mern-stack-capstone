@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   const {
     palette: { primary, secondary },
-    breakpoints,
   } = theme;
   return {
     signUpContainer: {

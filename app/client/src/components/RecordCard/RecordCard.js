@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
-import { Box, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Box, CardContent, Typography } from "@material-ui/core";
 import placeholderImage from "../../images/placeholderImage.png";
 import useStyles from "./RecordCardStyles";
 
