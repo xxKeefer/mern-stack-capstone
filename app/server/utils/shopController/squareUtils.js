@@ -1,17 +1,9 @@
 require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 const axios = require("axios").default;
+const { SQUARE_API_CONFIG } = require("../squareConfig");
 
 //HELPERS -- CATALOG
-const SQUARE_API_CONFIG = {
-  baseURL: "https://connect.squareupsandbox.com/v2",
-  headers: {
-    "Square-Version": "2020-05-28",
-    Authorization: `Bearer ${process.env.SQUARE_ACCESS_TOKEN}`,
-    "Content-Type": "application/json",
-  },
-};
-
 const abbreviate = (release_title, artist, year) => {
   const abr1 = release_title.slice(0, 3).toUpperCase();
   const abr2 = artist.slice(0, 3).toUpperCase();
