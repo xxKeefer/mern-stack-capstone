@@ -194,7 +194,6 @@ const getStockCount = async (SqVariationId, locId = LOC_ID) => {
   return count.data;
 };
 
-//TODO: fix this fuhnction
 const setStockCount = async (counts, locId = LOC_ID) => {
   const changes = [];
 
@@ -205,13 +204,11 @@ const setStockCount = async (counts, locId = LOC_ID) => {
         catalog_object_id: count.variation_id,
         state: "IN_STOCK",
         location_id: locId,
-        quantity: count.qty,
+        quantity: count.qty.toString(),
         occurred_at: new Date(Date.now()).toISOString(),
       },
     });
   });
-
-  console.log({ changes });
 
   const count = await axios.post(
     "/inventory/batch-change",

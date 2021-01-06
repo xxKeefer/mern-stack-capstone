@@ -179,11 +179,14 @@ const getStockCount = async (req, res) => {
 const setStockCount = async (req, res) => {
   const { counts } = req.body;
   const ids = [...counts].map((item) => item.square_id);
+
   try {
     const items = await Vinyl.find({ square_id: { $in: ids } });
     counts.map((item, i) => {
       item.variation_id = items[i].variations.stock.variation_id;
     });
+    console.log({ counts });
+
     const stock = await square.setStockCount(counts);
     res.status(200).json({ stock });
   } catch (e) {
