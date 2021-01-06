@@ -187,7 +187,7 @@ const LOC_ID = "LWB7HW6Z45KS9";
 
 const getStockCount = async (SqVariationId, locId = LOC_ID) => {
   const count = await axios.get(
-    `/inventory/${SqVariationId}0?location_ids=${locId}`,
+    `/inventory/${SqVariationId}?location_ids=${locId}`,
     SQUARE_API_CONFIG
   );
 
