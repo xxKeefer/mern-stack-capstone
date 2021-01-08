@@ -2,12 +2,16 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
-  const { breakpoints } = theme;
+  const {
+    palette: { light },
+    breakpoints,
+  } = theme;
   return {
     imageContainer: {
       margin: "auto",
       width: "100%",
       height: "45vw",
+      backgroundColor: light.main,
       [breakpoints.up("md")]: {
         width: "90vw",
         height: "30vw",

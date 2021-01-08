@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme) => {
       width: "90vw",
       position: "relative",
       display: "flex",
-      [breakpoints.up("lg")]: {
+      [breakpoints.only("lg")]: {
         width: "80vw",
+      },
+      [breakpoints.only("xl")]: {
+        width: "70vw",
       },
       height: "100%",
       margin: "5vh auto",

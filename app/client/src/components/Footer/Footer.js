@@ -13,8 +13,11 @@ const useStyles = makeStyles((theme) => {
       width: "90vw",
       borderTop: `2px solid ${secondary.light}`,
       paddingBottom: "5vh",
-      [breakpoints.up("lg")]: {
+      [breakpoints.only("lg")]: {
         width: "80vw",
+      }, 
+      [breakpoints.only("xl")]: {
+        width: "70vw",
       },
     },
     footerContainer: {

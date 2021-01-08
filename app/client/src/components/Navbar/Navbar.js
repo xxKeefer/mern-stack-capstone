@@ -14,11 +14,14 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       borderBottom: `1px solid ${secondary.main}`,
-      boxShadow: `0px 2px 1px -1px ${secondary.main}`,
+      boxShadow: `0px 2px 1px -2px ${secondary.main}`,
       margin: "0px auto",
       width: "90vw",
-      [breakpoints.up("lg")]: {
+      [breakpoints.only("lg")]: {
         width: "80vw",
+      },
+      [breakpoints.only("xl")]: {
+        width: "70vw",
       },
     },
     toolBarLower: {

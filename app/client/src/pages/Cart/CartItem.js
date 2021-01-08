@@ -10,6 +10,7 @@ import {
 import placeholderImage from "../../images/placeholderImage.png";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import CartContext from "../../context/CartContext";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -31,16 +32,20 @@ const useStyles = makeStyles((theme) => {
     },
     details: {
       display: "flex",
+      border: "2px solid blue",
+      width: "100%",
+      position: "relative",
     },
     content: {
       display: "flex",
-      justifyContent: "space-between",
       width: "100%",
       padding: "0.5rem",
+      position: "relative",
     },
     coverImage: {
       width: "10vw",
       height: "100%",
+      border: "2px solid red",
       [breakpoints.only("xs")]: {
         width: "20vw",
       },
@@ -51,8 +56,14 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "space-between",
       fontSize: "1.5rem",
     },
+    leftColumn: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+    },
     artistName: {
       fontSize: "1rem",
+      textAlign: "left",
     },
     recordTitle: {
       fontSize: "0.8rem",
@@ -86,13 +97,24 @@ const useStyles = makeStyles((theme) => {
       padding: 0,
       margin: 0,
     },
+    cardMediaWrapper: {
+      height: "100%",
+      width: "10vw",
+      [breakpoints.only("xs")]: {
+        width: "20vw",
+      },
+    },
   };
 });
 
-export default function CartItem() {
+export default function CartItem(props) {
   const classes = useStyles();
+  console.log(props);
+  const { cartItem, removeFromCart } = props;
 
   const [quantity, setQuantity] = useState(1);
+
+  const { artistName, recordTitle, recordPrice, coverImage } = cartItem;
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -104,61 +126,73 @@ export default function CartItem() {
   };
 
   return (
-    <Card className={classes.card}>
-      <div style={{ height: "100%", width: "20vw" }}>
-        <CardMedia
-          image={placeholderImage}
-          className={classes.coverImage}
-          title="placeholder"
-        ></CardMedia>
-      </div>
-      <div className={classes.details}>
-        <CardContent className={classes.content}>
-          <div className={classes.flexedColumn}>
-            <Typography className={classes.artistName}>
-              {/* Needs checks for length to adjust font size */}
-              Artist Name
-            </Typography>
-            <Typography className={classes.recordTitle}>
-              {/* Needs checks for length to adjust font size */}
-              Record Title That is also quite long
-            </Typography>
+    <CartContext.Consumer>
+      {(context) => (
+        <Card className={classes.card}>
+          <div className={classes.cardMediaWrapper}>
+            <CardMedia
+              image={coverImage}
+              className={classes.coverImage}
+              title="placeholder"
+            ></CardMedia>
           </div>
-          <div className={classes.flexedColumn}>
-            <div className={classes.quantityContainer} style={{ padding: 0 }}>
-              <IconButton
-                onClick={() => handleIncrement()}
-                style={{ height: "1rem" }}
-              >
-                <AddIcon className={classes.quantityIcons} />
-              </IconButton>
-              <h3 className={classes.quantityIcons}>{quantity}</h3>
-              {quantity > 1 ? (
-                <IconButton
-                  onClick={() => handleDecrement()}
-                  style={{ height: "1rem" }}
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <div className={classes.leftColumn}>
+                <Typography className={classes.artistName}>
+                  {/* Needs checks for length to adjust font size */}
+                  {artistName}
+                </Typography>
+                <Typography className={classes.recordTitle}>
+                  {/* Needs checks for length to adjust font size */}
+                  {recordTitle}
+                </Typography>
+              </div>
+              <div className={classes.flexedColumn}>
+                <div
+                  className={classes.quantityContainer}
+                  style={{ padding: 0 }}
                 >
-                  <RemoveIcon className={classes.quantityIcons} />
-                </IconButton>
-              ) : (
-                <IconButton
-                  onClick={() => handleDecrement()}
-                  style={{ height: "1rem" }}
-                  disabled={true}
+                  <IconButton
+                    onClick={() => handleIncrement()}
+                    style={{ height: "1rem" }}
+                  >
+                    <AddIcon className={classes.quantityIcons} />
+                  </IconButton>
+                  <h3 className={classes.quantityIcons}>{quantity}</h3>
+                  {quantity > 1 ? (
+                    <IconButton
+                      onClick={() => handleDecrement()}
+                      style={{ height: "1rem" }}
+                    >
+                      <RemoveIcon className={classes.quantityIcons} />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={() => handleDecrement()}
+                      style={{ height: "1rem" }}
+                      disabled={true}
+                    >
+                      <RemoveIcon className={classes.quantityIcons} />
+                    </IconButton>
+                  )}
+                </div>
+              </div>
+              <div className={classes.flexedColumn}>
+                <Typography className={classes.recordPrice}>
+                  ${recordPrice}
+                </Typography>
+                <Typography
+                  className={classes.removeItem}
+                  onClick={() => context.removeFromCart(cartItem)}
                 >
-                  <RemoveIcon className={classes.quantityIcons} />
-                </IconButton>
-              )}
-            </div>
+                  Remove Item
+                </Typography>
+              </div>
+            </CardContent>
           </div>
-          <div className={classes.flexedColumn}>
-            <Typography className={classes.recordPrice}>
-              ${99 * quantity}
-            </Typography>
-            <Typography className={classes.removeItem}>Remove Item</Typography>
-          </div>
-        </CardContent>
-      </div>
-    </Card>
+        </Card>
+      )}
+    </CartContext.Consumer>
   );
 }

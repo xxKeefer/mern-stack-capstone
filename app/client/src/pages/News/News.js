@@ -4,7 +4,7 @@ import NewsHero from "./NewsHero";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { secondary },
+    palette: { light, secondary },
   } = theme;
 
   return {

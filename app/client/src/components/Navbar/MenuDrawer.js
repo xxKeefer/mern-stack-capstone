@@ -102,6 +102,7 @@ export default function MenuDrawer() {
     return (
       <React.Fragment>
         <ListItem
+          key={item}
           button
           primary={`${item}`}
           onClick={() => setGenresOpen(!genresOpen)}
@@ -121,7 +122,11 @@ export default function MenuDrawer() {
           <List>
             {genres.map((genre) => {
               return (
-                <ListItem button classes={{ primary: classes.genreItems }}>
+                <ListItem
+                  button
+                  key={genre}
+                  classes={{ primary: classes.genreItems }}
+                >
                   <ListItemText
                     primary={`${genre}`}
                     classes={{ primary: classes.genresItemText }}

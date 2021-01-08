@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       backgroundColor: primary.main,
-      width: "42.5vw",
+      width: "90vw",
       boxShadow: "none",
       border: `1px solid ${secondary.main}`,
       [breakpoints.up("md")]: {
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => {
       },
       maxWidth: "200px",
       borderRadius: 0,
+      margin: "auto",
     },
     artistName: { margin: "0px", fontSize: "14px" },
     recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
@@ -24,8 +25,8 @@ const useStyles = makeStyles((theme) => {
     labelAndYear: { fontSize: "12px", color: "#808080" },
     cardGenres: { textTransform: "uppercase", fontSize: "10px" },
     coverImage: {
-      height: "42.5vw",
-      width: "42.5vw",
+      height: "90vw",
+      width: "90vw",
       maxWidth: "200px",
       maxHeight: "200px",
       [breakpoints.up("md")]: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => {
       padding: "0.5rem",
       textAlign: "justify",
       cursor: "pointer",
+      margin: 0,
     },
     iconContainer: {
       display: "flex",

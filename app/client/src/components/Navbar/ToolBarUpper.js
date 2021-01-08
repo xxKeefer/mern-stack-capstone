@@ -1,4 +1,5 @@
-import { Link, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
@@ -8,6 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuDrawer from "./MenuDrawer";
 import LoginModal from "../LoginModal/LoginModal";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -64,13 +66,27 @@ export default function ToolBarUpper() {
   return (
     <Toolbar className={classes.toolBarUpper}>
       {matchTabletDown && <MenuDrawer />}
-      <Link href="/">
+      <Link to="/">
         <h1 className={classes.catalogHeading}>
           {matchDesktopUp ? "catalogmusic" : "catalog"}
         </h1>
       </Link>
       <div>
-        <Link onClick={() => setModalState(!modalState)}>
+        <Link to="/dashboard">
+          {matchDesktopUp && <h2 className={classes.navLinks}>dashboard</h2>}
+          {matchTabletUp && (
+            <IconButton
+              aria-label="dashboard"
+              className={classes.accountButton}
+            >
+              <SupervisorAccountIcon
+                color="secondary"
+                className={classes.navIcons}
+              />
+            </IconButton>
+          )}
+        </Link>
+        <Link to="/login" onClick={() => setModalState(!modalState)}>
           {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
           {matchTabletUp && (
             <IconButton aria-label="account" className={classes.accountButton}>
@@ -81,7 +97,7 @@ export default function ToolBarUpper() {
             </IconButton>
           )}
         </Link>
-        <Link href="/cart">
+        <Link to="/cart">
           {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
           <IconButton edge="end" aria-label="cart">
             <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
