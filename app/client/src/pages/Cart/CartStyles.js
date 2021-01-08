@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => {
     },
     cartInfoBox: {
       display: "flex",
-      [breakpoints.only("xs")]: {
+      [breakpoints.down("sm")]: {
         flexDirection: "column",
         padding: 0,
       },

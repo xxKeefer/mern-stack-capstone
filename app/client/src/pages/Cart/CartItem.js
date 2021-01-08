@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import {
+  Button,
   CardContent,
   CardMedia,
   IconButton,
@@ -25,14 +26,13 @@ const useStyles = makeStyles((theme) => {
       borderRadius: 0,
       backgroundColor: primary.main,
       marginTop: "1rem",
-      [breakpoints.only("xs")]: {
+      [breakpoints.down("sm")]: {
         height: "20vw",
         width: "100%",
       },
     },
     details: {
       display: "flex",
-      border: "2px solid blue",
       width: "100%",
       position: "relative",
     },
@@ -41,12 +41,12 @@ const useStyles = makeStyles((theme) => {
       width: "100%",
       padding: "0.5rem",
       position: "relative",
+      justifyContent: "space-between",
     },
     coverImage: {
       width: "10vw",
       height: "100%",
-      border: "2px solid red",
-      [breakpoints.only("xs")]: {
+      [breakpoints.down("sm")]: {
         width: "20vw",
       },
     },
@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => {
     removeItem: {
       textAlign: "right",
       fontSize: "0.8rem",
+      cursor: "pointer",
     },
     quantityContainer: {
       display: "flex",
@@ -100,7 +101,7 @@ const useStyles = makeStyles((theme) => {
     cardMediaWrapper: {
       height: "100%",
       width: "10vw",
-      [breakpoints.only("xs")]: {
+      [breakpoints.down("sm")]: {
         width: "20vw",
       },
     },
@@ -110,7 +111,7 @@ const useStyles = makeStyles((theme) => {
 export default function CartItem(props) {
   const classes = useStyles();
   console.log(props);
-  const { cartItem, removeFromCart } = props;
+  const { cartItem } = props;
 
   const [quantity, setQuantity] = useState(1);
 
@@ -140,11 +141,9 @@ export default function CartItem(props) {
             <CardContent className={classes.content}>
               <div className={classes.leftColumn}>
                 <Typography className={classes.artistName}>
-                  {/* Needs checks for length to adjust font size */}
                   {artistName}
                 </Typography>
                 <Typography className={classes.recordTitle}>
-                  {/* Needs checks for length to adjust font size */}
                   {recordTitle}
                 </Typography>
               </div>
@@ -154,25 +153,21 @@ export default function CartItem(props) {
                   style={{ padding: 0 }}
                 >
                   <IconButton
-                    onClick={() => handleIncrement()}
+                    onClick={() => context.addToCart(cartItem)}
                     style={{ height: "1rem" }}
                   >
                     <AddIcon className={classes.quantityIcons} />
                   </IconButton>
-                  <h3 className={classes.quantityIcons}>{quantity}</h3>
-                  {quantity > 1 ? (
+                  <h3 className={classes.quantityIcons}>{cartItem.quantity}</h3>
+                  {cartItem.quantity > 1 ? (
                     <IconButton
-                      onClick={() => handleDecrement()}
+                      onClick={() => context.removeFromCart(cartItem)}
                       style={{ height: "1rem" }}
                     >
                       <RemoveIcon className={classes.quantityIcons} />
                     </IconButton>
                   ) : (
-                    <IconButton
-                      onClick={() => handleDecrement()}
-                      style={{ height: "1rem" }}
-                      disabled={true}
-                    >
+                    <IconButton style={{ height: "1rem" }} disabled={true}>
                       <RemoveIcon className={classes.quantityIcons} />
                     </IconButton>
                   )}
@@ -180,7 +175,7 @@ export default function CartItem(props) {
               </div>
               <div className={classes.flexedColumn}>
                 <Typography className={classes.recordPrice}>
-                  ${recordPrice}
+                  ${recordPrice * cartItem.quantity}
                 </Typography>
                 <Typography
                   className={classes.removeItem}
