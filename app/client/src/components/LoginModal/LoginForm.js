@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./LoginModalStyles";
@@ -15,7 +15,7 @@ export default function LoginModal(props) {
   const submitLoginInfo = async (userInfo) => {
     console.log(`this is the user info before post: ${userInfo}`);
     try {
-      const { data } = await publicFetch.post("api/auth/login", userInfo);
+      const { data } = await publicFetch.post("/api/auth/login", userInfo);
       console.log(data);
       authContext.setAuthState(data);
       setRedirectOnLogin(true);

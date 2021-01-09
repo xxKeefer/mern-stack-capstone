@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const publicFetch = axios.create({
-  baseURL: "https://dogolat.herokuapp.com",
+  baseURL: "localhost:8080",
 });
 
 export { publicFetch };

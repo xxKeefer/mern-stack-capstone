@@ -9,14 +9,14 @@ import { AuthContext } from "../../context/AuthContext";
 export default function SignUp() {
   const classes = useStyles();
   const { register, handleSubmit, getValues, errors } = useForm();
-  const [signupSuccess, setSignUpSuccess] = useState("");
+  // const [signupSuccess, setSignUpSuccess] = useState("");
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const authContext = useContext(AuthContext);
 
   const submitSignupInfo = async (userInfo) => {
     console.log(userInfo);
     try {
-      const { data } = await publicFetch.post("api/auth/signup", userInfo);
+      const { data } = await publicFetch.post("/api/auth/signup", userInfo);
       console.log(data);
       // send user object to auth
       authContext.setAuthState(data);
@@ -32,7 +32,7 @@ export default function SignUp() {
       <div className={classes.signUpContainer}>
         <div className={classes.formContainer}>
           <h1 className={classes.formTitle}>sign up</h1>
-          <p>{signupSuccess}</p>
+          {/* <p>{signupSuccess}</p> */}
           <form onSubmit={handleSubmit(submitSignupInfo)} id="signUpForm">
             <div className={classes.formGroup}>
               <label className={classes.formLabel} htmlFor="username">
