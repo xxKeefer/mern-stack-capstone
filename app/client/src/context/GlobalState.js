@@ -4,6 +4,7 @@ import { cartReducer, ADD_RECORD, REMOVE_RECORD } from "./reducers";
 import placeholderImage from "../images/placeholderImage.png";
 
 export default function GlobalState({ children }) {
+  './api/shop/list'
   const records = [
     {
       id: 1,
