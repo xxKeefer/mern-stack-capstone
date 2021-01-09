@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => {
   return {
     card: {
       display: "flex",
+      position: "relative",
       height: "10vw",
       width: "40vw",
       borderRadius: 0,
       backgroundColor: primary.main,
-      marginTop: "1rem",
       [breakpoints.down("sm")]: {
         height: "20vw",
         width: "100%",
@@ -110,21 +110,21 @@ const useStyles = makeStyles((theme) => {
 
 export default function CartItem(props) {
   const classes = useStyles();
-  console.log(props);
+
   const { cartItem } = props;
 
   const [quantity, setQuantity] = useState(1);
 
   const { artistName, recordTitle, recordPrice, coverImage } = cartItem;
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
-  const handleDecrement = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
+  // const handleIncrement = () => {
+  //   setQuantity(quantity + 1);
+  // };
+  // const handleDecrement = () => {
+  //   if (quantity > 0) {
+  //     setQuantity(quantity - 1);
+  //   }
+  // };
 
   return (
     <CartContext.Consumer>

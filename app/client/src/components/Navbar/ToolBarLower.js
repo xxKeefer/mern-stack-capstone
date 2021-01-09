@@ -1,4 +1,4 @@
-import { Link } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import SearchField from "./SearchField";
@@ -40,12 +40,14 @@ export default function ToolBarLower() {
     <Toolbar className={classes.toolBarLower}>
       <div>
         <Link className={classes.navLinks}>new vinyl</Link>
-        <Link className={classes.navLinks}>genres</Link>
-        <Link href="/news" className={classes.navLinks}>
+        <Link to="/genres" className={classes.navLinks}>
+          genres
+        </Link>
+        <Link to="/news" className={classes.navLinks}>
           news
         </Link>
         <Link className={classes.navLinks}>staff picks</Link>
-        <Link href="/contact" className={classes.navLinks}>
+        <Link to="/contact" className={classes.navLinks}>
           contact
         </Link>
       </div>

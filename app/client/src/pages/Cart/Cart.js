@@ -9,7 +9,6 @@ export default function SignUp() {
   const classes = useStyles();
 
   const context = useContext(CartContext);
-  console.log(context.cart);
 
   return (
     <div className={classes.cartContainer}>

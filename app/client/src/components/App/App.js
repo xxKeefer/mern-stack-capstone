@@ -13,6 +13,7 @@ import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import GlobalState from "../../context/GlobalState";
+import Genres from "../../pages/Genres/Genres";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="/cart" component={Cart} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/news" component={News} />
+                <Route path="/genres" component={Genres} />
                 <Route path="/dashboard" component={Dashboard} />
                 <Route exact path="/" component={Home} />
               </MainContainer>
