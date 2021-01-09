@@ -30,7 +30,10 @@ async function blogOwner(req, res, next) {
 
   if (!blog) res.status(404).json({ messsage: "blog does not exist" });
 
-  if (req.user.username === blog.author.toLowerCase()) {
+  if (
+    (req.user && req.user.username === blog.author.toLowerCase()) ||
+    req.user.roles.includes("super")
+  ) {
     return next();
   } else {
     res.status(403).json({ message: "You are not authorized to see that." });
