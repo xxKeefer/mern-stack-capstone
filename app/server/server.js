@@ -9,8 +9,8 @@ const passport = require("passport");
 // EXPRESS CONFIG
 const app = express();
 const port = process.env.PORT || 8080;
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.urlencoded({ limit: "50mb", extended: false }));
+app.use(express.json({ limit: "50mb" }));
 
 //DATABASE
 mongoose.connect(process.env.DB_URL, {
