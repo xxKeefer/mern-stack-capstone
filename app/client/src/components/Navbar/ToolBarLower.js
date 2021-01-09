@@ -1,4 +1,4 @@
-import { Link } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import SearchField from "./SearchField";
@@ -15,19 +15,20 @@ const useStyles = makeStyles((theme) => {
       [breakpoints.down("sm")]: {
         display: "none",
       },
-      height: "6.25vh",
       justifyContent: "space-between",
     },
     navLinks: {
       color: secondary.main,
-      cursor: "pointer",
-      fontSize: "1.5rem",
+      fontSize: "1.25rem",
       letterSpacing: 1,
       marginRight: "3vw",
       textDecoration: "none",
-    },
-    searchField: {
-      width: "25vw",
+      cursor: "pointer",
+      "&:hover": {
+        textDecoration: "none",
+        borderTop: "3px solid #EdFF00",
+        borderBottom: "3px solid #Edff00",
+      },
     },
   };
 });
@@ -39,10 +40,16 @@ export default function ToolBarLower() {
     <Toolbar className={classes.toolBarLower}>
       <div>
         <Link className={classes.navLinks}>new vinyl</Link>
-        <Link className={classes.navLinks}>genres</Link>
-        <Link className={classes.navLinks}>news</Link>
+        <Link to="/genres" className={classes.navLinks}>
+          genres
+        </Link>
+        <Link to="/news" className={classes.navLinks}>
+          news
+        </Link>
         <Link className={classes.navLinks}>staff picks</Link>
-        <Link className={classes.navLinks}>contact</Link>
+        <Link to="/contact" className={classes.navLinks}>
+          contact
+        </Link>
       </div>
       <SearchField />
     </Toolbar>

@@ -1,3 +1,5 @@
+// extend search bar down as much as possible
+
 import React, { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import {
@@ -26,16 +28,6 @@ const useStyles = makeStyles((theme) => {
       fontSize: "2.5rem",
       color: secondary.main,
     },
-    topBar: {
-      paddingLeft: "0.5rem",
-      maxHeight: "7vh",
-      width: "90vw",
-      margin: "auto",
-      marginBottom: "1rem",
-      borderBottom: `3px solid ${primary.main}`,
-      boxShadow: `0px 3px 2px -2px ${primary.main}`,
-      display: "flex",
-    },
     searchListItem: {
       padding: 0,
       width: "100vw",
@@ -63,10 +55,21 @@ const useStyles = makeStyles((theme) => {
       margin: "1rem auto 0px auto",
       background: primary.main,
     },
+    toolBarContainer: {
+      borderBottom: `3px solid ${primary.main}`,
+      boxShadow: `0px 3px 2px -2px ${primary.main}`,
+      width: "90vw",
+      margin: "auto",
+      padding: "0px",
+    },
+    genresChevron: {
+      fontSize: "1.5rem",
+      marginRight: "2rem",
+    },
   };
 });
 
-export default function MenuDrawer(props) {
+export default function MenuDrawer() {
   const [isOpen, setOpen] = useState(false);
   const classes = useStyles();
 
@@ -99,6 +102,7 @@ export default function MenuDrawer(props) {
     return (
       <React.Fragment>
         <ListItem
+          key={item}
           button
           primary={`${item}`}
           onClick={() => setGenresOpen(!genresOpen)}
@@ -108,13 +112,21 @@ export default function MenuDrawer(props) {
             primary="genres"
             classes={{ primary: classes.listItemText }}
           />
-          {genresOpen ? <ExpandLess /> : <ExpandMore />}
+          {genresOpen ? (
+            <ExpandLess className={classes.genresChevron} />
+          ) : (
+            <ExpandMore className={classes.genresChevron} />
+          )}
         </ListItem>
         <Collapse in={genresOpen} timeout="auto" unmountOnExit>
           <List>
             {genres.map((genre) => {
               return (
-                <ListItem button classes={{ primary: classes.genreItems }}>
+                <ListItem
+                  button
+                  key={genre}
+                  classes={{ primary: classes.genreItems }}
+                >
                   <ListItemText
                     primary={`${genre}`}
                     classes={{ primary: classes.genresItemText }}
@@ -129,7 +141,7 @@ export default function MenuDrawer(props) {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <IconButton
         aria-label="menu"
         edge="start"
@@ -149,7 +161,7 @@ export default function MenuDrawer(props) {
         classes={{ paper: classes.paper }}
       >
         <List style={{ padding: "0px" }}>
-          <ListItem style={{ padding: "0px" }}>
+          <ListItem className={classes.toolBarContainer}>
             <ToolBarDrawer
               state={isOpen}
               handleClick={(e) => {
@@ -170,6 +182,7 @@ export default function MenuDrawer(props) {
                   inset={true}
                   primary={`${item}`}
                   classes={{ primary: classes.listItemText }}
+                  key={item}
                 />
               </ListItem>
             );
@@ -180,6 +193,6 @@ export default function MenuDrawer(props) {
           </ListItem>
         </List>
       </Drawer>
-    </div>
+    </React.Fragment>
   );
 }

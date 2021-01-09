@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
-import { Popper, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -12,18 +12,17 @@ const useStyles = makeStyles((theme) => {
   } = theme;
   return {
     root: {
+      height: "1.5rem",
       width: "25vw",
-      [breakpoints.down("md")]: {
-        width: "80vw",
+      [breakpoints.down("sm")]: {
+        width: "70vw",
         margin: "auto",
         color: primary.main,
-        // backgroundColor: primary.main,
       },
     },
     paper: {
       backgroundColor: secondary.main,
       color: primary.main,
-      height: "100%",
     },
     groupLabel: {
       textTransform: "uppercase",
@@ -47,6 +46,7 @@ const useStyles = makeStyles((theme) => {
     searchTextField: {
       backgroundColor: primary.main,
       borderRadius: "none",
+      outline: `1px solid ${secondary.main}`,
     },
   };
 });
@@ -71,12 +71,6 @@ export default function SearchField() {
     inputValue.length > 0 && setOpen(true);
   };
 
-  // const customPopper = function (props) {
-  //   return (
-  //     <Popper {...props} className={classes.popper} placement="bottom-start" />
-  //   );
-  // };
-
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
     if (newInputValue.length > 0) {
@@ -94,6 +88,7 @@ export default function SearchField() {
         onClose={() => {
           setOpen(false);
         }}
+        freeSolo={true}
         noOptionsText={"No Results"}
         inputValue={inputValue}
         onInputChange={handleInputChange}
@@ -110,6 +105,9 @@ export default function SearchField() {
         options={options}
         groupBy={(option) => option.group}
         getOptionLabel={(option) => option.title}
+        ListboxProps={{
+          style: { height: "15rem", border: "solid 2px white", margin: "0px" },
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -126,7 +124,6 @@ export default function SearchField() {
             }}
             placeholder="search..."
             size="small"
-            variant="outlined"
             className={classes.searchTextField}
           ></TextField>
         )}

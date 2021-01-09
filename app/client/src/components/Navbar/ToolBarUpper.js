@@ -1,13 +1,18 @@
 import { makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { MuiLink } from "@material-ui/core/Link";
 import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuDrawer from "./MenuDrawer";
+import LoginModal from "../LoginModal/LoginModal";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import CartContext from "../../context/CartContext";
+import BoxFullDark from "../../icons/BoxFullDark";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -18,10 +23,10 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {},
     toolBarUpper: {
-      maxHeight: "6.25vh",
+      maxHeight: "5vh",
       justifyContent: "space-between",
-      paddingLeft: "0.5rem",
-      paddingRight: "0.5rem",
+      alignItems: "center",
+      padding: "0rem 0.5rem",
     },
     navIcons: {
       fontSize: "2.5rem",
@@ -29,8 +34,30 @@ const useStyles = makeStyles((theme) => {
     },
     catalogHeading: {
       fontFamily: typography.fontFamilyCoolvetica,
-      fontSize: "2.5rem",
-      marginBottom: "2rem",
+      fontSize: "2.2rem",
+      color: secondary.main,
+      textDecoration: "none",
+      display: "flex",
+      alignItems: "center",
+    },
+    navLinks: {
+      color: "#333",
+      display: "inline-block",
+      cursor: "pointer",
+    },
+    cartIconDiv: {
+      height: "1rem",
+      width: "1rem",
+      backgroundColor: "red",
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      borderRadius: "50%",
+      "& p": {
+        fontSize: "0.7rem",
+        color: "white",
+        margin: "auto",
+      },
     },
   };
 });
@@ -38,32 +65,73 @@ const useStyles = makeStyles((theme) => {
 export default function ToolBarUpper() {
   const classes = useStyles();
   const theme = useTheme();
+  const context = useContext(CartContext);
+  const { cart } = context;
   const matchTabletDown = useMediaQuery(theme.breakpoints.down("sm"));
   const matchTabletUp = useMediaQuery(theme.breakpoints.up("sm"));
   const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
 
+  const [modalState, setModalState] = useState(false);
+
+  const handleClick = (state) => {
+    setModalState(state);
+  };
+
   return (
     <Toolbar className={classes.toolBarUpper}>
       {matchTabletDown && <MenuDrawer />}
-      <h1 className={classes.catalogHeading}>
-        {matchDesktopUp ? "catalogmusic" : "catalog"}
-      </h1>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <h1 className={classes.catalogHeading}>
+          {matchDesktopUp ? "catalogmusic" : "catalog"}
+        </h1>
+      </Link>
       <div>
-        {matchDesktopUp && <h2 style={{ display: "inline-block" }}>log in</h2>}
-        {matchTabletUp && (
-          <IconButton aria-label="account" className={classes.accountButton}>
-            <AccountCircleIcon className={classes.navIcons} />
+        <Link to="/dashboard">
+          {matchDesktopUp && <h2 className={classes.navLinks}>dashboard</h2>}
+          {matchTabletUp && (
+            <IconButton
+              aria-label="dashboard"
+              className={classes.accountButton}
+            >
+              <SupervisorAccountIcon
+                color="secondary"
+                className={classes.navIcons}
+              />
+            </IconButton>
+          )}
+        </Link>
+        <Link onClick={() => setModalState(!modalState)}>
+          {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
+          {matchTabletUp && (
+            <IconButton aria-label="account" className={classes.accountButton}>
+              <AccountCircleIcon
+                color="secondary"
+                className={classes.navIcons}
+              />
+            </IconButton>
+          )}
+        </Link>
+        <Link to="/cart">
+          {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
+
+          <IconButton edge="end" aria-label="cart">
+            {cart.length > 0 ? (
+              <div style={{ position: "relative" }}>
+                <BoxFullDark className={classes.navIcons} viewBox="0 0 60 60" />
+                <div className={classes.cartIconDiv}>
+                  <p>{cart.reduce((a, b) => a + b.quantity, 0)}</p>
+                </div>
+              </div>
+            ) : (
+              <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
+            )}
           </IconButton>
-        )}
-        {matchDesktopUp && <h2 style={{ display: "inline-block" }}>cart</h2>}
-        <IconButton edge="end" aria-label="cart">
-          <BoxEmptyDark
-            color="secondary"
-            viewBox="0 0 60 60"
-            style={{ fontSize: "2.5rem" }}
-          />
-        </IconButton>
-      </div>{" "}
+        </Link>
+        <LoginModal
+          state={modalState}
+          handleClick={(e) => handleClick(e)}
+        ></LoginModal>
+      </div>
     </Toolbar>
   );
 }
