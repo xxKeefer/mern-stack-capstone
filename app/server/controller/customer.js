@@ -100,13 +100,14 @@ const retrieveCx = async (req, res) => {
   }
 };
 
-const addCardPayment = (req, res) => {
-  const {card_nonce} = req.body
-  const {square_id:customer_id} = req.user
+const addCardPayment = async (req, res) => {
+  const { card_nonce } = req.body;
+  const { square_id: customer_id } = req.user;
 
   try {
     const { data } = await axios.post(
-      `/customers/${customer_id}/cards`,{card_nonce},
+      `/customers/${customer_id}/cards`,
+      { card_nonce },
       SQUARE_API_CONFIG
     );
     res.status(200).json(data);
@@ -115,9 +116,9 @@ const addCardPayment = (req, res) => {
   }
 };
 
-const removeCardPayment = (req, res) => {
-  const {card_id} = req.body
-  const {square_id:customer_id} = req.user
+const removeCardPayment = async (req, res) => {
+  const { card_id } = req.body;
+  const { square_id: customer_id } = req.user;
 
   try {
     const { data } = await axios.delete(
@@ -128,7 +129,7 @@ const removeCardPayment = (req, res) => {
   } catch (e) {
     res.status(400).json(e.message);
   }
-};;
+};
 
 module.exports = {
   createCx,
