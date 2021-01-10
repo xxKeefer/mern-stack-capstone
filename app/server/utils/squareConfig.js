@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 const SQUARE_API_CONFIG = {
   baseURL: "https://connect.squareupsandbox.com/v2",

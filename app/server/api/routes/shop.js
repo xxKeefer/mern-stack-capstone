@@ -1,5 +1,6 @@
 const express = require("express");
 let router = express.Router();
+//TODO: add authorisation on these routes
 const {
   addItem,
   addItems,

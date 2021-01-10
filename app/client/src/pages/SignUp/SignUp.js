@@ -3,6 +3,7 @@ import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./SignUpStyles";
 import { publicFetch } from "../../util/fetch";
+import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -16,7 +17,10 @@ export default function SignUp() {
   const submitSignupInfo = async (userInfo) => {
     console.log(userInfo);
     try {
-      const { data } = await publicFetch.post("/api/auth/signup", userInfo);
+      const { data } = await axios.post(
+        "http://localhost:8080/api/auth/signup",
+        userInfo
+      );
       console.log(data);
       // send user object to auth
       authContext.setAuthState(data);

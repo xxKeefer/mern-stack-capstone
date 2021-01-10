@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 const axios = require("axios").default;
 const { SQUARE_API_CONFIG } = require("../squareConfig");
