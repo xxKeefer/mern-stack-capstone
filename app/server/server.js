@@ -10,7 +10,13 @@ const passport = require("passport");
 // EXPRESS CONFIG
 const app = express();
 const port = process.env.PORT || 8080;
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ limit: "50mb", extended: false }));
 app.use(express.json({ limit: "50mb" }));
 

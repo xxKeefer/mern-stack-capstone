@@ -5,7 +5,6 @@ import LoginForm from "./LoginForm";
 import useStyles from "./LoginModalStyles";
 import { AuthContext } from "../../context/AuthContext";
 
-
 export default function LoginModal(props) {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
@@ -15,11 +14,7 @@ export default function LoginModal(props) {
 
   return (
     <div>
-      <Modal
-        className={classes.modal}
-        open={authContext.isAuthenticated() ? false : props.state}
-        onClose={closeClick}
-      >
+      <Modal className={classes.modal} open={props.state} onClose={closeClick}>
         <Card className={classes.card}>
           <IconButton className={classes.closeButton}>
             <CloseIcon onClick={closeClick} />

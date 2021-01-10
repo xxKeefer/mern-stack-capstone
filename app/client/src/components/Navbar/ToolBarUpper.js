@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Link as MuiLink } from "@material-ui/core/";
 import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -89,55 +89,85 @@ export default function ToolBarUpper() {
         </h1>
       </Link>
       <div>
-        <Link to="/dashboard">
-          {matchDesktopUp && <h2 className={classes.navLinks}>dashboard</h2>}
-          {matchTabletUp && (
-            <IconButton
-              aria-label="dashboard"
-              className={classes.accountButton}
-            >
-              <SupervisorAccountIcon
-                color="secondary"
-                className={classes.navIcons}
-              />
-            </IconButton>
-          )}
-        </Link>
-        <MuiLink onClick={() => setModalState(!modalState)}>
-          {matchDesktopUp && (
-            <h2 className={classes.navLinks}>
-              {authContext.isAuthenticated() ? "my account" : "log in"}
-            </h2>
-          )}
-          {matchTabletUp && (
-            <IconButton aria-label="account" className={classes.accountButton}>
-              <AccountCircleIcon
-                color="secondary"
-                className={classes.navIcons}
-              />
-            </IconButton>
-          )}
-        </MuiLink>
-        <Link to="/cart">
-          {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
-
-          <IconButton edge="end" aria-label="cart">
-            {cart.length > 0 ? (
-              <div style={{ position: "relative" }}>
-                <BoxFullDark className={classes.navIcons} viewBox="0 0 60 60" />
-                <div className={classes.cartIconDiv}>
-                  <p>{cart.reduce((a, b) => a + b.quantity, 0)}</p>
-                </div>
-              </div>
-            ) : (
-              <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
+        {authContext.isSuper() || authContext.isAdmin() ? (
+          <Link to="/dashboard">
+            {matchDesktopUp && <h2 className={classes.navLinks}>dashboard</h2>}
+            {matchTabletUp && (
+              <IconButton
+                aria-label="dashboard"
+                className={classes.accountButton}
+              >
+                <SupervisorAccountIcon
+                  color="secondary"
+                  className={classes.navIcons}
+                />
+              </IconButton>
             )}
-          </IconButton>
-        </Link>
-        <LoginModal
-          state={modalState}
-          handleClick={(e) => handleClick(e)}
-        ></LoginModal>
+          </Link>
+        ) : (
+          <React.Fragment>
+            {authContext.isAuthenticated() ? (
+              <Link to="/account">
+                {matchDesktopUp && (
+                  <h2 className={classes.navLinks}>account </h2>
+                )}
+                {matchTabletUp && (
+                  <IconButton
+                    aria-label="account"
+                    className={classes.accountButton}
+                  >
+                    <AccountCircleIcon
+                      color="secondary"
+                      className={classes.navIcons}
+                    />
+                  </IconButton>
+                )}
+              </Link>
+            ) : (
+              <MuiLink
+                onClick={() => {
+                  setModalState(!modalState);
+                }}
+              >
+                {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
+                {matchTabletUp && (
+                  <IconButton
+                    aria-label="account"
+                    className={classes.accountButton}
+                  >
+                    <AccountCircleIcon
+                      color="secondary"
+                      className={classes.navIcons}
+                    />
+                  </IconButton>
+                )}
+              </MuiLink>
+            )}
+            <Link to="/cart">
+              {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
+
+              <IconButton edge="end" aria-label="cart">
+                {cart.length > 0 ? (
+                  <div style={{ position: "relative" }}>
+                    <BoxFullDark
+                      className={classes.navIcons}
+                      viewBox="0 0 60 60"
+                    />
+                    <div className={classes.cartIconDiv}>
+                      <p>{cart.reduce((a, b) => a + b.quantity, 0)}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <BoxEmptyDark
+                    className={classes.navIcons}
+                    viewBox="0 0 60 60"
+                  />
+                )}
+              </IconButton>
+            </Link>
+          </React.Fragment>
+        )}
+        <LoginModal state={modalState} handleClick={(e) => handleClick(e)} />
       </div>
     </Toolbar>
   );

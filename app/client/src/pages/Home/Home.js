@@ -128,7 +128,6 @@ export default function Home(props) {
       <HeroImage>
         <div className={classes.heroContainer}>
           <Typography className={classes.heroText}>
-            {authContext.isAuthenticated() && "LOGGED IN"}
             HELLO AND WELCOME
           </Typography>
           <Typography className={classes.heroText}>
