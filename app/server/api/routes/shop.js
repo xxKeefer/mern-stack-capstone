@@ -11,6 +11,7 @@ const {
   deleteItems,
   getStockCount,
   setStockCount,
+  sendCompactDB,
 } = require("../../controller/shop");
 
 router.route("/add").post(addItem);
@@ -22,6 +23,8 @@ router.route("/list").get(getMongoCatalog);
 router.route("/list-subset").get(listItems);
 
 router.route("/list-one").get(listItem);
+
+router.route("/search").get(sendCompactDB);
 
 router.route("/delete").delete(deleteItem);
 
