@@ -15,12 +15,8 @@ export default function SignUp() {
   const authContext = useContext(AuthContext);
 
   const submitSignupInfo = async (userInfo) => {
-    console.log(userInfo);
     try {
-      const { data } = await axios.post(
-        "http://localhost:8080/api/auth/signup",
-        userInfo
-      );
+      const { data } = await publicFetch.post("/api/auth/signup", userInfo);
       console.log(data);
       // send user object to auth
       authContext.setAuthState(data);
