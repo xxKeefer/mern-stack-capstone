@@ -1,5 +1,13 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import placeholderImage from "../images/placeholderImage.png";
+import { publicFetch } from "../util/fetch";
+
+
+// useEffect(() => {
+//   const updateCart = async () => {
+//      await publicFetch.put("/api/cart/add", cart);
+//   };
+// }, [cart]);
 
 export default createContext({
   records: [

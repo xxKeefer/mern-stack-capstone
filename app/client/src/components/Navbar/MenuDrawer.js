@@ -157,11 +157,10 @@ export default function MenuDrawer() {
         variant="temporary"
         anchor="left"
         open={isOpen}
-        transitionDuration={"10000"}
         classes={{ paper: classes.paper }}
       >
         <List style={{ padding: "0px" }}>
-          <ListItem className={classes.toolBarContainer}>
+          <ListItem className={classes.toolBarContainer} key="toolBarContainer">
             <ToolBarDrawer
               state={isOpen}
               handleClick={(e) => {
@@ -169,7 +168,11 @@ export default function MenuDrawer() {
               }}
             />
           </ListItem>
-          <ListItem className={classes.searchListItem} alignItems="center">
+          <ListItem
+            className={classes.searchListItem}
+            alignItems="center"
+            key="searchListItem"
+          >
             <SearchField />
           </ListItem>
 
@@ -177,12 +180,11 @@ export default function MenuDrawer() {
             return item === "genres" ? (
               genresListItem(item, genresArray)
             ) : (
-              <ListItem button className={classes.listItems}>
+              <ListItem key={item} button className={classes.listItems}>
                 <ListItemText
                   inset={true}
                   primary={`${item}`}
                   classes={{ primary: classes.listItemText }}
-                  key={item}
                 />
               </ListItem>
             );

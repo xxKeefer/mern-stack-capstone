@@ -58,7 +58,7 @@ const sessionCheck = async (req, res) => {
   if (req.user) {
     res.status(200).json({ _id: req.user._id });
   } else {
-    res.status(404).json({ _id: null });
+    res.status(200).json({ _id: null });
   }
 };
 
