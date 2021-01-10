@@ -15,4 +15,14 @@ const exampleSuper = (req, res) => {
   res.status(200).json({ message: "You hit the super route." });
 };
 
-module.exports = { examplePublic, examplePrivate, exampleAdmin, exampleSuper };
+const showSession = (req, res) => {
+  res.status(200).json({ user: req.user, session: req.session });
+};
+
+module.exports = {
+  examplePublic,
+  examplePrivate,
+  exampleAdmin,
+  exampleSuper,
+  showSession,
+};
