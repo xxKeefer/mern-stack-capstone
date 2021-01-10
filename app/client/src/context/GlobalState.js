@@ -4,7 +4,7 @@ import { cartReducer, ADD_RECORD, REMOVE_RECORD } from "./reducers";
 import placeholderImage from "../images/placeholderImage.png";
 
 export default function GlobalState({ children }) {
-  './api/shop/list'
+  "./api/shop/list";
   const records = [
     {
       id: 1,
@@ -64,7 +64,7 @@ export default function GlobalState({ children }) {
   const removeFromCart = (recordId) => {
     dispatch({ type: REMOVE_RECORD, recordId: recordId });
   };
-  console.log(cartState.cart);
+
   return (
     <CartContext.Provider
       value={{
