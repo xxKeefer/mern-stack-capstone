@@ -7,27 +7,12 @@ const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({});
 
   const setAuthInfo = (currentUserInfo) => {
-    localStorage.setItem("currentUserId", currentUserInfo._id);
     setAuthState(currentUserInfo);
   };
 
-  const currentSessionId = async () => {
-    try {
-      const { _id: currentUserId } = await publicFetch("/api/auth/session");
-      console.log("hit api");
-      return currentUserId;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const isAuthenticated = async () => {
-    const currentUserId = await currentSessionId();
-    console.log(currentUserId);
-    if (authState._id) console.log(authState._id);
-    // return authState._id === (await currentSessionId())
-    // ? console.log("authenticated")
-    // : console.log("not authenticated");
+  const isAuthenticated = () => {
+    console.log("authenticated");
+    return true;
   };
 
   const isAdmin = () => {

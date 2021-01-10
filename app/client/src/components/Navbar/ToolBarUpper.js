@@ -104,7 +104,11 @@ export default function ToolBarUpper() {
           )}
         </Link>
         <MuiLink onClick={() => setModalState(!modalState)}>
-          {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
+          {matchDesktopUp && (
+            <h2 className={classes.navLinks}>
+              {authContext.isAuthenticated() ? "my account" : "log in"}
+            </h2>
+          )}
           {matchTabletUp && (
             <IconButton aria-label="account" className={classes.accountButton}>
               <AccountCircleIcon
