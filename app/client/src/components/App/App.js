@@ -17,6 +17,9 @@ import Genres from "../../pages/Genres/Genres";
 import { AuthProvider } from "../../context/AuthContext";
 
 const App = () => {
+  // useEffect fires on pageload
+
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
