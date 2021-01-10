@@ -14,29 +14,25 @@ const AuthProvider = ({ children }) => {
   };
 
   const currentSessionId = async () => {
-    const { currentUserId } = await publicFetch("/api/currentuser/session");
+    const { _id: currentUserId } = await publicFetch("/api/auth/session");
     return currentUserId;
   };
 
   const isAuthenticated = () => {
-    console.log("functioning");
-    return null;
-    // return authState === currentSessionId()
-    //   ? console.log("authenticated")
-    //   : console.log("not authenticated");
+    return authState === currentSessionId()
+      ? console.log("authenticated")
+      : console.log("not authenticated");
+  };
+  const test = "test";
+
+  const value = {
+    authState,
+    setAuthState: (authInfo) => setAuthInfo(authInfo),
+    isAuthenticated,
+    test,
   };
 
-  return (
-    <Provider
-      value={{
-        authState,
-        setAuthState: (authInfo) => setAuthInfo(authInfo),
-        isAuthenticated,
-      }}
-    >
-      {children}
-    </Provider>
-  );
+  return <Provider value={value}>{children}</Provider>;
 };
 
 export { AuthContext, AuthProvider };

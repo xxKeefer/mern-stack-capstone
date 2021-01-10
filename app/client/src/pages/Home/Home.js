@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { useContext } from "react";
 import RecordCard from "../../components/RecordCard/RecordCard";
 import { Divider, Grid, Paper, Typography } from "@material-ui/core";
 import HeroImage from "../../components/HeroImage/HeroImage";
@@ -120,57 +120,53 @@ const records = [
 export default function Home(props) {
   const classes = useStyles();
 
-  const authContext = createContext(AuthContext);
-  console.log(authContext.isAuthenticated());
+  const authContext = useContext(AuthContext);
+  const cartContext = useContext(CartContext);
 
   return (
-    <CartContext>
-      {(context) => (
-        <Grid container style={{}}>
-          <HeroImage>
-            <div className={classes.heroContainer}>
-              <Typography className={classes.heroText}>
-                {/* {authContext.isAuthenticated() && "LOGGED IN"} */}
-                HELLO AND WELCOME
-              </Typography>
-              <Typography className={classes.heroText}>
-                to the <span>catalog music</span> webstore
-              </Typography>
-              <Divider />
-            </div>
-            {/* <img
+    <Grid container style={{}}>
+      <HeroImage>
+        <div className={classes.heroContainer}>
+          <Typography className={classes.heroText}>
+            {authContext.isAuthenticated() && "LOGGED IN"}
+            HELLO AND WELCOME
+          </Typography>
+          <Typography className={classes.heroText}>
+            to the <span>catalog music</span> webstore
+          </Typography>
+          <Divider />
+        </div>
+        {/* <img
           alt="catalog records"
           src={shopImage}
           style={{ width: "100%", height: "100%", margin: "auto" }}
         ></img> */}
-          </HeroImage>
+      </HeroImage>
 
-          <Paper className={classes.categoryTitle}>
-            <h1 className={classes.titleText}>new releases</h1>
-          </Paper>
-          <Grid
-            className={classes.recordsGrid}
-            justify="space-evenly"
-            container
-            spacing={2}
-          >
-            {context.records.map((record) => (
-              <Grid item xs={12} sm="auto" key={record.recordTitle}>
-                <RecordCard record={record} />
-              </Grid>
-            ))}
+      <Paper className={classes.categoryTitle}>
+        <h1 className={classes.titleText}>new releases</h1>
+      </Paper>
+      <Grid
+        className={classes.recordsGrid}
+        justify="space-evenly"
+        container
+        spacing={2}
+      >
+        {cartContext.records.map((record) => (
+          <Grid item xs={12} sm="auto" key={record.recordTitle}>
+            <RecordCard record={record} />
           </Grid>
-          <Paper className={classes.categoryTitle}>
-            <h1 className={classes.titleText}>fresh pre-loved</h1>
-          </Paper>
-          <Grid
-            className={classes.recordsGrid}
-            justify="space-evenly"
-            container
-            spacing={2}
-          ></Grid>
-        </Grid>
-      )}
-    </CartContext>
+        ))}
+      </Grid>
+      <Paper className={classes.categoryTitle}>
+        <h1 className={classes.titleText}>fresh pre-loved</h1>
+      </Paper>
+      <Grid
+        className={classes.recordsGrid}
+        justify="space-evenly"
+        container
+        spacing={2}
+      ></Grid>
+    </Grid>
   );
 }
