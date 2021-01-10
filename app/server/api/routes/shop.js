@@ -1,6 +1,6 @@
 const express = require("express");
 let router = express.Router();
-//TODO: add authorisation on these routes
+const auth = require("../../middleware/auth");
 const {
   addItem,
   addItems,
@@ -11,11 +11,12 @@ const {
   deleteItems,
   getStockCount,
   setStockCount,
+  sendCompactDB,
 } = require("../../controller/shop");
 
-router.route("/add").post(addItem);
+router.route("/add").post(auth.admin, addItem);
 
-router.route("/add-multi").post(addItems);
+router.route("/add-multi").post(auth.admin, addItems);
 
 router.route("/list").get(getMongoCatalog);
 
@@ -23,12 +24,14 @@ router.route("/list-subset").get(listItems);
 
 router.route("/list-one").get(listItem);
 
-router.route("/delete").delete(deleteItem);
+router.route("/search").get(sendCompactDB);
 
-router.route("/delete-multi").delete(deleteItems);
+router.route("/delete").delete(auth.admin, deleteItem);
 
-router.route("/item-count").get(getStockCount);
+router.route("/delete-multi").delete(auth.admin, deleteItems);
 
-router.route("/item-stock-in").post(setStockCount);
+router.route("/item-count").get(auth.admin, getStockCount);
+
+router.route("/item-stock-in").post(auth.admin, setStockCount);
 
 module.exports = router;
