@@ -13,11 +13,8 @@ export default function LoginModal(props) {
   const authContext = useContext(AuthContext);
 
   const submitLoginInfo = async (userInfo) => {
-    console.log("this is the user info before post:", { userInfo });
     try {
       const { data } = await publicFetch.post("/api/auth/login", userInfo);
-
-      console.log("this is the user info after post:", data);
       authContext.setAuthState(data);
       setRedirectOnLogin(true);
     } catch (error) {

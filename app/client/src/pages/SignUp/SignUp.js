@@ -3,7 +3,6 @@ import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./SignUpStyles";
 import { publicFetch } from "../../util/fetch";
-import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 

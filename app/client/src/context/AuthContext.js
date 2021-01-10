@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { publicFetch } from "../util/fetch";
 
 const AuthContext = createContext();
@@ -7,7 +7,6 @@ const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({});
 
   const setAuthInfo = (currentUserInfo) => {
-    localStorage.setItem("currentUserId", currentUserInfo._id);
     setAuthState(currentUserInfo);
   };
 
@@ -16,6 +15,7 @@ const AuthProvider = ({ children }) => {
       const {
         data: { _id: currentUserId },
       } = await publicFetch("/api/auth/session");
+      console.log(currentUserId);
       return currentUserId;
     } catch (error) {
       console.log(error);
@@ -24,16 +24,29 @@ const AuthProvider = ({ children }) => {
 
   const isAuthenticated = async () => {
     const currentUserId = await currentSessionId();
-    return currentUserId;
+    return currentUserId === true;
   };
 
   const isAdmin = () => {
-    return authState.roles[0] === "admin";
+    // return authState && authState.roles[0] === "admin";
   };
 
   const isSuper = () => {
-    return authState.roles[0] === "super";
+    // return authState && authState.roles[0] === "super";
   };
+
+  const logUserOut = async () => {
+    const resp = await publicFetch("api/auth/logout");
+    console.log(resp);
+    setAuthState({});
+  };
+
+  useEffect(() => {
+    const isAuthenticated = async () => {
+      const currentUserId = await currentSessionId();
+      return currentUserId ? true : setAuthState({}) && false;
+    };
+  }, [authState]);
 
   return (
     <AuthContext.Provider
@@ -43,6 +56,7 @@ const AuthProvider = ({ children }) => {
         isAuthenticated,
         isAdmin,
         isSuper,
+        logUserOut,
       }}
     >
       {children}
