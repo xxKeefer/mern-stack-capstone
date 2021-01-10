@@ -15,10 +15,10 @@ import Dashboard from "../../pages/Dashboard/Dashboard";
 import GlobalState from "../../context/GlobalState";
 import Genres from "../../pages/Genres/Genres";
 import { AuthProvider } from "../../context/AuthContext";
+import Account from "../../pages/Account/Account";
 
 const App = () => {
   // useEffect fires on pageload
-
 
   return (
     <React.Fragment>
@@ -35,6 +35,7 @@ const App = () => {
                   <Route path="/contact" component={Contact} />
                   <Route path="/news" component={News} />
                   <Route path="/genres" component={Genres} />
+                  <Route path="/account" component={Account} />
                   <Route path="/dashboard" component={Dashboard} />
                   <Route exact path="/" component={Home} />
                 </MainContainer>
