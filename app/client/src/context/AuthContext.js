@@ -13,8 +13,9 @@ const AuthProvider = ({ children }) => {
 
   const currentSessionId = async () => {
     try {
-      const { _id: currentUserId } = await publicFetch("/api/auth/session");
-      console.log("hit api");
+      const {
+        data: { _id: currentUserId },
+      } = await publicFetch("/api/auth/session");
       return currentUserId;
     } catch (error) {
       console.log(error);
@@ -23,11 +24,7 @@ const AuthProvider = ({ children }) => {
 
   const isAuthenticated = async () => {
     const currentUserId = await currentSessionId();
-    console.log(currentUserId);
-    if (authState._id) console.log(authState._id);
-    // return authState._id === (await currentSessionId())
-    // ? console.log("authenticated")
-    // : console.log("not authenticated");
+    return currentUserId;
   };
 
   const isAdmin = () => {
