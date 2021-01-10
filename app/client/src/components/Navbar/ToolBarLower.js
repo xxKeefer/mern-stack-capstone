@@ -39,14 +39,18 @@ export default function ToolBarLower() {
   return (
     <Toolbar className={classes.toolBarLower}>
       <div>
-        <Link className={classes.navLinks}>new vinyl</Link>
+        <Link to="/" className={classes.navLinks}>
+          new vinyl
+        </Link>
         <Link to="/genres" className={classes.navLinks}>
           genres
         </Link>
         <Link to="/news" className={classes.navLinks}>
           news
         </Link>
-        <Link className={classes.navLinks}>staff picks</Link>
+        <Link to="/" className={classes.navLinks}>
+          staff picks
+        </Link>
         <Link to="/contact" className={classes.navLinks}>
           contact
         </Link>

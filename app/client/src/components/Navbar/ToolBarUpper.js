@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { MuiLink } from "@material-ui/core/Link";
+import { Link as MuiLink } from "@material-ui/core/";
 import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BoxEmptyDark from "../../icons/BoxEmptyDark";
@@ -13,6 +13,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import CartContext from "../../context/CartContext";
 import BoxFullDark from "../../icons/BoxFullDark";
+import { AuthContext } from "../../context/AuthContext";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -65,8 +66,10 @@ const useStyles = makeStyles((theme) => {
 export default function ToolBarUpper() {
   const classes = useStyles();
   const theme = useTheme();
-  const context = useContext(CartContext);
-  const { cart } = context;
+  const cartContext = useContext(CartContext);
+  const authContext = useContext(AuthContext);
+
+  const { cart } = cartContext;
   const matchTabletDown = useMediaQuery(theme.breakpoints.down("sm"));
   const matchTabletUp = useMediaQuery(theme.breakpoints.up("sm"));
   const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -100,7 +103,7 @@ export default function ToolBarUpper() {
             </IconButton>
           )}
         </Link>
-        <Link onClick={() => setModalState(!modalState)}>
+        <MuiLink onClick={() => setModalState(!modalState)}>
           {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
           {matchTabletUp && (
             <IconButton aria-label="account" className={classes.accountButton}>
@@ -110,7 +113,7 @@ export default function ToolBarUpper() {
               />
             </IconButton>
           )}
-        </Link>
+        </MuiLink>
         <Link to="/cart">
           {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
 
