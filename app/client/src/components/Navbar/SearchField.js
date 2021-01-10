@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { publicFetch } from "../../util/fetch";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -55,13 +56,15 @@ export default function SearchField() {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState("");
   const [open, setOpen] = useState(false);
+  const [records, setRecords] = useState([]);
 
-  const records = [
-    { group: "Records", title: "Lovely Record" },
-    { group: "Records", title: "Beautiful Sky" },
-    { group: "Artists", title: "The Musicmakers" },
-    { group: "Genres", title: "Techno" },
-  ];
+  useEffect(() => {
+    const getRecords = async () => {
+      const { data } = await publicFetch.get("/api/shop/search");
+      setRecords(data);
+    };
+    getRecords();
+  }, []);
 
   const options = records.map((option) => {
     return { ...option };
