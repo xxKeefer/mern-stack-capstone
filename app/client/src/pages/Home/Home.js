@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import RecordCard from "../../components/RecordCard/RecordCard";
 import { Divider, Grid, Paper, Typography } from "@material-ui/core";
 import HeroImage from "../../components/HeroImage/HeroImage";
@@ -6,6 +6,7 @@ import shopImage from "../../images/shop-image.jpg";
 import { makeStyles } from "@material-ui/core";
 import placeholderImage from "../../images/placeholderImage.png";
 import CartContext from "../../context/CartContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -116,15 +117,20 @@ const records = [
   },
 ];
 
-export default function Home() {
+export default function Home(props) {
   const classes = useStyles();
+
+  const authContext = createContext(AuthContext);
+  console.log(authContext.isAuthenticated());
+
   return (
-    <CartContext.Consumer>
+    <CartContext>
       {(context) => (
         <Grid container style={{}}>
           <HeroImage>
             <div className={classes.heroContainer}>
               <Typography className={classes.heroText}>
+                {/* {authContext.isAuthenticated() && "LOGGED IN"} */}
                 HELLO AND WELCOME
               </Typography>
               <Typography className={classes.heroText}>
@@ -165,6 +171,6 @@ export default function Home() {
           ></Grid>
         </Grid>
       )}
-    </CartContext.Consumer>
+    </CartContext>
   );
 }
