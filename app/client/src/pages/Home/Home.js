@@ -9,6 +9,7 @@ import CartContext from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
 import { GlobalContext } from "../../context/GlobalState";
 import { useQuery } from "react-query";
+import { API } from "../../util/fetch";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -126,11 +127,21 @@ export default function Home(props) {
   const cartContext = useContext(CartContext);
   const globalContext = useContext(GlobalContext);
 
-  const newReleases = useQuery("newReleases", globalContext.fetchNewReleases());
+  const fetchNewReleases = async () => {
+    const promise = await API.get("/records/year/2020");
+    return promise.data;
+  };
+
+  const { data: newReleases, status, error } = useQuery(
+    "newReleases",
+    async () => {
+      const { data } = await API.get("/records/year/2020");
+      return data;
+    }
+  );
+  console.log({ newReleases });
 
   // const [newReleases, setNewReleases] = useState([]);
-
-
 
   return (
     <Grid container style={{}}>
@@ -160,11 +171,12 @@ export default function Home(props) {
         container
         spacing={2}
       >
-        {newReleases.map((record) => (
-          <Grid item xs={12} sm="auto" key={record.recordTitle}>
-            <RecordCard record={record} />
-          </Grid>
-        ))}
+        {status === "success" &&
+          newReleases.map((record) => (
+            <Grid item xs={12} sm="auto" key={record.recordTitle}>
+              <RecordCard record={record} />
+            </Grid>
+          ))}
       </Grid>
       <Paper className={classes.categoryTitle}>
         <h1 className={classes.titleText}>fresh pre-loved</h1>
