@@ -21,7 +21,7 @@ export default function SignUp() {
       authContext.setAuthState(data);
       setRedirectOnLogin(true);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
   };
 
