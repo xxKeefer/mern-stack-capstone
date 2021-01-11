@@ -60,7 +60,7 @@ export default function SearchField() {
 
   useEffect(() => {
     const getRecords = async () => {
-      const { data } = await API.get("/shop/search");
+      const { data } = await API.get("/records/search");
       setRecords(data);
     };
     getRecords();

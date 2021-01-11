@@ -9,7 +9,7 @@ import { GlobalContext } from "../../context/GlobalState";
 
 export default function LoginForm(props) {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setError } = useForm();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const authContext = useContext(AuthContext);
   const globalContext = useContext(GlobalContext);
@@ -21,7 +21,11 @@ export default function LoginForm(props) {
       setRedirectOnLogin(true);
       globalContext.setModalState(false);
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        console.error(error.response.data.formError);
+        const { name, type, message } = error.response.data.formError;
+        setError(name, { type, message });
+      }
     }
   };
 
@@ -43,6 +47,9 @@ export default function LoginForm(props) {
             />
             {errors.email && errors.email.type === "required" && (
               <p className={classes.errorMessage}>This is required</p>
+            )}
+            {errors.email && errors.email.type === "manual" && (
+              <p className={classes.errorMessage}>{errors.email.message}</p>
             )}
           </div>
           <div className={classes.formGroup}>
