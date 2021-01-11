@@ -23,8 +23,22 @@ const createUser = async (req, res, next) => {
     if (!userExists) {
       const user = await User.create({ username, email, password });
       handleNewUser(user);
-    } else {
-      throw new Error("user already exists.");
+    } else if (userExists.username === username) {
+      res.status(400).send({
+        formError: {
+          type: "manual",
+          name: "username",
+          message: "username is taken.",
+        },
+      });
+    } else if (userExists.email === email) {
+      res.status(400).send({
+        formError: {
+          type: "manual",
+          name: "email",
+          message: "email is taken.",
+        },
+      });
     }
   } catch (e) {
     res.status(400).json({ message: e.message });

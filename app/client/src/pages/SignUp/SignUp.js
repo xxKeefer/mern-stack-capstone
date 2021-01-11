@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./SignUpStyles";
@@ -11,13 +11,8 @@ export default function SignUp() {
   const { register, handleSubmit, getValues, errors, setError } = useForm();
   // const [signupSuccess, setSignUpSuccess] = useState("");
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const [formErr, setFormErr] = useState(false);
-  const authContext = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const { name, type, message } = formErr;
-  //   setError(name, { type, message });
-  // }, [formErr, setError]);
+  const authContext = useContext(AuthContext);
 
   const submitSignupInfo = async (userInfo) => {
     try {
@@ -28,7 +23,7 @@ export default function SignUp() {
       setRedirectOnLogin(true);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
+        console.error(error.response.data.formError);
         const { name, type, message } = error.response.data.formError;
         setError(name, { type, message });
       }
@@ -56,11 +51,11 @@ export default function SignUp() {
               {errors.username && errors.username.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
               )}
-              {/* {errors.username && errors.username.type === "manual" && (
+              {errors.username && errors.username.type === "manual" && (
                 <p className={classes.errorMessage}>
                   {errors.username.message}
                 </p>
-              )} */}
+              )}
             </div>
 
             <div className={classes.formGroup}>
@@ -76,9 +71,9 @@ export default function SignUp() {
               {errors.email && errors.email.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
               )}
-              {/* {errors.email && errors.email.type === "manual" && (
+              {errors.email && errors.email.type === "manual" && (
                 <p className={classes.errorMessage}>{errors.email.message}</p>
-              )} */}
+              )}
             </div>
 
             <div className={classes.formGroup}>
