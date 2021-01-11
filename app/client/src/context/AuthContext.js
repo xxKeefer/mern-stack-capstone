@@ -4,28 +4,37 @@ import { API } from "../util/fetch";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({});
+  const [authState, setAuthState] = useState(null);
 
   const setAuthInfo = (currentUserInfo) => {
     setAuthState(currentUserInfo);
   };
 
-  const currentSessionId = async () => {
+  const getCurrentUser = async () => {
     try {
-      const {
-        data: { _id: currentUserId },
-      } = await API("/auth/session");
-      console.loAPIerId);
-      return currentUserId;
+      const { data } = await API.get("/auth/session");
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const isAuthenticated = async () => {
+      const currentUser = await getCurrentUser();
+      return currentUser
+        ? setAuthState(currentUser) && true
+        : setAuthState(null) && false;
+    };
+    isAuthenticated();
+  }, []);
 
-  const isAuthenticated = async () => {
-    const currentUserId = await currentSessionId();
-    return currentUserId === true;
-  };
+  // const isAuthenticated = async () => {
+  //   const currentUserId = await currentSessionId();
+  //   console.log({ currentUserId });
+
+  //   return currentUserId;
+  // };
 
   const isAdmin = () => {
     // return authState && authState.roles[0] === "admin";
@@ -36,24 +45,17 @@ const AuthProvider = ({ children }) => {
   };
 
   const logUserOut = async () => {
-    const resp = await API("api/auth/logout");
-    console.log(resp);
+    const { data } = await API.get("/auth/logout");
+    console.log(data);
     setAuthState({});
   };
-
-  useEffect(() => {
-    const isAuthenticated = async () => {
-      const currentUserId = await currentSessionId();
-      return currentUserId ? true : setAuthState({}) && false;
-    };
-  }, [authState]);
 
   return (
     <AuthContext.Provider
       value={{
         authState,
         setAuthState: (authInfo) => setAuthInfo(authInfo),
-        isAuthenticated,
+        // isAuthenticated,
         isAdmin,
         isSuper,
         logUserOut,
