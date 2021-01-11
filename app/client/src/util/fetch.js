@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const publicFetch = axios.create({
-  baseURL: "http://localhost:8080",
+const API = axios.create({
+  baseURL: "http://localhost:8080/api",
   withCredentials: true,
   timeout: 5000,
 });
 
-export { publicFetch };
+export { API };

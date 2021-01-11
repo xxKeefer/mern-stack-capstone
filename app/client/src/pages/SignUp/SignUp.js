@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./SignUpStyles";
-import { publicFetch } from "../../util/fetch";
+import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -15,7 +15,7 @@ export default function SignUp() {
 
   const submitSignupInfo = async (userInfo) => {
     try {
-      const { data } = await publicFetch.post("/api/auth/signup", userInfo);
+      const { data } = await API.post("/auth/signup", userInfo);
       console.log(data);
       // send user object to auth
       authContext.setAuthState(data);
