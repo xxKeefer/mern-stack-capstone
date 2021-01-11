@@ -17,6 +17,7 @@ export default function LoginModal(props) {
       const { data } = await publicFetch.post("/api/auth/login", userInfo);
       authContext.setAuthState(data);
       setRedirectOnLogin(true);
+      props.setModalState(false);
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +68,7 @@ export default function LoginModal(props) {
           />
         </form>
         <p className={classes.signUpMessage}>
-          Don't have an account?{" "}
+          Don't have an account?
           <Link
             href="/signup"
             className={classes.bottomLinks}

@@ -109,7 +109,7 @@ export default function ToolBarUpper() {
             {authContext.isAuthenticated() ? (
               <Link to="/account">
                 {matchDesktopUp && (
-                  <h2 className={classes.navLinks}>account </h2>
+                  <h2 className={classes.navLinks}>my account </h2>
                 )}
                 {matchTabletUp && (
                   <IconButton
@@ -167,7 +167,11 @@ export default function ToolBarUpper() {
             </Link>
           </React.Fragment>
         )}
-        <LoginModal state={modalState} handleClick={(e) => handleClick(e)} />
+        <LoginModal
+          state={modalState}
+          setModalState={setModalState}
+          handleClick={(e) => handleClick(e)}
+        />
       </div>
     </Toolbar>
   );
