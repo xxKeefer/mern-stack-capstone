@@ -5,7 +5,7 @@ import useStyles from "./SignUpStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext } from "../../context/GlobalState";
 
 export default function SignUp() {
   const classes = useStyles();
