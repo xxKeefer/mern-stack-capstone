@@ -10,7 +10,7 @@ export default function RecordCard(props) {
 
   const {
     release_title: releaseTitle,
-    artists,
+    artists_sort: artist,
     genres,
     image,
     preloved,
@@ -64,15 +64,7 @@ export default function RecordCard(props) {
           </Box>
           <CardContent style={{ position: "relative", padding: "2px" }}>
             <div className={classes.flexedRow}>
-              <Typography className={classes.artistName}>
-                {artists === 1
-                  ? artists[0]
-                  : artists.map((artist, index) => {
-                      return index === genres.length - 1
-                        ? artist
-                        : `${artist}, `;
-                    })}
-              </Typography>
+              <Typography className={classes.artistName}>{artist}</Typography>
               <Typography className={classes.recordPrice}>$99</Typography>
             </div>
             <div className={classes.flexedRow}>
@@ -82,7 +74,7 @@ export default function RecordCard(props) {
             </div>
             <div className={classes.flexedRow}>
               <Typography className={classes.labelAndYear}>
-                {label} • {year}
+                {"label"} • {year}
               </Typography>
             </div>
             <div className={classes.flexedRow}>

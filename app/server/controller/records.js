@@ -3,7 +3,8 @@ const Vinyl = require("../models/vinyl");
 const query = async (req, res) => {
   const { category, query } = req.params;
   const findQuery = {};
-  Object.defineProperty(findQuery, category, { value: query });
+  findQuery[`${category}`] = query;
+
   try {
     const results = await Vinyl.find(findQuery).collation({
       locale: "en",
