@@ -1,6 +1,22 @@
 const Vinyl = require("../models/vinyl");
 
-const query = async (req, res) => {};
+const query = async (req, res) => {
+  const { category, query } = req.params;
+  const findQuery = {};
+  Object.defineProperty(findQuery, category, { value: query });
+  try {
+    const results = await Vinyl.find(findQuery).collation({
+      locale: "en",
+      strength: 2,
+    });
+
+    res.status(200).json(results);
+  } catch (e) {
+    res.status(400).json(e.message);
+  }
+};
+
+const complexQuery = async (req, res) => {};
 
 const sendCompactDB = async (req, res) => {
   const compactDB = [];
@@ -22,4 +38,4 @@ const sendCompactDB = async (req, res) => {
   }
 };
 
-module.exports = { query, sendCompactDB };
+module.exports = { query, complexQuery, sendCompactDB };

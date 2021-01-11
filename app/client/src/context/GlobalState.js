@@ -71,12 +71,10 @@ const GlobalState = ({ children }) => {
 
   const [modalState, setModalState] = useState(false);
 
-  const [newReleases, setNewReleases] = useState([]);
-
   const fetchNewReleases = async () => {
-    const { data } = API("/shop/list");
+    const { data } = API.get("/records/year/2020");
     console.log(data);
-    setNewReleases(data);
+    return data;
   };
 
   return (

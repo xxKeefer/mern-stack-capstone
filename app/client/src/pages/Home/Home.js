@@ -126,7 +126,11 @@ export default function Home(props) {
   const cartContext = useContext(CartContext);
   const globalContext = useContext(GlobalContext);
 
-  const newReleases = useQuery("newReleases", fetchNewReleases);
+  const newReleases = useQuery("newReleases", globalContext.fetchNewReleases());
+
+  // const [newReleases, setNewReleases] = useState([]);
+
+
 
   return (
     <Grid container style={{}}>
