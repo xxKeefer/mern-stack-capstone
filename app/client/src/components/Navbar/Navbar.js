@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
       borderBottom: `1px solid ${secondary.main}`,
       boxShadow: `0px 2px 1px -2px ${secondary.main}`,
       margin: "0px auto",
-      width: "90vw",
+      width: "100vw",
       [breakpoints.only("lg")]: {
         width: "80vw",
       },
