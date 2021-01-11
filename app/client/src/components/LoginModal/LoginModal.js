@@ -13,11 +13,6 @@ export default function LoginModal(props) {
     props.handleClick(!state);
   };
 
-  // const closeOnLogin = () => {
-  //   console.log(props.state);
-  //   return props.state;
-  // };
-
   return (
     <div>
       <Modal className={classes.modal} open={props.state} onClose={closeClick}>

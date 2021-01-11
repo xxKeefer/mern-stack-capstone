@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { publicFetch } from "../util/fetch";
+import { API } from "../util/fetch";
 
 const AuthContext = createContext();
 
@@ -48,8 +48,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const logUserOut = async () => {
-    const resp = await publicFetch("api/auth/logout");
-    console.log(resp);
+    const { data } = await API.get("/auth/logout");
+    console.log(data);
     setAuthState(null);
     setSessionExpiry(null);
   };

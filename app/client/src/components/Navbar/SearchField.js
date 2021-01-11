@@ -4,7 +4,7 @@ import SearchIcon from "@material-ui/icons/SearchOutlined";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { publicFetch } from "../../util/fetch";
+import { API } from "../../util/fetch";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -60,7 +60,7 @@ export default function SearchField() {
 
   useEffect(() => {
     const getRecords = async () => {
-      const { data } = await publicFetch.get("/api/shop/search");
+      const { data } = await API.get("/shop/search");
       setRecords(data);
     };
     getRecords();
