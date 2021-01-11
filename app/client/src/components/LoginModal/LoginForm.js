@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./LoginModalStyles";
-import { publicFetch } from "../../util/fetch";
+import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -14,7 +14,7 @@ export default function LoginModal(props) {
 
   const submitLoginInfo = async (userInfo) => {
     try {
-      const { data } = await publicFetch.post("/api/auth/login", userInfo);
+      const { data } = await API.post("/auth/login", userInfo);
       authContext.setAuthState(data);
       setRedirectOnLogin(true);
     } catch (error) {

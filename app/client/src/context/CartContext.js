@@ -1,11 +1,10 @@
 import React, { createContext, useEffect } from "react";
 import placeholderImage from "../images/placeholderImage.png";
-import { publicFetch } from "../util/fetch";
-
+import { API } from "../util/fetch";
 
 // useEffect(() => {
 //   const updateCart = async () => {
-//      await publicFetch.put("/api/cart/add", cart);
+//      await API.put("/cart/add", cart);
 //   };
 // }, [cart]);
 

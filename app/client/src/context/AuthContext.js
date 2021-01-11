@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { publicFetch } from "../util/fetch";
+import { API } from "../util/fetch";
 
 const AuthContext = createContext();
 
@@ -14,8 +14,8 @@ const AuthProvider = ({ children }) => {
     try {
       const {
         data: { _id: currentUserId },
-      } = await publicFetch("/api/auth/session");
-      console.log(currentUserId);
+      } = await API("/auth/session");
+      console.loAPIerId);
       return currentUserId;
     } catch (error) {
       console.log(error);
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logUserOut = async () => {
-    const resp = await publicFetch("api/auth/logout");
+    const resp = await API("api/auth/logout");
     console.log(resp);
     setAuthState({});
   };
