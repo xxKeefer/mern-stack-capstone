@@ -106,7 +106,7 @@ export default function ToolBarUpper() {
           </Link>
         ) : (
           <React.Fragment>
-            {authContext.isAuthenticated() ? (
+            {authContext.authState ? (
               <Link to="/account">
                 {matchDesktopUp && (
                   <h2 className={classes.navLinks}>my account </h2>
