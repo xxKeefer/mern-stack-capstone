@@ -3,7 +3,9 @@ import CartContext from "./CartContext";
 import { cartReducer, ADD_RECORD, REMOVE_RECORD } from "./reducers";
 import placeholderImage from "../images/placeholderImage.png";
 import { API } from "../util/fetch";
-import { useQuery } from "react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+
+const queryClient = new QueryClient();
 
 const GlobalContext = createContext();
 
@@ -72,9 +74,8 @@ const GlobalState = ({ children }) => {
   const [modalState, setModalState] = useState(false);
 
   const fetchNewReleases = async () => {
-    const { data } = API.get("/records/year/2020");
-    console.log(data);
-    return data;
+    const promise = await API.get("/records/year/2012");
+    return promise;
   };
 
   return (
@@ -85,16 +86,18 @@ const GlobalState = ({ children }) => {
         fetchNewReleases: fetchNewReleases,
       }}
     >
-      <CartContext.Provider
-        value={{
-          records: records,
-          cart: cartState.cart,
-          addToCart: addToCart,
-          removeFromCart: removeFromCart,
-        }}
-      >
-        {children}
-      </CartContext.Provider>
+      <QueryClientProvider client={queryClient}>
+        <CartContext.Provider
+          value={{
+            records: records,
+            cart: cartState.cart,
+            addToCart: addToCart,
+            removeFromCart: removeFromCart,
+          }}
+        >
+          {children}
+        </CartContext.Provider>
+      </QueryClientProvider>
     </GlobalContext.Provider>
   );
 };

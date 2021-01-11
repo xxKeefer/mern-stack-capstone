@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       width: "90vw",
-      boxShadow: "none",
-      border: `1px solid ${secondary.main}`,
+      // boxShadow: "none",
+      // border: `1px solid ${secondary.main}`,
       [breakpoints.up("md")]: {
         width: "15vw",
       },
