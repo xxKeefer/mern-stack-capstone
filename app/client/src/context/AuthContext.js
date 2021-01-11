@@ -5,36 +5,39 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState(null);
+  const [sessionExpiry, setSessionExpiry] = useState(null);
+
+  const currentDate = new Date();
+  let expiryDate = new Date();
 
   const setAuthInfo = (currentUserInfo) => {
     setAuthState(currentUserInfo);
+    expiryDate.setDate(expiryDate.getDate() + 1).toLocaleString();
+    setSessionExpiry(expiryDate);
+    console.log(expiryDate);
+    console.log(currentDate);
   };
 
-  const getCurrentUser = async () => {
-    try {
-      const { data } = await API.get("/auth/session");
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.log(error);
+  // const currentSessionId = async () => {
+  //   try {
+  //     const {
+  //       data: { _id: currentUserId },
+  //     } = await publicFetch("/api/auth/session");
+  //     console.log(currentUserId);
+  //     return currentUserId;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const isAuthenticated = () => {
+    if (currentDate < sessionExpiry) {
+      return true;
+    } else {
+      setAuthState(null);
+      return false;
     }
   };
-  useEffect(() => {
-    const isAuthenticated = async () => {
-      const currentUser = await getCurrentUser();
-      return currentUser
-        ? setAuthState(currentUser) && true
-        : setAuthState(null) && false;
-    };
-    isAuthenticated();
-  }, []);
-
-  // const isAuthenticated = async () => {
-  //   const currentUserId = await currentSessionId();
-  //   console.log({ currentUserId });
-
-  //   return currentUserId;
-  // };
 
   const isAdmin = () => {
     // return authState && authState.roles[0] === "admin";
@@ -47,7 +50,8 @@ const AuthProvider = ({ children }) => {
   const logUserOut = async () => {
     const { data } = await API.get("/auth/logout");
     console.log(data);
-    setAuthState({});
+    setAuthState(null);
+    setSessionExpiry(null);
   };
 
   return (
@@ -55,7 +59,7 @@ const AuthProvider = ({ children }) => {
       value={{
         authState,
         setAuthState: (authInfo) => setAuthInfo(authInfo),
-        // isAuthenticated,
+        isAuthenticated,
         isAdmin,
         isSuper,
         logUserOut,

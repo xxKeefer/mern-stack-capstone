@@ -1,5 +1,5 @@
 import { Card, IconButton, Modal } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import LoginForm from "./LoginForm";
 import useStyles from "./LoginModalStyles";
@@ -8,6 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 export default function LoginModal(props) {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
+
   const closeClick = (state) => {
     props.handleClick(!state);
   };
@@ -19,7 +20,7 @@ export default function LoginModal(props) {
           <IconButton className={classes.closeButton}>
             <CloseIcon onClick={closeClick} />
           </IconButton>
-          <LoginForm />
+          <LoginForm setModalState={props.setModalState} />
         </Card>
       </Modal>
     </div>
