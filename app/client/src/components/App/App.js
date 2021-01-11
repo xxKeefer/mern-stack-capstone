@@ -12,7 +12,7 @@ import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";
 import Dashboard from "../../pages/Dashboard/Dashboard";
-import GlobalState from "../../context/GlobalState";
+import { GlobalState } from "../../context/GlobalState";
 import Genres from "../../pages/Genres/Genres";
 import { AuthProvider } from "../../context/AuthContext";
 import Account from "../../pages/Account/Account";

@@ -1,23 +1,25 @@
 import React, { useState, useContext } from "react";
-import { Link } from "@material-ui/core/";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useStyles from "./LoginModalStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { GlobalContext } from "../../context/GlobalState";
 
-export default function LoginModal(props) {
+export default function LoginForm(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors, setError } = useForm();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const authContext = useContext(AuthContext);
+  const globalContext = useContext(GlobalContext);
 
   const submitLoginInfo = async (userInfo) => {
     try {
       const { data } = await API.post("/auth/login", userInfo);
       authContext.setAuthState(data);
       setRedirectOnLogin(true);
-      props.setModalState(false);
+      globalContext.setModalState(false);
     } catch (error) {
       if (error.response) {
         console.error(error.response.data.formError);
@@ -77,9 +79,10 @@ export default function LoginModal(props) {
         <p className={classes.signUpMessage}>
           Don't have an account?
           <Link
-            href="/signup"
+            to="/signup"
             className={classes.bottomLinks}
             color="secondary"
+            onClick={() => globalContext.setModalState(false)}
           >
             Sign Up
           </Link>

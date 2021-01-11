@@ -14,6 +14,7 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import CartContext from "../../context/CartContext";
 import BoxFullDark from "../../icons/BoxFullDark";
 import { AuthContext } from "../../context/AuthContext";
+import { GlobalContext } from "../../context/GlobalState";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -74,11 +75,11 @@ export default function ToolBarUpper() {
   const matchTabletUp = useMediaQuery(theme.breakpoints.up("sm"));
   const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
 
-  const [modalState, setModalState] = useState(false);
-
-  const handleClick = (state) => {
-    setModalState(state);
+  const handleClick = () => {
+    globalContext.setModalState(true);
   };
+
+  const globalContext = useContext(GlobalContext);
 
   return (
     <Toolbar className={classes.toolBarUpper}>
@@ -126,7 +127,7 @@ export default function ToolBarUpper() {
             ) : (
               <MuiLink
                 onClick={() => {
-                  setModalState(!modalState);
+                  globalContext.setModalState(true);
                 }}
               >
                 {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
@@ -167,11 +168,7 @@ export default function ToolBarUpper() {
             </Link>
           </React.Fragment>
         )}
-        <LoginModal
-          state={modalState}
-          setModalState={setModalState}
-          handleClick={(e) => handleClick(e)}
-        />
+        <LoginModal />
       </div>
     </Toolbar>
   );

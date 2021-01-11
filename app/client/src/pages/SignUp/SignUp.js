@@ -5,6 +5,7 @@ import useStyles from "./SignUpStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { GlobalContext } from "../../context/GlobalContext";
 
 export default function SignUp() {
   const classes = useStyles();
@@ -13,6 +14,7 @@ export default function SignUp() {
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
 
   const authContext = useContext(AuthContext);
+  const globalContext = useContext(GlobalContext);
 
   const submitSignupInfo = async (userInfo) => {
     try {
@@ -130,7 +132,11 @@ export default function SignUp() {
           </form>
           <p className={classes.signUpMessage}>
             Already have an account?
-            <Link className={classes.bottomLinks} color="secondary">
+            <Link
+              className={classes.bottomLinks}
+              color="secondary"
+              onClick={() => globalContext.setModalState(true)}
+            >
               Log In
             </Link>
           </p>

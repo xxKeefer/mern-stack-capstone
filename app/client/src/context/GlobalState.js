@@ -1,9 +1,11 @@
-import React, { useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import CartContext from "./CartContext";
 import { cartReducer, ADD_RECORD, REMOVE_RECORD } from "./reducers";
 import placeholderImage from "../images/placeholderImage.png";
 
-export default function GlobalState({ children }) {
+const GlobalContext = createContext();
+
+const GlobalState = ({ children }) => {
   "./api/shop/list";
   const records = [
     {
@@ -65,16 +67,24 @@ export default function GlobalState({ children }) {
     dispatch({ type: REMOVE_RECORD, recordId: recordId });
   };
 
+  const [modalState, setModalState] = useState(false);
+
   return (
-    <CartContext.Provider
-      value={{
-        records: records,
-        cart: cartState.cart,
-        addToCart: addToCart,
-        removeFromCart: removeFromCart,
-      }}
+    <GlobalContext.Provider
+      value={{ modalState: modalState, setModalState: setModalState }}
     >
-      {children}
-    </CartContext.Provider>
+      <CartContext.Provider
+        value={{
+          records: records,
+          cart: cartState.cart,
+          addToCart: addToCart,
+          removeFromCart: removeFromCart,
+        }}
+      >
+        {children}
+      </CartContext.Provider>
+    </GlobalContext.Provider>
   );
-}
+};
+
+export { GlobalContext, GlobalState };
