@@ -7,14 +7,15 @@ import CartContext from "../../context/CartContext";
 
 export default function RecordCard(props) {
   const classes = useStyles();
+
   const {
-    artistName,
-    recordTitle,
-    recordPrice,
-    recordLabel,
-    releaseYear,
+    release_title: releaseTitle,
+    artists,
     genres,
-    coverImage,
+    image,
+    preloved,
+    label,
+    year,
     description,
   } = props.record;
 
@@ -42,7 +43,7 @@ export default function RecordCard(props) {
           >
             <img
               alt="record cover"
-              src={coverImage}
+              src={image}
               className={classes.coverImage}
               style={{
                 filter: blur,
@@ -64,20 +65,24 @@ export default function RecordCard(props) {
           <CardContent style={{ position: "relative", padding: "2px" }}>
             <div className={classes.flexedRow}>
               <Typography className={classes.artistName}>
-                {artistName}
+                {artists === 1
+                  ? artists[0]
+                  : artists.map((artist, index) => {
+                      return index === genres.length - 1
+                        ? artist
+                        : `${artist}, `;
+                    })}
               </Typography>
-              <Typography className={classes.recordPrice}>
-                ${recordPrice}
-              </Typography>
+              <Typography className={classes.recordPrice}>$99</Typography>
             </div>
             <div className={classes.flexedRow}>
               <Typography className={classes.recordTitle}>
-                {recordTitle}
+                {releaseTitle}
               </Typography>
             </div>
             <div className={classes.flexedRow}>
               <Typography className={classes.labelAndYear}>
-                {recordLabel} • {releaseYear}
+                {label} • {year}
               </Typography>
             </div>
             <div className={classes.flexedRow}>

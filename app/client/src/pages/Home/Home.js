@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core";
 import placeholderImage from "../../images/placeholderImage.png";
 import CartContext from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
+import { GlobalContext } from "../../context/GlobalState";
+import { useQuery } from "react-query";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -122,6 +124,9 @@ export default function Home(props) {
 
   const authContext = useContext(AuthContext);
   const cartContext = useContext(CartContext);
+  const globalContext = useContext(GlobalContext);
+
+  const newReleases = useQuery("newReleases", fetchNewReleases);
 
   return (
     <Grid container style={{}}>
@@ -151,7 +156,7 @@ export default function Home(props) {
         container
         spacing={2}
       >
-        {cartContext.records.map((record) => (
+        {newReleases.map((record) => (
           <Grid item xs={12} sm="auto" key={record.recordTitle}>
             <RecordCard record={record} />
           </Grid>

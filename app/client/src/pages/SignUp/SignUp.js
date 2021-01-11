@@ -5,7 +5,7 @@ import useStyles from "./SignUpStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { GlobalContext } from "../../context/GlobalContext";
+import { GlobalContext } from "../../context/GlobalState";
 
 export default function SignUp() {
   const classes = useStyles();
@@ -133,6 +133,7 @@ export default function SignUp() {
           <p className={classes.signUpMessage}>
             Already have an account?
             <Link
+              to={"/login"}
               className={classes.bottomLinks}
               color="secondary"
               onClick={() => globalContext.setModalState(true)}
