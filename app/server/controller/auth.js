@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const passport = require("passport");
+const user = require("../models/user");
 
 //MODEL & SESSION FUNCTIONS
 const createUser = async (req, res, next) => {
@@ -23,11 +24,29 @@ const createUser = async (req, res, next) => {
     if (!userExists) {
       const user = await User.create({ username, email, password });
       handleNewUser(user);
-    } else {
-      throw new Error("user already exists.");
+    } else if (userExists.username === username) {
+      res
+        .status(400)
+        .send({
+          formError: {
+            type: "manual",
+            name: "username",
+            message: "username is taken.",
+          },
+        });
+    } else if (userExists.email === email) {
+      res
+        .status(400)
+        .send({
+          formError: {
+            type: "manual",
+            name: "email",
+            message: "email is taken.",
+          },
+        });
     }
   } catch (e) {
-    res.status(400).json({ message: e.message });
+    res.status(500).json({ message: e.message });
   }
 };
 
@@ -55,10 +74,12 @@ const logoutUser = (req, res) => {
 };
 
 const sessionCheck = async (req, res) => {
+  console.log(req.user);
+
   if (req.user) {
-    res.status(200).json({ _id: req.user._id });
+    res.status(200).json(req.user);
   } else {
-    res.status(200).json({ _id: null });
+    res.status(200).json(null);
   }
 };
 

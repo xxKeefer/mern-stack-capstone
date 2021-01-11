@@ -36,7 +36,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "cookie cat",
     resave: false,
     saveUninitialized: false,
-    cookie: { expires: 600000 },
+    cookie: { expires: 60 * 60 * 24 * 1000 },
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
 );

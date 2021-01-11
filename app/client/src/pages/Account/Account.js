@@ -13,7 +13,8 @@ export default function Account() {
 
   return (
     <div>
-      {!authContext.isAuthenticated() && <Redirect to="/" />}
+      {console.log(authContext.authState)}
+      {!authContext.authState && <Redirect to="/" />}
       <Button onClick={handleLogout}>logout</Button>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./SignUpStyles";
@@ -8,20 +8,29 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function SignUp() {
   const classes = useStyles();
-  const { register, handleSubmit, getValues, errors } = useForm();
+  const { register, handleSubmit, getValues, errors, setError } = useForm();
   // const [signupSuccess, setSignUpSuccess] = useState("");
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
+  const [formErr, setFormErr] = useState(false);
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    const { name, type, message } = formErr;
+    setError(name, { type, message });
+  }, [formErr, setError]);
 
   const submitSignupInfo = async (userInfo) => {
     try {
       const { data } = await API.post("/auth/signup", userInfo);
-      console.log(data);
+      console.log({ data });
       // send user object to auth
       authContext.setAuthState(data);
       setRedirectOnLogin(true);
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        const { name, type, message } = error.response.data.formError;
+        setFormErr({ name, type, message });
+      }
     }
   };
 
