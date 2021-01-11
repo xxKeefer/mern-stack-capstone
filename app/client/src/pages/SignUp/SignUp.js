@@ -14,10 +14,10 @@ export default function SignUp() {
   const [formErr, setFormErr] = useState(false);
   const authContext = useContext(AuthContext);
 
-  useEffect(() => {
-    const { name, type, message } = formErr;
-    setError(name, { type, message });
-  }, [formErr, setError]);
+  // useEffect(() => {
+  //   const { name, type, message } = formErr;
+  //   setError(name, { type, message });
+  // }, [formErr, setError]);
 
   const submitSignupInfo = async (userInfo) => {
     try {
@@ -30,7 +30,7 @@ export default function SignUp() {
       if (error.response) {
         console.log(error.response.data);
         const { name, type, message } = error.response.data.formError;
-        setFormErr({ name, type, message });
+        setError(name, { type, message });
       }
     }
   };
@@ -56,6 +56,11 @@ export default function SignUp() {
               {errors.username && errors.username.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
               )}
+              {/* {errors.username && errors.username.type === "manual" && (
+                <p className={classes.errorMessage}>
+                  {errors.username.message}
+                </p>
+              )} */}
             </div>
 
             <div className={classes.formGroup}>
@@ -71,6 +76,9 @@ export default function SignUp() {
               {errors.email && errors.email.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
               )}
+              {/* {errors.email && errors.email.type === "manual" && (
+                <p className={classes.errorMessage}>{errors.email.message}</p>
+              )} */}
             </div>
 
             <div className={classes.formGroup}>
