@@ -27,3 +27,24 @@ const vinylSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Vinyl", vinylSchema);
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+
+ 
+
+const queryClient = new QueryClient()
+
+
+
+export default function App() {
+
+  return (
+
+    <QueryClientProvider client={queryClient}>
+
+      <Example />
+
+    </QueryClientProvider>
+
+  )
+
+}
