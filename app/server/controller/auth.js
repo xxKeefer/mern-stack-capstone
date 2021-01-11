@@ -51,7 +51,13 @@ const loginUser = (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.status(404).json({ message: "User does not exist." });
+      return res.status(404).send({
+        formError: {
+          type: "manual",
+          name: "email",
+          message: "user does not exist.",
+        },
+      });
     }
     req.logIn(user, (err) => {
       if (err) {

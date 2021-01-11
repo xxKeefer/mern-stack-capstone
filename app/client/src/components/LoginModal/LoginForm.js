@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function LoginModal(props) {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setError } = useForm();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const authContext = useContext(AuthContext);
 
@@ -19,7 +19,11 @@ export default function LoginModal(props) {
       setRedirectOnLogin(true);
       props.setModalState(false);
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        console.error(error.response.data.formError);
+        const { name, type, message } = error.response.data.formError;
+        setError(name, { type, message });
+      }
     }
   };
 
@@ -41,6 +45,9 @@ export default function LoginModal(props) {
             />
             {errors.email && errors.email.type === "required" && (
               <p className={classes.errorMessage}>This is required</p>
+            )}
+            {errors.email && errors.email.type === "manual" && (
+              <p className={classes.errorMessage}>{errors.email.message}</p>
             )}
           </div>
           <div className={classes.formGroup}>
