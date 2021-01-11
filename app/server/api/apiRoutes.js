@@ -7,6 +7,7 @@ const admin = require("./routes/admin");
 const shop = require("./routes/shop");
 const orders = require("./routes/orders");
 const customer = require("./routes/customer");
+const records = require("./routes/records");
 const blog = require("./routes/blog");
 const mailer = require("./routes/mailer");
 
@@ -16,6 +17,7 @@ router.use("/admin", admin);
 router.use("/shop", shop);
 router.use("/orders", orders);
 router.use("/customer", customer);
+router.use("/records", records);
 router.use("/blog", blog);
 router.use("/mailer", mailer);
 
