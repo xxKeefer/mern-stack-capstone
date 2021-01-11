@@ -133,6 +133,7 @@ export default function SignUp() {
           <p className={classes.signUpMessage}>
             Already have an account?
             <Link
+              to={"/login"}
               className={classes.bottomLinks}
               color="secondary"
               onClick={() => globalContext.setModalState(true)}

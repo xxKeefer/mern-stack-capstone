@@ -2,6 +2,8 @@ import React, { createContext, useReducer, useState } from "react";
 import CartContext from "./CartContext";
 import { cartReducer, ADD_RECORD, REMOVE_RECORD } from "./reducers";
 import placeholderImage from "../images/placeholderImage.png";
+import { API } from "../util/fetch";
+import { useQuery } from "react-query";
 
 const GlobalContext = createContext();
 
@@ -69,9 +71,19 @@ const GlobalState = ({ children }) => {
 
   const [modalState, setModalState] = useState(false);
 
+  const fetchNewReleases = async () => {
+    const { data } = API.get("/records/year/2020");
+    console.log(data);
+    return data;
+  };
+
   return (
     <GlobalContext.Provider
-      value={{ modalState: modalState, setModalState: setModalState }}
+      value={{
+        modalState: modalState,
+        setModalState: setModalState,
+        fetchNewReleases: fetchNewReleases,
+      }}
     >
       <CartContext.Provider
         value={{
