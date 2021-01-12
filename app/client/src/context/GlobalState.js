@@ -10,7 +10,6 @@ const queryClient = new QueryClient();
 const GlobalContext = createContext();
 
 const GlobalState = ({ children }) => {
-  "./api/shop/list";
   const records = [
     {
       id: 1,
@@ -89,7 +88,7 @@ const GlobalState = ({ children }) => {
       <QueryClientProvider client={queryClient}>
         <CartContext.Provider
           value={{
-            records: records,
+            records,
             cart: cartState.cart,
             addToCart: addToCart,
             removeFromCart: removeFromCart,

@@ -14,9 +14,12 @@ export default function RecordCard(props) {
     genres,
     image,
     preloved,
-    label,
+    labels,
     year,
     description,
+    variations: {
+      stock: { price },
+    },
   } = props.record;
 
   const [blur, setBlur] = useState("blur(0px)");
@@ -29,6 +32,14 @@ export default function RecordCard(props) {
       setTimeout(() => {
         setDisplay(displayState);
       }, 300);
+    }
+  };
+
+  const parseLabelData = (labels) => {
+    if (!labels) {
+      return "Year";
+    } else {
+      return labels[0].name;
     }
   };
 
@@ -65,7 +76,9 @@ export default function RecordCard(props) {
           <CardContent style={{ position: "relative", padding: "2px" }}>
             <div className={classes.flexedRow}>
               <Typography className={classes.artistName}>{artist}</Typography>
-              <Typography className={classes.recordPrice}>$99</Typography>
+              <Typography className={classes.recordPrice}>
+                ${(price / 100.0).toFixed(2)}
+              </Typography>
             </div>
             <div className={classes.flexedRow}>
               <Typography className={classes.recordTitle}>
@@ -74,7 +87,7 @@ export default function RecordCard(props) {
             </div>
             <div className={classes.flexedRow}>
               <Typography className={classes.labelAndYear}>
-                {"label"} • {year}
+                {parseLabelData(labels)} • {year}
               </Typography>
             </div>
             <div className={classes.flexedRow}>

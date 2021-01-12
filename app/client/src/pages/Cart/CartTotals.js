@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => {
       borderRadius: 0,
       backgroundColor: fluro.main,
       marginTop: "1rem",
+      width: "100%",
     },
     shoppingButton: {
       border: `2px solid ${secondary.main}`,
@@ -46,8 +47,8 @@ const useStyles = makeStyles((theme) => {
 
 export default function CartTotals(props) {
   const classes = useStyles();
-  const context = useContext(CartContext);
-  const { cart } = context;
+  const cartContext = useContext(CartContext);
+  const { cart } = cartContext;
   return (
     <div>
       <Card className={classes.card}>
@@ -60,7 +61,9 @@ export default function CartTotals(props) {
               : cart.reduce((a, b) => a + b.recordPrice * b.quantity, 0)}
           </h1>
         </div>
-        <Button className={classes.checkoutButton}>Checkout</Button>
+        <Link to="/checkout">
+          <Button className={classes.checkoutButton}>Checkout</Button>
+        </Link>
         <Link to="/">
           <Button className={classes.shoppingButton}>Continue Shopping</Button>
         </Link>

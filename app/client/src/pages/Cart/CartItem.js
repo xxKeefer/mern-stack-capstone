@@ -8,7 +8,6 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import placeholderImage from "../../images/placeholderImage.png";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import CartContext from "../../context/CartContext";
@@ -114,8 +113,14 @@ export default function CartItem(props) {
   const { cartItem } = props;
 
   const [quantity, setQuantity] = useState(1);
-
-  const { artistName, recordTitle, recordPrice, coverImage } = cartItem;
+  const {
+    artists_sort: artistName,
+    release_title: recordTitle,
+    variations: {
+      stock: { price: recordPrice },
+    },
+    image: coverImage,
+  } = cartItem;
 
   // const handleIncrement = () => {
   //   setQuantity(quantity + 1);

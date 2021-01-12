@@ -15,7 +15,6 @@ import Dashboard from "../../pages/Dashboard/Dashboard";
 import { GlobalState } from "../../context/GlobalState";
 import Genres from "../../pages/Genres/Genres";
 import { AuthContext } from "../../context/AuthContext";
-import { API } from "../../util/fetch";
 import Account from "../../pages/Account/Account";
 
 const App = () => {

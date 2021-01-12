@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext } from "react";
 import { API } from "../util/fetch";
 
 const AuthContext = createContext();
@@ -22,27 +22,16 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const getCurrentUser = async () => {
-    try {
-      const {
-        user: { user },
-      } = API.get("/auth/session");
-      return user ? user : null;
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
   const isAuthenticated = () => {
     return authState && true;
   };
 
   const isAdmin = () => {
-    // return authState && authState.roles[0] === "admin";
+    return authState && authState.roles[0] === "admin";
   };
 
   const isSuper = () => {
-    // return authState && authState.roles[0] === "super";
+    return authState && authState.roles[0] === "super";
   };
 
   const logUserOut = async () => {
