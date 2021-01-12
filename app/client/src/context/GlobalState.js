@@ -63,6 +63,7 @@ const GlobalState = ({ children }) => {
   ];
   const [cartState, dispatch] = useReducer(cartReducer, { cart: [] });
 
+
   const addToCart = (record) => {
     dispatch({ type: ADD_RECORD, record: record });
   };
