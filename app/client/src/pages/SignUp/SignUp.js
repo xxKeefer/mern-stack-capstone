@@ -4,24 +4,22 @@ import { useForm } from "react-hook-form";
 import useStyles from "./SignUpStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import { GlobalContext } from "../../context/GlobalState";
+import { useAuth } from "../../context/AuthContext";
+import { useGlobal } from "../../context/GlobalState";
 
 export default function SignUp() {
   const classes = useStyles();
+  const auth = useAuth();
+  const globe = useGlobal();
   const { register, handleSubmit, getValues, errors, setError } = useForm();
-  // const [signupSuccess, setSignUpSuccess] = useState("");
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-
-  const authContext = useContext(AuthContext);
-  const globalContext = useContext(GlobalContext);
 
   const submitSignupInfo = async (userInfo) => {
     try {
       const { data } = await API.post("/auth/signup", userInfo);
       console.log(data);
       // send user object to auth
-      authContext.setAuthState(data);
+      auth.setAuthState(data);
       setRedirectOnLogin(true);
     } catch (error) {
       if (error.response) {
@@ -136,7 +134,7 @@ export default function SignUp() {
               to={"/login"}
               className={classes.bottomLinks}
               color="secondary"
-              onClick={() => globalContext.setModalState(true)}
+              onClick={() => globe.setModalState(true)}
             >
               Log In
             </Link>

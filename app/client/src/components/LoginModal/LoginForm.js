@@ -1,25 +1,25 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useStyles from "./LoginModalStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import { GlobalContext } from "../../context/GlobalState";
+import { useAuth } from "../../context/AuthContext";
+import { useGlobal } from "../../context/GlobalState";
 
 export default function LoginForm(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors, setError } = useForm();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const authContext = useContext(AuthContext);
-  const globalContext = useContext(GlobalContext);
+  const auth = useAuth();
+  const globe = useGlobal();
 
   const submitLoginInfo = async (userInfo) => {
     try {
       const { data } = await API.post("/auth/login", userInfo);
-      authContext.setAuthState(data);
+      globe.setModalState(false);
+      auth.setAuthState(data);
       setRedirectOnLogin(true);
-      globalContext.setModalState(false);
     } catch (error) {
       if (error.response) {
         console.error(error.response.data.formError);
@@ -82,7 +82,7 @@ export default function LoginForm(props) {
             to="/signup"
             className={classes.bottomLinks}
             color="secondary"
-            onClick={() => globalContext.setModalState(false)}
+            onClick={() => globe.setModalState(false)}
           >
             Sign Up
           </Link>

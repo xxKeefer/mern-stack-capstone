@@ -11,10 +11,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MenuDrawer from "./MenuDrawer";
 import LoginModal from "../LoginModal/LoginModal";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import CartContext from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import BoxFullDark from "../../icons/BoxFullDark";
-import { AuthContext } from "../../context/AuthContext";
-import { GlobalContext } from "../../context/GlobalState";
+import { useAuth } from "../../context/AuthContext";
+import { useGlobal } from "../../context/GlobalState";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -67,20 +67,15 @@ const useStyles = makeStyles((theme) => {
 export default function ToolBarUpper() {
   const classes = useStyles();
   const theme = useTheme();
-  const cartContext = useContext(CartContext);
-  const authContext = useContext(AuthContext);
-
-  const { cart } = cartContext;
+  const auth = useAuth();
+  const globe = useGlobal();
+  const {
+    cartState: { cart, shipping },
+  } = useCart();
 
   const matchTabletDown = useMediaQuery(theme.breakpoints.down("sm"));
   const matchTabletUp = useMediaQuery(theme.breakpoints.up("sm"));
   const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
-
-  const handleClick = () => {
-    globalContext.setModalState(true);
-  };
-
-  const globalContext = useContext(GlobalContext);
 
   return (
     <Toolbar className={classes.toolBarUpper}>
@@ -91,84 +86,85 @@ export default function ToolBarUpper() {
         </h1>
       </Link>
       <div>
-        {authContext.isSuper() || authContext.isAdmin() ? (
-          <Link to="/dashboard">
-            {matchDesktopUp && <h2 className={classes.navLinks}>dashboard</h2>}
-            {matchTabletUp && (
-              <IconButton
-                aria-label="dashboard"
-                className={classes.accountButton}
-              >
-                <SupervisorAccountIcon
-                  color="secondary"
-                  className={classes.navIcons}
-                />
-              </IconButton>
-            )}
-          </Link>
-        ) : (
-          <React.Fragment>
-            {authContext.authState ? (
-              <Link to="/account">
-                {matchDesktopUp && (
-                  <h2 className={classes.navLinks}>my account</h2>
-                )}
-                {matchTabletUp && (
-                  <IconButton
-                    aria-label="account"
-                    className={classes.accountButton}
-                  >
-                    <AccountCircleIcon
-                      color="secondary"
-                      className={classes.navIcons}
-                    />
-                  </IconButton>
-                )}
-              </Link>
-            ) : (
-              <MuiLink
-                onClick={() => {
-                  globalContext.setModalState(true);
-                }}
-              >
-                {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
-                {matchTabletUp && (
-                  <IconButton
-                    aria-label="account"
-                    className={classes.accountButton}
-                  >
-                    <AccountCircleIcon
-                      color="secondary"
-                      className={classes.navIcons}
-                    />
-                  </IconButton>
-                )}
-              </MuiLink>
-            )}
-            <Link to="/cart">
-              {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
+        <React.Fragment>
+          {(auth.isSuper() || auth.isAdmin()) && (
+            <Link to="/dashboard">
+              {matchDesktopUp && (
+                <h2 className={classes.navLinks}>dashboard</h2>
+              )}
+              {matchTabletUp && (
+                <IconButton
+                  aria-label="dashboard"
+                  className={classes.accountButton}
+                >
+                  <SupervisorAccountIcon
+                    color="secondary"
+                    className={classes.navIcons}
+                  />
+                </IconButton>
+              )}
+            </Link>
+          )}
+          {auth.authState ? (
+            <Link to="/account">
+              {matchDesktopUp && (
+                <h2 className={classes.navLinks}>my account</h2>
+              )}
+              {matchTabletUp && (
+                <IconButton
+                  aria-label="account"
+                  className={classes.accountButton}
+                >
+                  <AccountCircleIcon
+                    color="secondary"
+                    className={classes.navIcons}
+                  />
+                </IconButton>
+              )}
+            </Link>
+          ) : (
+            <MuiLink
+              onClick={() => {
+                globe.setModalState(true);
+              }}
+            >
+              {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
+              {matchTabletUp && (
+                <IconButton
+                  aria-label="account"
+                  className={classes.accountButton}
+                >
+                  <AccountCircleIcon
+                    color="secondary"
+                    className={classes.navIcons}
+                  />
+                </IconButton>
+              )}
+            </MuiLink>
+          )}
+          <Link to="/cart">
+            {matchDesktopUp && <h2 className={classes.navLinks}>cart</h2>}
 
-              <IconButton edge="end" aria-label="cart">
-                {cart.length > 0 ? (
-                  <div style={{ position: "relative" }}>
-                    <BoxFullDark
-                      className={classes.navIcons}
-                      viewBox="0 0 60 60"
-                    />
-                    <div className={classes.cartIconDiv}>
-                      <p>{cart.reduce((a, b) => a + b.quantity, 0)}</p>
-                    </div>
-                  </div>
-                ) : (
-                  <BoxEmptyDark
+            <IconButton edge="end" aria-label="cart">
+              {cart.length > 0 ? (
+                <div style={{ position: "relative" }}>
+                  <BoxFullDark
                     className={classes.navIcons}
                     viewBox="0 0 60 60"
                   />
-                )}
-              </IconButton>
-            </Link>
-          </React.Fragment>
-        )}
+                  <div className={classes.cartIconDiv}>
+                    <p>{cart.reduce((a, b) => a + b.quantity, 0)}</p>
+                  </div>
+                </div>
+              ) : (
+                <BoxEmptyDark
+                  className={classes.navIcons}
+                  viewBox="0 0 60 60"
+                />
+              )}
+            </IconButton>
+          </Link>
+        </React.Fragment>
         <LoginModal />
       </div>
     </Toolbar>

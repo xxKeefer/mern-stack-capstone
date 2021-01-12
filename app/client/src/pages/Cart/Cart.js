@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
 import useStyles from "./CartStyles";
 import CartItem from "./CartItem";
-import { Box, Container } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import CartTotals from "./CartTotals";
-import CartContext from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import Checkout from "../Checkout/Checkout";
 import ShippingDetails from "./ShippingDetails";
 
 export default function SignUp() {
   const classes = useStyles();
 
-  const context = useContext(CartContext);
+  const {
+    cartState: { cart, shipping },
+  } = useCart();
 
   const handleShippingSubmit = () => {};
 
@@ -26,12 +28,12 @@ export default function SignUp() {
             border: "2px solid red",
           }}
         >
-          {context.cart.length <= 0 && (
+          {cart.length <= 0 && (
             <p style={{ color: "white", fontSize: "1rem" }}>
               No Items in the Cart
             </p>
           )}
-          {context.cart.map((cartItem) => {
+          {cart.map((cartItem) => {
             return <CartItem key={cartItem.discogs_id} cartItem={cartItem} />;
           })}
         </div>
