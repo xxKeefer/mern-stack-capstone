@@ -1,5 +1,5 @@
 import { Card, IconButton, Modal } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import LoginForm from "./LoginForm";
 import useStyles from "./LoginModalStyles";
