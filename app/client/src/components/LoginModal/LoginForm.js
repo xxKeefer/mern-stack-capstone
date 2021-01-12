@@ -87,7 +87,7 @@ export default function LoginForm(props) {
             Sign Up
           </Link>
         </p>
-        <Link className={classes.bottomLinks} color="secondary">
+        <Link to="/" className={classes.bottomLinks} color="secondary">
           Reset Password
         </Link>
       </div>

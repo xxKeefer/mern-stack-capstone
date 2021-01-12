@@ -24,7 +24,7 @@ export default function SignUp() {
             <p style={{ color: "white" }}>No Items in the Cart</p>
           )}
           {context.cart.map((cartItem) => {
-            return <CartItem cartItem={cartItem} />;
+            return <CartItem key={cartItem.discogs_id} cartItem={cartItem} />;
           })}
         </Box>
         <Container
