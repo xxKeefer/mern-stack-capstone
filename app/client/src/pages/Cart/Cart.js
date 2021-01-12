@@ -4,6 +4,7 @@ import CartItem from "./CartItem";
 import { Box, Container } from "@material-ui/core";
 import CartTotals from "./CartTotals";
 import CartContext from "../../context/CartContext";
+import Checkout from "../Checkout/Checkout";
 
 export default function SignUp() {
   const classes = useStyles();
@@ -24,7 +25,7 @@ export default function SignUp() {
             <p style={{ color: "white" }}>No Items in the Cart</p>
           )}
           {context.cart.map((cartItem) => {
-            return <CartItem cartItem={cartItem} />;
+            return <CartItem key={cartItem.discogs_id} cartItem={cartItem} />;
           })}
         </Box>
         <Container
@@ -33,6 +34,7 @@ export default function SignUp() {
           }}
         >
           <CartTotals />
+          <Checkout></Checkout>
         </Container>
       </Box>
     </div>

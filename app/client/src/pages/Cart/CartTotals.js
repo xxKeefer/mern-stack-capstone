@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
+import { toCurrencyString } from "../../util/currency";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -47,8 +48,10 @@ const useStyles = makeStyles((theme) => {
 
 export default function CartTotals(props) {
   const classes = useStyles();
-  const cartContext = useContext(CartContext);
-  const { cart } = cartContext;
+  const context = useContext(CartContext);
+  const { cart } = context;
+
+  console.log(cart);
   return (
     <div>
       <Card className={classes.card}>
@@ -57,8 +60,15 @@ export default function CartTotals(props) {
           <h1 className={classes.totalPrice}>
             $
             {cart.length === 1
-              ? cart[0].quantity * cart[0].recordPrice
-              : cart.reduce((a, b) => a + b.recordPrice * b.quantity, 0)}
+              ? toCurrencyString(
+                  cart[0].quantity * cart[0].variations.stock.price
+                )
+              : toCurrencyString(
+                  cart.reduce(
+                    (a, b) => a + b.variations.stock.price * b.quantity,
+                    0
+                  )
+                )}
           </h1>
         </div>
         <Link to="/checkout">
