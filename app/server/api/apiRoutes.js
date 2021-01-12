@@ -1,24 +1,24 @@
 const express = require("express");
 let router = express.Router();
 
-const auth = require("./routes/auth");
-const example = require("./routes/example");
 const admin = require("./routes/admin");
-const shop = require("./routes/shop");
-const orders = require("./routes/orders");
-const customer = require("./routes/customer");
-const records = require("./routes/records");
+const auth = require("./routes/auth");
 const blog = require("./routes/blog");
+const customer = require("./routes/customer");
+const example = require("./routes/example");
 const mailer = require("./routes/mailer");
+const orders = require("./routes/orders");
+const records = require("./routes/records");
+const shop = require("./routes/shop");
 
-router.use("/auth", auth);
-router.use("/example", example);
 router.use("/admin", admin);
-router.use("/shop", shop);
-router.use("/orders", orders);
-router.use("/customer", customer);
-router.use("/records", records);
+router.use("/auth", auth);
 router.use("/blog", blog);
+router.use("/customer", customer);
+router.use("/example", example);
 router.use("/mailer", mailer);
+router.use("/orders", orders);
+router.use("/records", records);
+router.use("/shop", shop);
 
 module.exports = router;
