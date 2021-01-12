@@ -27,11 +27,11 @@ const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    // return authState && authState.roles[0] === "admin";
+    return authState && authState.roles[0] === "admin";
   };
 
   const isSuper = () => {
-    // return authState && authState.roles[0] === "super";
+    return authState && authState.roles[0] === "super";
   };
 
   const logUserOut = async () => {
