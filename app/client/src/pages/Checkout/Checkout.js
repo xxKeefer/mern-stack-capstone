@@ -1,6 +1,5 @@
 import React from "react";
 import { API } from "../../util/fetch";
-import "react-square-payment-form/lib/default.css";
 import {
   SquarePaymentForm,
   CreditCardNumberInput,
@@ -8,8 +7,20 @@ import {
   CreditCardCVVInput,
   CreditCardSubmitButton,
 } from "react-square-payment-form";
+import { withStyles } from "@material-ui/core/styles";
 
-export default class Checkout extends React.Component {
+const useStyles = (theme) => ({
+  paymentContainer: {
+    backgroundColor: "EEE",
+  },
+  fab: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+});
+
+class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,8 +51,10 @@ export default class Checkout extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
+      <div style={{ backgroundColor: "EEE" }}>
         <h1>checkout items</h1>
 
         <SquarePaymentForm
@@ -50,7 +63,7 @@ export default class Checkout extends React.Component {
           locationId={"LWB7HW6Z45KS9"} //SANDBOX_LOCATION_ID
           cardNonceResponseReceived={this.cardNonceResponseReceived}
         >
-          <fieldset className="sq-fieldset">
+          <fieldset className="sq-fieldset" >
             <CreditCardNumberInput />
             <div className="sq-form-third">
               <CreditCardExpirationDateInput />
@@ -73,3 +86,5 @@ export default class Checkout extends React.Component {
     );
   }
 }
+
+export default withStyles(useStyles)(Checkout);

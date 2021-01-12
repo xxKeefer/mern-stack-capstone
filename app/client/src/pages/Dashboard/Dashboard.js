@@ -56,19 +56,19 @@ export default function Dashboard() {
   const { register, handleSubmit, errors, setError, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 
+  const showSuccessfulSubmit = () => {
+    setSuccessfulSubmit(true);
+    setTimeout(() => {
+      setSuccessfulSubmit(false);
+    }, 1000);
+  };
+
   const submitAddRecord = async (recordInfo) => {
     console.log(recordInfo);
     recordInfo.preloved === "true"
       ? (recordInfo.preloved = true)
       : (recordInfo.preloved = false);
     recordInfo.price = parseInt(recordInfo.price);
-
-    const showSuccessfulSubmit = () => {
-      setSuccessfulSubmit(true);
-      setTimeout(() => {
-        setSuccessfulSubmit(false);
-      }, 1000);
-    };
 
     try {
       const { data } = await API.post("/shop/add", recordInfo);
