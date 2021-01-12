@@ -1,4 +1,5 @@
 import React from "react";
+import { API } from "../../util/fetch";
 import "react-square-payment-form/lib/default.css";
 import {
   SquarePaymentForm,
@@ -16,7 +17,16 @@ export default class Checkout extends React.Component {
     };
   }
 
-  cardNonceResponseReceived = (
+  submitPayment = async (nonce, token) => {
+    try {
+      const { data } = await API.post(`/payments/${nonce}/${token}`);
+      if (data) return data;
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  cardNonceResponseReceived = async (
     errors,
     nonce,
     cardData,
@@ -34,6 +44,11 @@ export default class Checkout extends React.Component {
         ", buyerVerificationToken: " +
         buyerVerificationToken
     );
+    const paymentResponse = await this.submitPayment(
+      nonce,
+      buyerVerificationToken
+    );
+    console.log({ paymentResponse });
   };
 
   createVerificationDetails() {
