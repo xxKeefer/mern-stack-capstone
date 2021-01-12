@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import SignUp from "../../pages/SignUp/SignUp";
 import Cart from "../../pages/Cart/Cart";
+import Checkout from "../../pages/Checkout/Checkout";
 import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";
@@ -32,6 +33,7 @@ const App = () => {
                 <MainContainer>
                   <Route path="/signup" component={SignUp} />
                   <Route path="/cart" component={Cart} />
+                  <Route path="/checkout" component={Checkout} />
                   <Route path="/contact" component={Contact} />
                   <Route path="/news" component={News} />
                   <Route path="/genres" component={Genres} />
