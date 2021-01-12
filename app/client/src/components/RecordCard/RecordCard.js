@@ -4,6 +4,7 @@ import { Box, CardContent, IconButton, Typography } from "@material-ui/core";
 import useStyles from "./RecordCardStyles";
 import CartIcon from "../../icons/BoxFullDark";
 import CartContext from "../../context/CartContext";
+import { toCurrencyString } from "../../util/currency";
 
 export default function RecordCard(props) {
   const classes = useStyles();
@@ -77,7 +78,7 @@ export default function RecordCard(props) {
             <div className={classes.flexedRow}>
               <Typography className={classes.artistName}>{artist}</Typography>
               <Typography className={classes.recordPrice}>
-                ${(price / 100.0).toFixed(2)}
+                ${toCurrencyString(price)}
               </Typography>
             </div>
             <div className={classes.flexedRow}>

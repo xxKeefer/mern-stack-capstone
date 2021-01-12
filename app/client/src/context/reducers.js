@@ -4,7 +4,7 @@ export const REMOVE_RECORD = "REMOVE_RECORD";
 const addToCart = (record, state) => {
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(
-    (item) => item.id === record.id
+    (item) => item.discogs_id === record.discogs_id
   );
 
   if (updatedItemIndex < 0) {
@@ -24,7 +24,7 @@ const addToCart = (record, state) => {
 const removeFromCart = (record, state) => {
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(
-    (item) => item.id === record.id
+    (item) => item.discogs_id === record.discogs_id
   );
 
   const updatedItem = {

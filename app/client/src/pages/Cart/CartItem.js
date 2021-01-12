@@ -112,10 +112,18 @@ export default function CartItem(props) {
   const classes = useStyles();
 
   const { cartItem } = props;
+  console.log({ cartItem });
 
   const [quantity, setQuantity] = useState(1);
 
-  const { artistName, recordTitle, recordPrice, coverImage } = cartItem;
+  const {
+    artists_sort: artistName,
+    release_title: recordTitle,
+    variations: {
+      stock: { price: recordPrice },
+    },
+    image: coverImage,
+  } = cartItem;
 
   // const handleIncrement = () => {
   //   setQuantity(quantity + 1);
@@ -175,7 +183,7 @@ export default function CartItem(props) {
               </div>
               <div className={classes.flexedColumn}>
                 <Typography className={classes.recordPrice}>
-                  ${recordPrice * cartItem.quantity}
+                  ${((recordPrice / 100.0) * cartItem.quantity).toFixed(2)}
                 </Typography>
                 <Typography
                   className={classes.removeItem}

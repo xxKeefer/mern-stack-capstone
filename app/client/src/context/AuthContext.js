@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext } from "react";
 import { API } from "../util/fetch";
 
 const AuthContext = createContext();
@@ -19,17 +19,6 @@ const AuthProvider = ({ children }) => {
       return user;
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const getCurrentUser = async () => {
-    try {
-      const {
-        user: { user },
-      } = API.get("/auth/session");
-      return user ? user : null;
-    } catch (e) {
-      console.log(e.message);
     }
   };
 
