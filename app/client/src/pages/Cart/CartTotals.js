@@ -2,8 +2,13 @@ import { Button, Card } from "@material-ui/core";
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CartContext from "../../context/CartContext";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import { toCurrencyString } from "../../util/currency";
+import {
+  toCurrencyString,
+  evaluateTotalPrice,
+  buildLineItems,
+} from "../../util/shop";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -48,8 +53,8 @@ const useStyles = makeStyles((theme) => {
 
 export default function CartTotals(props) {
   const classes = useStyles();
-  const context = useContext(CartContext);
-  const { cart } = context;
+  const { cart } = useContext(CartContext);
+  const { authState: auth } = useContext(AuthContext);
 
   console.log(cart);
   return (
@@ -58,17 +63,7 @@ export default function CartTotals(props) {
         <div className={classes.totalContainer}>
           <h1 className={classes.totalsTitle}>total</h1>
           <h1 className={classes.totalPrice}>
-            $
-            {cart.length === 1
-              ? toCurrencyString(
-                  cart[0].quantity * cart[0].variations.stock.price
-                )
-              : toCurrencyString(
-                  cart.reduce(
-                    (a, b) => a + b.variations.stock.price * b.quantity,
-                    0
-                  )
-                )}
+            ${toCurrencyString(evaluateTotalPrice(cart))}
           </h1>
         </div>
         <Link to="/checkout">

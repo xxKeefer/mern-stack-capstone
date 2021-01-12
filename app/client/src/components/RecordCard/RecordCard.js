@@ -4,7 +4,7 @@ import { Box, CardContent, IconButton, Typography } from "@material-ui/core";
 import useStyles from "./RecordCardStyles";
 import CartIcon from "../../icons/BoxFullDark";
 import CartContext from "../../context/CartContext";
-import { toCurrencyString } from "../../util/currency";
+import { toCurrencyString } from "../../util/shop";
 
 export default function RecordCard(props) {
   const classes = useStyles();
