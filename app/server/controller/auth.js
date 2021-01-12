@@ -55,7 +55,7 @@ const loginUser = (req, res, next) => {
         formError: {
           type: "manual",
           name: "email",
-          message: "user does not exist.",
+          message: "username or password incorrect.",
         },
       });
     }

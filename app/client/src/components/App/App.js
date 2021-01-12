@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import SignUp from "../../pages/SignUp/SignUp";
 import Cart from "../../pages/Cart/Cart";
+import Checkout from "../../pages/Checkout/Checkout";
 import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";

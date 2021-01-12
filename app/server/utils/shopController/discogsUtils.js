@@ -13,6 +13,7 @@ const processRaw = (raw) => {
     styles,
     tracklist,
     images,
+    labels,
   } = raw.data;
   return {
     id,
@@ -25,6 +26,7 @@ const processRaw = (raw) => {
     styles,
     tracklist,
     images,
+    labels,
   };
 };
 
