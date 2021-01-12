@@ -1,39 +1,18 @@
-//TODO: erase commented code that is no longer required
-
-// import React, { useContext } from "react";
 import React from "react";
 import RecordCard from "../../components/RecordCard/RecordCard";
 import { Divider, Grid, Paper, Typography } from "@material-ui/core";
 import HeroImage from "../../components/HeroImage/HeroImage";
-// import shopImage from "../../images/shop-image.jpg";
-// import { makeStyles } from "@material-ui/core";
-// import placeholderImage from "../../images/placeholderImage.png";
-// import CartContext from "../../context/CartContext";
-// import { AuthContext } from "../../context/AuthContext";
-// import { GlobalContext } from "../../context/GlobalState";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";
 import useStyles from "./HomeStyles";
 
-
 export default function Home(props) {
   const classes = useStyles();
-
-  // const authContext = useContext(AuthContext);
-  // const cartContext = useContext(CartContext);
-  // const globalContext = useContext(GlobalContext);
-
-  // const fetchNewReleases = async () => {
-  //   const promise = await API.get("/records/year/2020");
-  //   return promise.data;
-  // };
 
   const { data: newReleases, status } = useQuery("newReleases", async () => {
     const { data } = await API.get("/records/year/2020");
     return data;
   });
-
-  // const [newReleases, setNewReleases] = useState([]);
 
   return (
     <Grid container style={{}}>

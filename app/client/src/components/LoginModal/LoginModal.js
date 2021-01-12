@@ -3,23 +3,20 @@ import React, { useContext, useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import LoginForm from "./LoginForm";
 import useStyles from "./LoginModalStyles";
-import { AuthContext } from "../../context/AuthContext";
-import { GlobalContext } from "../../context/GlobalState";
+import { useGlobal } from "../../context/GlobalState";
 
 export default function LoginModal(props) {
   const classes = useStyles();
-  const authContext = useContext(AuthContext);
-  const globalContext = useContext(GlobalContext);
-
-  const closeClick = (state) => {
-    globalContext.setModalState(false);
+  const globe = useGlobal();
+  const closeClick = () => {
+    globe.setModalState(false);
   };
 
   return (
     <div>
       <Modal
         className={classes.modal}
-        open={globalContext.modalState}
+        open={globe.modalState}
         onClose={closeClick}
       >
         <Card className={classes.card}>

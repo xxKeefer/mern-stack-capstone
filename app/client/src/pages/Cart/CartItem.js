@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import {
-  Button,
   CardContent,
   CardMedia,
   IconButton,
@@ -10,7 +9,8 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import CartContext from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
+import { ACTIONS } from "../../context/reducers/cartReducer";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -109,12 +109,11 @@ const useStyles = makeStyles((theme) => {
 
 export default function CartItem(props) {
   const classes = useStyles();
+  const { dispatch } = useCart();
 
   const { cartItem } = props;
   console.log({ cartItem });
 
-
-  const [quantity, setQuantity] = useState(1);
   const {
     artists_sort: artistName,
     release_title: recordTitle,
@@ -124,77 +123,74 @@ export default function CartItem(props) {
     image: coverImage,
   } = cartItem;
 
-  // const handleIncrement = () => {
-  //   setQuantity(quantity + 1);
-  // };
-  // const handleDecrement = () => {
-  //   if (quantity > 0) {
-  //     setQuantity(quantity - 1);
-  //   }
-  // };
-
   return (
-    <CartContext.Consumer>
-      {(context) => (
-        <Card className={classes.card}>
-          <div className={classes.cardMediaWrapper}>
-            <CardMedia
-              image={coverImage}
-              className={classes.coverImage}
-              title="placeholder"
-            ></CardMedia>
+    <Card className={classes.card}>
+      <div className={classes.cardMediaWrapper}>
+        <CardMedia
+          image={coverImage}
+          className={classes.coverImage}
+          title="placeholder"
+        ></CardMedia>
+      </div>
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <div className={classes.leftColumn}>
+            <Typography className={classes.artistName}>{artistName}</Typography>
+            <Typography className={classes.recordTitle}>
+              {recordTitle}
+            </Typography>
           </div>
-          <div className={classes.details}>
-            <CardContent className={classes.content}>
-              <div className={classes.leftColumn}>
-                <Typography className={classes.artistName}>
-                  {artistName}
-                </Typography>
-                <Typography className={classes.recordTitle}>
-                  {recordTitle}
-                </Typography>
-              </div>
-              <div className={classes.flexedColumn}>
-                <div
-                  className={classes.quantityContainer}
-                  style={{ padding: 0 }}
+          <div className={classes.flexedColumn}>
+            <div className={classes.quantityContainer} style={{ padding: 0 }}>
+              <IconButton
+                onClick={() => {
+                  dispatch({
+                    type: ACTIONS.ADD_RECORD,
+                    payload: cartItem,
+                  });
+                }}
+                style={{ height: "1rem" }}
+              >
+                <AddIcon className={classes.quantityIcons} />
+              </IconButton>
+              <h3 className={classes.quantityIcons}>{cartItem.quantity}</h3>
+              {cartItem.quantity > 1 ? (
+                <IconButton
+                  onClick={() => {
+                    dispatch({
+                      type: ACTIONS.REMOVE_RECORD,
+                      payload: cartItem,
+                    });
+                  }}
+                  style={{ height: "1rem" }}
                 >
-                  <IconButton
-                    onClick={() => context.addToCart(cartItem)}
-                    style={{ height: "1rem" }}
-                  >
-                    <AddIcon className={classes.quantityIcons} />
-                  </IconButton>
-                  <h3 className={classes.quantityIcons}>{cartItem.quantity}</h3>
-                  {cartItem.quantity > 1 ? (
-                    <IconButton
-                      onClick={() => context.removeFromCart(cartItem)}
-                      style={{ height: "1rem" }}
-                    >
-                      <RemoveIcon className={classes.quantityIcons} />
-                    </IconButton>
-                  ) : (
-                    <IconButton style={{ height: "1rem" }} disabled={true}>
-                      <RemoveIcon className={classes.quantityIcons} />
-                    </IconButton>
-                  )}
-                </div>
-              </div>
-              <div className={classes.flexedColumn}>
-                <Typography className={classes.recordPrice}>
-                  ${((recordPrice / 100.0) * cartItem.quantity).toFixed(2)}
-                </Typography>
-                <Typography
-                  className={classes.removeItem}
-                  onClick={() => context.removeFromCart(cartItem)}
-                >
-                  Remove Item
-                </Typography>
-              </div>
-            </CardContent>
+                  <RemoveIcon className={classes.quantityIcons} />
+                </IconButton>
+              ) : (
+                <IconButton style={{ height: "1rem" }} disabled={true}>
+                  <RemoveIcon className={classes.quantityIcons} />
+                </IconButton>
+              )}
+            </div>
           </div>
-        </Card>
-      )}
-    </CartContext.Consumer>
+          <div className={classes.flexedColumn}>
+            <Typography className={classes.recordPrice}>
+              ${((recordPrice / 100.0) * cartItem.quantity).toFixed(2)}
+            </Typography>
+            <Typography
+              className={classes.removeItem}
+              onClick={() => {
+                dispatch({
+                  type: ACTIONS.REMOVE_RECORD,
+                  payload: cartItem,
+                });
+              }}
+            >
+              Remove Item
+            </Typography>
+          </div>
+        </CardContent>
+      </div>
+    </Card>
   );
 }
