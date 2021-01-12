@@ -31,7 +31,6 @@ export default function Home(props) {
       return data;
     }
   );
-  console.log({ newReleases });
 
   // const [newReleases, setNewReleases] = useState([]);
 
