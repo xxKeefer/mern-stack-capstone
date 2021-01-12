@@ -25,6 +25,7 @@ const addItem = async (req, res) => {
       styles,
       tracklist,
       images,
+      labels,
     } = data;
 
     const item = await square.addItem(
@@ -56,6 +57,7 @@ const addItem = async (req, res) => {
       description,
       review,
       preloved,
+      labels,
     });
 
     res.status(201).json(newVinyl);
@@ -68,7 +70,7 @@ const addItems = async (req, res) => {
   const { upload_items: batchArray } = req.body;
   try {
     const processedByDiscogs = await Discogs.batchGetInfo(batchArray);
-
+    //TODO: make sure labels field is coming through
     const uploadedItems = await square.addItems(processedByDiscogs);
 
     // bind square_id to items processed by discogs and make data fit model
