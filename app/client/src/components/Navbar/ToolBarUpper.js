@@ -71,6 +71,7 @@ export default function ToolBarUpper() {
   const authContext = useContext(AuthContext);
 
   const { cart } = cartContext;
+
   const matchTabletDown = useMediaQuery(theme.breakpoints.down("sm"));
   const matchTabletUp = useMediaQuery(theme.breakpoints.up("sm"));
   const matchDesktopUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -110,7 +111,7 @@ export default function ToolBarUpper() {
             {authContext.authState ? (
               <Link to="/account">
                 {matchDesktopUp && (
-                  <h2 className={classes.navLinks}>my account </h2>
+                  <h2 className={classes.navLinks}>my account</h2>
                 )}
                 {matchTabletUp && (
                   <IconButton

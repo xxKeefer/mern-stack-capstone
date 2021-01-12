@@ -5,38 +5,36 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState(null);
-  const [sessionExpiry, setSessionExpiry] = useState(null);
-
-  const currentDate = new Date();
-  let expiryDate = new Date();
 
   const setAuthInfo = (currentUserInfo) => {
     setAuthState(currentUserInfo);
-    expiryDate.setDate(expiryDate.getDate() + 1).toLocaleString();
-    setSessionExpiry(expiryDate);
-    console.log(expiryDate);
-    console.log(currentDate);
   };
 
-  // const currentSessionId = async () => {
-  //   try {
-  //     const {
-  //       data: { _id: currentUserId },
-  //     } = await publicFetch("/api/auth/session");
-  //     console.log(currentUserId);
-  //     return currentUserId;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchSessionUser = async () => {
+    try {
+      const {
+        data: { user },
+      } = await API.get("auth/session");
+      console.log("fetchsession:", user);
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCurrentUser = async () => {
+    try {
+      const {
+        user: { user },
+      } = API.get("/auth/session");
+      return user ? user : null;
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   const isAuthenticated = () => {
-    if (currentDate < sessionExpiry) {
-      return true;
-    } else {
-      setAuthState(null);
-      return false;
-    }
+    return authState && true;
   };
 
   const isAdmin = () => {
@@ -48,10 +46,14 @@ const AuthProvider = ({ children }) => {
   };
 
   const logUserOut = async () => {
-    const { data } = await API.get("/auth/logout");
-    console.log(data);
-    setAuthState(null);
-    setSessionExpiry(null);
+    try {
+      const { data } = await API.get("/auth/logout");
+
+      console.log("loguserout", data);
+      setAuthState(null);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -63,6 +65,7 @@ const AuthProvider = ({ children }) => {
         isAdmin,
         isSuper,
         logUserOut,
+        fetchSessionUser,
       }}
     >
       {children}

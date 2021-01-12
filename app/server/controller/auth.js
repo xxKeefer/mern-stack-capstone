@@ -70,15 +70,18 @@ const loginUser = (req, res, next) => {
 
 const logoutUser = (req, res) => {
   req.session.destroy(() => {
-    res.status(200).json({ message: "session destroyed." });
+    res
+      .status(200)
+      .clearCookie("connect.sid")
+      .json({ message: "session destroyed." });
   });
 };
 
 const sessionCheck = async (req, res) => {
   if (req.user) {
-    res.status(200).json({ _id: req.user._id });
+    res.status(200).json({ user: req.user });
   } else {
-    res.status(200).json({ _id: null });
+    res.status(200).json({ user: req.user });
   }
 };
 
