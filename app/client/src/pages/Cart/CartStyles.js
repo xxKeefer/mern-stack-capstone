@@ -12,11 +12,14 @@ const useStyles = makeStyles((theme) => {
       height: "100%",
       padding: "2rem",
     },
-    formTitle: {
+    pageTitle: {
       color: primary.main,
     },
     cartInfoBox: {
       display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+
       [breakpoints.down("sm")]: {
         flexDirection: "column",
         padding: 0,
