@@ -64,7 +64,7 @@ export default function Home(props) {
       >
         {status === "success" &&
           newReleases.map((record) => (
-            <Grid item xs={12} sm="auto" key={record.recordTitle}>
+            <Grid item xs={12} sm="auto" key={record.discogs_id}>
               <RecordCard record={record} />
             </Grid>
           ))}
