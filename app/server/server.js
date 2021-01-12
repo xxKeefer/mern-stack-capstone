@@ -10,13 +10,23 @@ const passport = require("passport");
 // EXPRESS CONFIG
 const app = express();
 const port = process.env.PORT || 8080;
-app.use(
-  cors({
-    origin: "http://localhost:3000", // allow to server to accept request from different origin
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-  })
-);
+
+//CORS CONFIGURATION
+const allowList = ["http://localhost:3000"]; // allow to server to accept request from different origin
+const corsConfig = {
+  origin: (origin, callback) => {
+    // Check each url in allowList and see if it includes the origin (instead of matching exact string)
+    const allowListIndex = allowList.findIndex((url) => url.includes(origin));
+    console.log(
+      "ORIGIN :: Request permitted from: ",
+      allowList[allowListIndex]
+    );
+    callback(null, allowListIndex > -1);
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+app.use(cors(corsConfig));
 app.use(express.urlencoded({ limit: "50mb", extended: false }));
 app.use(express.json({ limit: "50mb" }));
 
@@ -28,18 +38,26 @@ mongoose.connect(process.env.DB_URL, {
 });
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
-db.once("open", () => console.log("Database successfully connected."));
+db.once("open", () => console.log("DB :: connected successfully."));
+
+//SESSION CONFIGURATION
+const sessionConfig = {
+  secret: process.env.SESSION_SECRET || "cookie cat",
+  resave: false,
+  saveUninitialized: false,
+  proxy: true,
+  cookie: { expires: 600000, httpOnly: false },
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+};
+
+if (process.env.NODE_ENV === "production") {
+  sessionConfig.cookie.sameSite = "none"; // allow cross-site usage of cookies
+  sessionConfig.cookie.secure = true; // secures cookies
+}
+app.enable("trust proxy"); //stamps the cookie to tell FE it is secure
 
 //MIDDLEWARE
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "cookie cat",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { expires: 600000 },
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  })
-);
+app.use(session(sessionConfig));
 
 //configure local strategy for passport
 require("./middleware/passport");
@@ -60,7 +78,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.listen(port, () => {
-  console.log("App listening @ port:" + port);
+  console.log("PORT :: Listening @ port:" + port);
 });
-
-//test
