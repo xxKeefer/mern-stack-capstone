@@ -37,7 +37,7 @@ export default function RecordCard(props) {
   };
 
   const parseLabelData = (labels) => {
-    if (!labels) {
+    if (labels.length < 1) {
       return "Year";
     } else {
       return labels[0].name;

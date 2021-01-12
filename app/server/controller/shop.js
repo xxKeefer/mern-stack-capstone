@@ -3,6 +3,8 @@ const Discogs = require("../utils/shopController/discogsUtils");
 const Vinyl = require("../models/vinyl");
 
 const addItem = async (req, res) => {
+  console.log(req.body);
+
   const {
     release_id, // from Discogs
     price, // manual entry

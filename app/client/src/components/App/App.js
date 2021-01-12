@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import SignUp from "../../pages/SignUp/SignUp";
 import Cart from "../../pages/Cart/Cart";
-import Checkout from "../../pages/Checkout/Checkout";
 import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";
@@ -16,7 +15,6 @@ import Dashboard from "../../pages/Dashboard/Dashboard";
 import { GlobalState } from "../../context/GlobalState";
 import Genres from "../../pages/Genres/Genres";
 import { AuthContext } from "../../context/AuthContext";
-import { API } from "../../util/fetch";
 import Account from "../../pages/Account/Account";
 
 const App = () => {
@@ -45,7 +43,6 @@ const App = () => {
                 <Route path="/signup" component={SignUp} />
                 <Route path="/cart" component={Cart} />
                 <Route path="/contact" component={Contact} />
-                <Route path="/checkout" component={Checkout} />
                 <Route path="/news" component={News} />
                 <Route path="/genres" component={Genres} />
                 <Route path="/account" component={Account} />

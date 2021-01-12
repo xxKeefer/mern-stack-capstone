@@ -1,5 +1,5 @@
-import { Box, Container, makeStyles } from "@material-ui/core";
-import React from "react";
+import { Box, Container, Fade, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
 import theme from "../../components/App/theme";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -7,7 +7,7 @@ import { API } from "../../util/fetch";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { primary, secondary },
+    palette: { light, primary, secondary },
     breakpoints,
   } = theme;
   return {
@@ -41,23 +41,46 @@ const useStyles = makeStyles((theme) => {
     formLabel: { fontSize: "1rem", color: secondary.main },
     errorMessage: { color: "#ed2e38" },
     formTitle: {},
+    successfulSubmit: {
+      padding: "0.5rem, 2rem",
+      backgroundColor: light.main,
+      color: secondary.main,
+      border: `2px solid ${secondary.main}`,
+    },
   };
 });
 
 export default function Dashboard() {
   const classes = useStyles();
 
-  const { register, handleSubmit, errors, setError } = useForm();
+  const { register, handleSubmit, errors, setError, reset } = useForm();
+  const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 
   const submitAddRecord = async (recordInfo) => {
     console.log(recordInfo);
+    recordInfo.preloved === "true"
+      ? (recordInfo.preloved = true)
+      : (recordInfo.preloved = false);
+    recordInfo.price = parseInt(recordInfo.price);
+
+    const showSuccessfulSubmit = () => {
+      setSuccessfulSubmit(true);
+      setTimeout(() => {
+        setSuccessfulSubmit(false);
+      }, 1000);
+    };
+
     try {
       const { data } = await API.post("/shop/add", recordInfo);
       console.log(data);
+      showSuccessfulSubmit();
+      reset();
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(successfulSubmit);
 
   return (
     <div>
@@ -87,6 +110,7 @@ export default function Dashboard() {
                 <option value="false">New</option>
                 <option value="true">Preloved</option>
               </select>
+
               {errors.price && errors.price.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
               )}
@@ -129,7 +153,11 @@ export default function Dashboard() {
                 row={3}
               />
             </div>
-
+            {successfulSubmit && (
+              <p className={classes.successfulSubmit}>
+                Record Submitted Successfully
+              </p>
+            )}
             <input
               className={classes.submitButton}
               type="submit"
