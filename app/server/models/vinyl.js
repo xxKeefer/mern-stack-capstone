@@ -19,7 +19,7 @@ const vinylSchema = new mongoose.Schema({
   },
   catalog_number: { type: String, required: false },
   format: { type: String, required: false },
-  label: { type: String, required: false },
+  labels: { type: Array, required: false },
   release_date: { type: String, required: false },
   year: { type: String, required: false },
   description: { type: String, required: false },
