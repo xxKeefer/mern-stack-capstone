@@ -17,57 +17,27 @@ export default class Checkout extends React.Component {
     };
   }
 
-  submitPayment = async (nonce, token) => {
+  submitPayment = async (nonce, price) => {
+    const payDetails = { nonce, price };
     try {
-      const { data } = await API.post(`/payments/${nonce}/${token}`);
+      const { data } = await API.post(`/payments/`, payDetails);
       if (data) return data;
     } catch (e) {
       console.log(e.message);
     }
   };
 
-  cardNonceResponseReceived = async (
-    errors,
-    nonce,
-    cardData,
-    buyerVerificationToken
-  ) => {
+  cardNonceResponseReceived = async (errors, nonce, price) => {
     if (errors) {
       this.setState({ errorMessages: errors.map((error) => error.message) });
       return;
     }
 
     this.setState({ errorMessages: [] });
-    alert(
-      "nonce created: " +
-        nonce +
-        ", buyerVerificationToken: " +
-        buyerVerificationToken
-    );
-    const paymentResponse = await this.submitPayment(
-      nonce,
-      buyerVerificationToken
-    );
+    alert("nonce created: " + nonce);
+    const paymentResponse = await this.submitPayment(nonce, price);
     console.log({ paymentResponse });
   };
-
-  createVerificationDetails() {
-    return {
-      amount: "100.00",
-      currencyCode: "USD",
-      intent: "CHARGE",
-      billingContact: {
-        familyName: "Smith",
-        givenName: "John",
-        email: "jsmith@example.com",
-        country: "GB",
-        city: "London",
-        addressLines: ["1235 Emperor's Gate"],
-        postalCode: "SW7 4JA",
-        phone: "020 7946 0532",
-      },
-    };
-  }
 
   render() {
     return (
@@ -79,7 +49,6 @@ export default class Checkout extends React.Component {
           applicationId={"sandbox-sq0idb-FjbIBPKhnJ98JvdVZumxIA"} //SANDBOX_APPLICATION_ID
           locationId={"LWB7HW6Z45KS9"} //SANDBOX_LOCATION_ID
           cardNonceResponseReceived={this.cardNonceResponseReceived}
-          createVerificationDetails={this.createVerificationDetails}
         >
           <fieldset className="sq-fieldset">
             <CreditCardNumberInput />

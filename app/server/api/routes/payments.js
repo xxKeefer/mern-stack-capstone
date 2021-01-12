@@ -3,6 +3,6 @@ let router = express.Router();
 
 const { payNow } = require("../../controller/payments");
 
-router.route("/:nonce/:token").post(payNow);
+router.route("/").post(payNow);
 
 module.exports = router;
