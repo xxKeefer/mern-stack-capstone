@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => {
       width: "40vw",
       borderRadius: 0,
       backgroundColor: primary.main,
+      margin: "1rem",
       [breakpoints.down("sm")]: {
         height: "20vw",
         width: "100%",
@@ -112,7 +113,6 @@ export default function CartItem(props) {
 
   const { cartItem } = props;
   console.log({ cartItem });
-
 
   const [quantity, setQuantity] = useState(1);
   const {

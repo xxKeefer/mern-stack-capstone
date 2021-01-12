@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import useStyles from "./CartStyles";
 import CartItem from "./CartItem";
-import { Box, Container } from "@material-ui/core";
+import { Card, Container } from "@material-ui/core";
 import CartTotals from "./CartTotals";
 import CartContext from "../../context/CartContext";
 import Checkout from "../Checkout/Checkout";
 import ShippingDetails from "./ShippingDetails";
 
-export default function SignUp() {
+export default function Cart() {
   const classes = useStyles();
 
   const context = useContext(CartContext);
@@ -18,32 +18,25 @@ export default function SignUp() {
     <div className={classes.cartContainer}>
       <h1 className={classes.pageTitle}>your cart</h1>
       <div className={classes.cartInfoBox}>
-        <div
-          //TODO move inline styles out
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            border: "2px solid red",
-          }}
-        >
+        <Card className={classes.cartItemsContainer}>
           {context.cart.length <= 0 && (
-            <p style={{ color: "white", fontSize: "1rem" }}>
-              No Items in the Cart
-            </p>
+            <h1 className={classes.noItemsMessage}>
+              there's nothing in your cart!
+            </h1>
           )}
           {context.cart.map((cartItem) => {
             return <CartItem key={cartItem.discogs_id} cartItem={cartItem} />;
           })}
-        </div>
+        </Card>
         <Container
           style={{
             padding: 0,
             backgroundColor: "EEE",
           }}
         >
-          <CartTotals />
           <ShippingDetails onSubmit={handleShippingSubmit} />
-          <Checkout></Checkout>
+          <Checkout />
+          <CartTotals />
         </Container>
       </div>
     </div>

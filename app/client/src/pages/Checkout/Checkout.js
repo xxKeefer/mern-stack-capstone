@@ -8,6 +8,7 @@ import {
   CreditCardSubmitButton,
 } from "react-square-payment-form";
 import { withStyles } from "@material-ui/core/styles";
+import { Card } from "@material-ui/core";
 
 const useStyles = (theme) => ({
   paymentContainer: {
@@ -54,27 +55,68 @@ class Checkout extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div style={{ backgroundColor: "EEE" }}>
-        <h1>checkout items</h1>
-
+      <Card
+        style={{
+          borderRadius: 0,
+          backgroundColor: "#EEE",
+          marginBottom: "1rem",
+        }}
+      >
         <SquarePaymentForm
           sandbox={true}
           applicationId={"sandbox-sq0idb-FjbIBPKhnJ98JvdVZumxIA"} //SANDBOX_APPLICATION_ID
           locationId={"LWB7HW6Z45KS9"} //SANDBOX_LOCATION_ID
           cardNonceResponseReceived={this.cardNonceResponseReceived}
+          inputStyles={[
+            { backgroundColor: "#EEE" },
+            { color: "#333" },
+            { fontSize: "1rem" },
+          ]}
         >
-          <fieldset className="sq-fieldset" >
-            <CreditCardNumberInput />
-            <div className="sq-form-third">
+          <fieldset
+            className="sq-fieldset"
+            style={{ backgroundColor: "#EEE", border: "none" }}
+          >
+            <h1>checkout items</h1>
+            <div
+              className="sq-form-third"
+              style={{
+                border: "2px solid #333",
+                display: "flex",
+                justifyContent: "center",
+                padding: "1rem",
+                fontSize: "1rem",
+              }}
+            >
+              <CreditCardNumberInput />
+            </div>
+            <div
+              className="sq-form-third"
+              style={{
+                border: "2px solid #333",
+                display: "flex",
+                justifyContent: "center",
+                padding: "1rem",
+                fontSize: "1rem",
+              }}
+            >
               <CreditCardExpirationDateInput />
             </div>
-
-            <div className="sq-form-third">
+            <div
+              className="sq-form-third"
+              style={{
+                border: "2px solid #333",
+                display: "flex",
+                justifyContent: "center",
+                padding: "1rem",
+                fontSize: "1rem",
+              }}
+            >
               <CreditCardCVVInput />
             </div>
-          </fieldset>
 
-          <CreditCardSubmitButton>Pay $1.00</CreditCardSubmitButton>
+            <CreditCardSubmitButton>Pay $1.00</CreditCardSubmitButton>
+          </fieldset>
         </SquarePaymentForm>
 
         <div className="sq-error-message">
@@ -82,7 +124,7 @@ class Checkout extends React.Component {
             <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
           ))}
         </div>
-      </div>
+      </Card>
     );
   }
 }
