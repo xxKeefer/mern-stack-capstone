@@ -18,10 +18,11 @@ const useStyles = makeStyles((theme) => {
     card: {
       display: "flex",
       flexDirection: "column",
-      margin: "1rem",
       borderRadius: 0,
       backgroundColor: primary.main,
       padding: "1rem",
+      marginBottom: "1.5rem",
+
       [breakpoints.only("xs")]: {
         width: "100%",
         margin: 0,
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "space-between",
       borderBottom: `2px solid ${secondary.main}`,
     },
-    totalsTitle: {},
+    totalsTitle: { padding: 0 },
     checkoutButton: {
       border: `2px solid ${secondary.main}`,
       borderRadius: 0,

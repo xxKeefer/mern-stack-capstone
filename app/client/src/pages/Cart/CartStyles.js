@@ -2,18 +2,28 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { primary, secondary },
+    palette: { fluro, primary, secondary },
     breakpoints,
   } = theme;
   return {
     cartContainer: {
-      backgroundColor: secondary.main,
+      backgroundColor: primary.main,
       width: "100%",
       height: "100%",
       padding: "2rem",
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+    },
+    cartItemsContainer: {
+      display: "flex",
+      padding: "1rem",
+      justifyContent: "center",
+      backgroundColor: primary.main,
+      marginBottom: "1.5rem",
     },
     pageTitle: {
-      color: primary.main,
+      color: secondary.main,
     },
     cartInfoBox: {
       display: "flex",
@@ -24,6 +34,12 @@ const useStyles = makeStyles((theme) => {
         flexDirection: "column",
         padding: 0,
       },
+    },
+    noItemsMessage: {
+      color: secondary.main,
+      fontWeight: "200",
+      borderBottom: `4px double ${fluro.main}`,
+      fontStyle: "italic",
     },
   };
 });
