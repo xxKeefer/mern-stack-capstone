@@ -58,12 +58,15 @@ export default function Cart() {
         })}
       </Card>
       <ShippingDetails onSubmit={handleShippingSubmit} />
-      <Checkout
-        showCardForm={showCardForm}
-        setShowCardForm={setShowCardForm}
-        cart={cart}
-      />
-      <CartTotals />
+      <Card className={classes.totalsAndPaymentContainer}>
+        <CartTotals />
+
+        <Checkout
+          showCardForm={showCardForm}
+          setShowCardForm={setShowCardForm}
+          cart={cart}
+        />
+      </Card>
     </Container>
   );
 }

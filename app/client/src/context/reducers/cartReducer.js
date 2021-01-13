@@ -29,6 +29,7 @@ export default function cartReducer(cartState, action) {
         updatedCart[updatedItemIndex] = updatedItem;
         console.log("item count increased", updatedCart);
       }
+      localStorage.setItem("myCart", JSON.stringify(updatedCart));
       return { ...cartState, cart: updatedCart };
     }
     case ACTIONS.REMOVE_RECORD: {
@@ -47,7 +48,7 @@ export default function cartReducer(cartState, action) {
       } else {
         updatedCart[updatedItemIndex] = updatedItem;
       }
-
+      localStorage.setItem("myCart", JSON.stringify(updatedCart));
       return { ...cartState, cart: updatedCart };
     }
 

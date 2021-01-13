@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => {
     card: {
       display: "flex",
       flexDirection: "column",
-      borderRadius: 0,
       backgroundColor: primary.main,
       padding: "1rem",
       marginBottom: "1.5rem",
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => {
       width: "100%",
     },
     shoppingButton: {
-      border: `2px solid ${secondary.main}`,
+      border: `2px solid ${theme.palette.light.main}`,
       borderRadius: 0,
       marginTop: "1rem",
       width: "100%",
@@ -59,7 +58,7 @@ export default function CartTotals(props) {
 
   return (
     <div>
-      <Card className={classes.card}>
+      <div className={classes.card}>
         <div className={classes.totalContainer}>
           <h1 className={classes.totalsTitle}>total</h1>
           <h1 className={classes.totalPrice}>
@@ -72,7 +71,7 @@ export default function CartTotals(props) {
         <Link to="/">
           <Button className={classes.shoppingButton}>Continue Shopping</Button>
         </Link>
-      </Card>
+      </div>
     </div>
   );
 }
