@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => {
       // border: `1px solid ${secondary.main}`,
       [breakpoints.up("md")]: {
         width: "15vw",
+        minHeight: "25vw",
       },
       maxWidth: "200px",
       borderRadius: 0,

@@ -15,7 +15,7 @@ export default function Home(props) {
   });
 
   return (
-    <Grid container style={{}}>
+    <div>
       <HeroImage>
         <div className={classes.heroContainer}>
           <Typography className={classes.heroText}>
@@ -58,6 +58,6 @@ export default function Home(props) {
         container
         spacing={2}
       ></Grid>
-    </Grid>
+    </div>
   );
 }

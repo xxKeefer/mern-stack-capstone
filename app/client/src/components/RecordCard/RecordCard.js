@@ -75,13 +75,33 @@ export default function RecordCard(props) {
       </Box>
       <CardContent style={{ position: "relative", padding: "2px" }}>
         <div className={classes.flexedRow}>
-          <Typography className={classes.artistName}>{artist}</Typography>
+          <Typography
+            className={classes.artistName}
+            style={
+              artist.length > 15
+                ? {
+                    fontSize: `${1 - artist.length * 0.01}rem`,
+                  }
+                : { fontSize: "1rem" }
+            }
+          >
+            {artist}
+          </Typography>
           <Typography className={classes.recordPrice}>
             ${toCurrencyString(price)}
           </Typography>
         </div>
         <div className={classes.flexedRow}>
-          <Typography className={classes.recordTitle}>
+          <Typography
+            className={classes.recordTitle}
+            style={
+              artist.length > 15
+                ? {
+                    fontSize: `${0.9 - artist.length * 0.01}rem`,
+                  }
+                : { fontSize: "1rem" }
+            }
+          >
             {releaseTitle}
           </Typography>
         </div>

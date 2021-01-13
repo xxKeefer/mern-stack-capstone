@@ -3,6 +3,7 @@ import { makeStyles, Paper } from "@material-ui/core";
 import { API } from "../../util/fetch";
 import { useQuery } from "react-query";
 import RecordCard from "../../components/RecordCard/RecordCard";
+import Results from "../../components/Results/Results";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => {
   } = theme;
   return {
     genresContainer: {
-      backgroundColor: secondary.main,
+      backgroundColor: primary.main,
       width: "100%",
       height: "100%",
       padding: "1rem",
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     pageTitle: {
-      color: primary.main,
+      color: secondary.main,
       marginTop: 0,
     },
   };
@@ -159,10 +160,12 @@ export default function Genres() {
           // })} */}
         </ul>
       </Paper>
-      {records.length > 0 &&
-        records.map((record) => {
-          return <RecordCard record={record}></RecordCard>;
-        })}
+      <Results>
+        {records.length > 0 &&
+          records.map((record) => {
+            return <RecordCard record={record}></RecordCard>;
+          })}
+      </Results>
     </div>
   );
 }
