@@ -1,8 +1,8 @@
 import { Button, Card } from "@material-ui/core";
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CartContext from "../../context/CartContext";
-import { AuthContext } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
+import AuthContext from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import {
   toCurrencyString,
@@ -54,8 +54,9 @@ const useStyles = makeStyles((theme) => {
 
 export default function CartTotals(props) {
   const classes = useStyles();
-  const { cart } = useContext(CartContext);
-  const { authState: auth } = useContext(AuthContext);
+  const {
+    cartState: { cart, shipping },
+  } = useCart();
 
   console.log(cart);
   return (

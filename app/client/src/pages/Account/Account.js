@@ -1,20 +1,19 @@
 import { Button } from "@material-ui/core";
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Account() {
-  const authContext = useContext(AuthContext);
+  const auth = useAuth();
 
   const handleLogout = () => {
-    console.log("logginout");
-    authContext.logUserOut();
+    auth.logUserOut();
   };
 
   return (
     <div>
       <Button onClick={handleLogout}>logout</Button>
-      {!authContext.isAuthenticated() && <Redirect to="/" />}
+      {!auth.isAuthenticated() && <Redirect to="/" />}
     </div>
   );
 }

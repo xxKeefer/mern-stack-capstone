@@ -1,9 +1,19 @@
-import { Box, Card, Container, Fade, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  Card,
+  Container,
+  Fade,
+  IconButton,
+  makeStyles,
+} from "@material-ui/core";
 import React, { useState } from "react";
 import theme from "../../components/App/theme";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { API } from "../../util/fetch";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import { useCart } from "../../context/CartContext";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -18,6 +28,7 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: primary.main,
       padding: "1rem",
       marginBottom: "1rem",
+      position: "relative",
     },
     formInput: {
       fontSize: "1rem",
@@ -51,27 +62,54 @@ const useStyles = makeStyles((theme) => {
     },
     inputPairRow: {
       display: "flex",
+      [breakpoints.only("xs")]: {
+        flexDirection: "column",
+      },
     },
     addressLine1Input: {
       fontSize: "1rem",
       margin: 0,
       width: "100%",
     },
+    shippingTopBar: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "0",
+      width: "100%",
+      alignItems: "center",
+    },
   };
 });
 
 export default function ShippingDetails(props) {
   const classes = useStyles();
-  const showShippingForm = true;
+
+  const {
+    cartState: { cart, shipping },
+  } = useCart();
+
+  const [showShippingForm, setShowShippingForm] = useState(false);
 
   const { register, handleSubmit, errors, setError, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
   return (
     <div>
       <Card className={classes.formContainer}>
-        <h1 className={classes.formTitle}>shipping</h1>
+        <div className={classes.shippingTopBar}>
+          <h1 className={classes.formTitle}>shipping details</h1>
+          {showShippingForm ? (
+            <IconButton onClick={() => setShowShippingForm(!showShippingForm)}>
+              <ExpandLess />
+            </IconButton>
+          ) : (
+            <IconButton onClick={() => setShowShippingForm(!showShippingForm)}>
+              <ExpandMore />
+            </IconButton>
+          )}
+        </div>
+
         {showShippingForm && (
-          <form onSubmit={handleSubmit(props.onSubmit())} id="shippingDetails">
+          <form onSubmit={handleSubmit(props.onSubmit)} id="shippingDetails">
             <div className={classes.inputPairRow}>
               <div className={classes.formGroup}>
                 <label className={classes.formLabel} htmlFor="first_name">

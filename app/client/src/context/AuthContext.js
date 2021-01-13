@@ -1,9 +1,13 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useContext } from "react";
 import { API } from "../util/fetch";
 
-const AuthContext = createContext();
+const GlobalAuthContext = React.createContext();
 
-const AuthProvider = ({ children }) => {
+export const useAuth = () => {
+  return useContext(GlobalAuthContext);
+};
+
+const AuthContext = ({ children }) => {
   const [authState, setAuthState] = useState(null);
 
   const setAuthInfo = (currentUserInfo) => {
@@ -15,7 +19,6 @@ const AuthProvider = ({ children }) => {
       const {
         data: { user },
       } = await API.get("auth/session");
-      console.log("fetchsession:", user);
       return user;
     } catch (error) {
       console.log(error);
@@ -27,18 +30,16 @@ const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    return authState && authState.roles[0] === "admin";
+    return authState && authState.roles.includes("admin");
   };
 
   const isSuper = () => {
-    return authState && authState.roles[0] === "super";
+    return authState && authState.roles.includes("super");
   };
 
   const logUserOut = async () => {
     try {
-      const { data } = await API.get("/auth/logout");
-
-      console.log("loguserout", data);
+      await API.get("/auth/logout");
       setAuthState(null);
     } catch (error) {
       console.log(error);
@@ -46,7 +47,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
+    <GlobalAuthContext.Provider
       value={{
         authState,
         setAuthState: (authInfo) => setAuthInfo(authInfo),
@@ -58,8 +59,7 @@ const AuthProvider = ({ children }) => {
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </GlobalAuthContext.Provider>
   );
 };
-
-export { AuthContext, AuthProvider };
+export default AuthContext;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,24 +12,24 @@ import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";
 import Dashboard from "../../pages/Dashboard/Dashboard";
-import { GlobalState } from "../../context/GlobalState";
+import GlobalState from "../../context/GlobalState";
 import Genres from "../../pages/Genres/Genres";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import Account from "../../pages/Account/Account";
 
 const App = () => {
-  const authContext = useContext(AuthContext);
+  const auth = useAuth();
 
   useEffect(() => {
-    if (authContext.authState === null) {
-      authContext
+    if (auth.authState === null) {
+      auth
         .fetchSessionUser()
         .then((resp) => {
-          authContext.setAuthState(resp);
+          auth.setAuthState(resp);
         })
         .catch((error) => console.log(error));
     }
-  }, [authContext]);
+  }, [auth]);
 
   return (
     <React.Fragment>
