@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => {
     },
     cartItemsContainer: {
       display: "flex",
-      padding: "1rem",
+      flexDirection: "column",
+      padding: "0.5rem",
       justifyContent: "center",
       backgroundColor: primary.main,
       marginBottom: "1.5rem",
@@ -40,6 +41,10 @@ const useStyles = makeStyles((theme) => {
       fontWeight: "200",
       borderBottom: `4px double ${fluro.main}`,
       fontStyle: "italic",
+      textAlign: "center",
+    },
+    totalsAndPaymentContainer: {
+      backgroundColor: primary.main,
     },
   };
 });
