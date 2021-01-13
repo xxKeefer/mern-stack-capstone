@@ -1,6 +1,7 @@
 import React from "react";
 import { API } from "../../util/fetch";
 import { ACTIONS } from "../../context/reducers/cartReducer";
+import { withStyles } from "@material-ui/core/styles";
 import {
   SquarePaymentForm,
   CreditCardNumberInput,
@@ -8,7 +9,6 @@ import {
   CreditCardCVVInput,
   CreditCardSubmitButton,
 } from "react-square-payment-form";
-import { withStyles } from "@material-ui/core/styles";
 import {
   toCurrencyString,
   evaluateTotalPrice,
@@ -67,8 +67,6 @@ class Checkout extends React.Component {
       line_items: buildLineItems(this.state.cart),
       customer_id: this.state.customer,
     };
-    console.log({ orderDetails });
-
     try {
       const {
         data: { order },
@@ -79,8 +77,6 @@ class Checkout extends React.Component {
         order: order.id,
         customer: this.state.customer,
       };
-
-      console.log({ payDetails });
 
       const { data } = await API.post(`/payments/`, payDetails);
       if (data) return data;
@@ -96,6 +92,7 @@ class Checkout extends React.Component {
     }
     this.setState({ errorMessages: [] });
     const paymentResponse = await this.submitPayment(nonce, this.state.price);
+    //TODO: animate a success screen here
     console.log({ paymentResponse });
   };
 

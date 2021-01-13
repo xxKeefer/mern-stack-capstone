@@ -315,6 +315,7 @@ export default function ShippingDetails(props) {
                 Record Submitted Successfully
               </p>
             )}
+            {/* TODO: syle this bottun with the fluro colour and ripple animation */}
             <input
               className={classes.submitButton}
               type="submit"
