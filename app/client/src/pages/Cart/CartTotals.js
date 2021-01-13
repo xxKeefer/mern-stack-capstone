@@ -3,6 +3,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
+import { API } from "../../util/fetch";
+import { ACTIONS } from "../../context/reducers/cartReducer";
 import {
   toCurrencyString,
   evaluateTotalPrice,
@@ -53,25 +55,70 @@ const useStyles = makeStyles((theme) => {
 export default function CartTotals(props) {
   const classes = useStyles();
   const {
-    cartState: { cart, shipping },
+    cartState,
+    cartState: { cart, customer, order },
+    dispatch,
   } = useCart();
 
+  const handleCheckout = async () => {
+    const orderDetails = {
+      line_items: buildLineItems(cart),
+      customer_id: customer,
+    };
+
+    try {
+      const {
+        data: { order },
+      } = await API.post("/orders", orderDetails);
+
+      dispatch({
+        type: ACTIONS.SET_ORDER,
+        payload: order.id,
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const handlePayment = async () => {};
+
   return (
-    <div>
-      <div className={classes.card}>
-        <div className={classes.totalContainer}>
-          <h1 className={classes.totalsTitle}>total</h1>
-          <h1 className={classes.totalPrice}>
-            ${toCurrencyString(evaluateTotalPrice(cart))}
-          </h1>
-        </div>
-        <Link to="/checkout">
-          <Button className={classes.checkoutButton}>Checkout</Button>
-        </Link>
-        <Link to="/">
-          <Button className={classes.shoppingButton}>Continue Shopping</Button>
-        </Link>
+    <div className={classes.card}>
+      <div className={classes.totalContainer}>
+        <h1 className={classes.totalsTitle}>total</h1>
+        <h1 className={classes.totalPrice}>
+          ${toCurrencyString(evaluateTotalPrice(cart))}
+        </h1>
       </div>
+      {/* <Link to="/checkout"> */}
+      <Button
+        className={classes.checkoutButton}
+        onClick={() => {
+          handleCheckout();
+        }}
+      >
+        Checkout
+      </Button>
+      {/* </Link> */}
+      <Link to="/">
+        <Button className={classes.shoppingButton}>Continue Shopping</Button>
+      </Link>
+      <Button
+        className={classes.checkoutButton}
+        onClick={() => {
+          handlePayment();
+        }}
+      >
+        fake pay button
+      </Button>
+      <Button
+        className={classes.checkoutButton}
+        onClick={() => {
+          console.log({ cartState });
+        }}
+      >
+        get cart state
+      </Button>
     </div>
   );
 }

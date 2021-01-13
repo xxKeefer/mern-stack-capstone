@@ -33,7 +33,7 @@ const createCx = async (req, res) => {
     // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
 
     res.status(201).json(data);
-    console.log("CUSTOMER :: created new customer.");
+    console.log(`CUSTOMER :: Created: ${data.customer.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }

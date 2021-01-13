@@ -11,6 +11,7 @@ import { useTheme, withStyles } from "@material-ui/core/styles";
 import { Button, Card, IconButton } from "@material-ui/core";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { toCurrencyString, evaluateTotalPrice } from "../../util/shop";
 import { useCart } from "../../context/CartContext";
 import "./checkoutStyles.css";
 import { Link } from "react-router-dom";
@@ -30,12 +31,12 @@ const useStyles = (theme) => ({
     position: "relative",
   },
 });
-
 class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       errorMessages: [],
+      price: evaluateTotalPrice(this.props.cart),
     };
   }
 
@@ -49,15 +50,13 @@ class Checkout extends React.Component {
     }
   };
 
-  cardNonceResponseReceived = async (errors, nonce, price) => {
+  cardNonceResponseReceived = async (errors, nonce) => {
     if (errors) {
       this.setState({ errorMessages: errors.map((error) => error.message) });
       return;
     }
-
     this.setState({ errorMessages: [] });
-    alert("nonce created: " + nonce);
-    const paymentResponse = await this.submitPayment(nonce, price);
+    const paymentResponse = await this.submitPayment(nonce, this.state.price);
     console.log({ paymentResponse });
   };
 
@@ -65,7 +64,6 @@ class Checkout extends React.Component {
     const { classes } = this.props;
     const showCardForm = this.props.showCardForm;
     const setShowCardForm = this.props.setShowCardForm;
-    const cart = this.props.cart;
 
     return (
       <div className={classes.checkoutContainer}>
@@ -103,7 +101,9 @@ class Checkout extends React.Component {
                 <CreditCardCVVInput />
               </div>
 
-              <CreditCardSubmitButton>PAY</CreditCardSubmitButton>
+              <CreditCardSubmitButton>
+                Pay ${toCurrencyString(this.state.price)}
+              </CreditCardSubmitButton>
 
               <div className="sq-error-message">
                 {this.state.errorMessages.map((errorMessage) => (

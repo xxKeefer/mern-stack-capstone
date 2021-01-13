@@ -1,7 +1,5 @@
 const express = require("express");
 let router = express.Router();
-const auth = require("../../middleware/auth");
-router.use(auth.user);
 const {
   createOrder,
   searchAllOwned,

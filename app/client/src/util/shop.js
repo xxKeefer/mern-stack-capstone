@@ -21,7 +21,7 @@ const buildLineItems = (cart) => {
 const buildCustomer = (shipping) => {
   const { first_name, last_name, phone_number } = shipping;
   delete shipping.phone_number;
-  shipping.address.country = "AU";
+  shipping.country = "AU";
   return {
     address: shipping,
     family_name: first_name,
