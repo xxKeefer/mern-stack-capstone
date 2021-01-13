@@ -24,8 +24,8 @@ const buildCustomer = (shipping) => {
   shipping.country = "AU";
   return {
     address: shipping,
-    family_name: first_name,
-    given_name: last_name,
+    given_name: first_name,
+    family_name: last_name,
     phone_number,
   };
 };

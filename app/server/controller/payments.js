@@ -25,6 +25,7 @@ const payNow = async (req, res) => {
       SQUARE_API_CONFIG
     );
     res.status(200).json(payment);
+    console.log(`PAYMENT :: Received: ${payment.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }
