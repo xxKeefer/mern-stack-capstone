@@ -85,7 +85,7 @@ export default function ShippingDetails(props) {
   const classes = useStyles();
 
   const {
-    cartState: { cart, shipping },
+    cartState: { cart },
   } = useCart();
 
   const [showShippingForm, setShowShippingForm] = useState(false);

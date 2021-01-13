@@ -1,11 +1,10 @@
 export const ACTIONS = {
   ADD_RECORD: "add-record",
   REMOVE_RECORD: "remove-record",
-  ADD_SHIPPING: "add-shipping",
-  REMOVE_SHIPPING: "remove-shipping",
-  SAVE_SHIPPING: "save-shipping",
   SET_CUSTOMER: "set-customer",
   UNSET_CUSTOMER: "unset-customer",
+  SET_ORDER: "set-order",
+  UNSET_ORDER: "unset-order",
 };
 
 export default function cartReducer(cartState, action) {
@@ -51,24 +50,20 @@ export default function cartReducer(cartState, action) {
       return { ...cartState, cart: updatedCart };
     }
 
-    case ACTIONS.ADD_SHIPPING: {
-      return { ...cartState };
-    }
-
-    case ACTIONS.REMOVE_SHIPPING: {
-      return { ...cartState, shipping: {} };
-    }
-
-    case ACTIONS.SAVE_SHIPPING: {
-      return { ...cartState };
-    }
-
     case ACTIONS.SET_CUSTOMER: {
-      return { ...cartState };
+      return { ...cartState, customer: action.payload };
     }
 
     case ACTIONS.UNSET_CUSTOMER: {
       return { ...cartState, customer: null };
+    }
+
+    case ACTIONS.SET_ORDER: {
+      return { ...cartState, order: action.payload };
+    }
+
+    case ACTIONS.UNSET_ORDER: {
+      return { ...cartState, order: null };
     }
 
     default:

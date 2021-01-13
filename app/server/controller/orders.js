@@ -3,25 +3,13 @@ const axios = require("axios").default;
 const { SQUARE_API_CONFIG } = require("../utils/squareConfig");
 
 const createOrder = async (req, res) => {
-  const { square_id: customer_id } = req.user;
-  const { line_items, location_id = "LWB7HW6Z45KS9" } = req.body;
+  const { line_items, customer_id, location_id = "LWB7HW6Z45KS9" } = req.body;
+  console.log(req.body);
 
   line_items.map((i) => {
     i.uid = uuidv4();
     i.quantity = i.quantity.toString();
   });
-
-  /**
-   * line_items looks like an array of the following objects:
-   *
-   * {
-   *   quantity: 1,
-   *   catalog_object_id: "WXKXRP7DKLD3UEGKOUXRVVZV",
-   *   uid: "SomeUniqueIdentifier1",
-   * }
-   *
-   * the uid is added on line 9
-   */
 
   try {
     const { data } = await axios.post(
@@ -38,10 +26,12 @@ const createOrder = async (req, res) => {
       },
       SQUARE_API_CONFIG
     );
+    console.log(`ORDER :: Created: ${data.order.id}`);
 
     res.status(201).json(data);
   } catch (e) {
     res.status(400).json(e.message);
+    console.error(`ORDER :: ${e.message}`);
   }
 };
 

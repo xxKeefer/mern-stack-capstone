@@ -17,7 +17,8 @@ export default function Cart() {
   const classes = useStyles();
   const { currentUser } = useAuth();
   const {
-    cartState: { cart, shipping },
+    cartState,
+    cartState: { cart },
     dispatch,
   } = useCart();
 
