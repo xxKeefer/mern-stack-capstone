@@ -8,7 +8,7 @@ export const useCart = () => {
 };
 
 const CartContext = ({ children }) => {
-  const initialCart = { cart: [], shipping: {} };
+  const initialCart = { cart: [], shipping: {}, customer: null };
   const [cartState, dispatch] = useReducer(cartReducer, initialCart);
 
   return (
