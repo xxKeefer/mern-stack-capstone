@@ -7,11 +7,12 @@ import {
   CreditCardCVVInput,
   CreditCardSubmitButton,
 } from "react-square-payment-form";
-import { withStyles } from "@material-ui/core/styles";
-import { Card, IconButton } from "@material-ui/core";
+import { useTheme, withStyles } from "@material-ui/core/styles";
+import { Button, Card, IconButton } from "@material-ui/core";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { useCart } from "../../context/CartContext";
+import "./checkoutStyles.css";
 
 const useStyles = (theme) => ({
   paymentContainer: {
@@ -29,9 +30,14 @@ const useStyles = (theme) => ({
     padding: "0",
     alignItems: "center",
   },
-  ".sq-input": {
-    
-  }
+  ".sq-input": {},
+  checkoutButton: {
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderRadius: 0,
+    backgroundColor: theme.palette.fluro.main,
+    marginTop: "1rem",
+    width: "100%",
+  },
 });
 
 class Checkout extends React.Component {
@@ -99,6 +105,7 @@ class Checkout extends React.Component {
               applicationId={"sandbox-sq0idb-FjbIBPKhnJ98JvdVZumxIA"} //SANDBOX_APPLICATION_ID
               locationId={"LWB7HW6Z45KS9"} //SANDBOX_LOCATION_ID
               cardNonceResponseReceived={this.cardNonceResponseReceived}
+              inputClass="third"
             >
               <fieldset
                 className="sq-fieldset"
@@ -119,7 +126,7 @@ class Checkout extends React.Component {
                     marginBottom: "1rem",
                   }}
                 >
-                  <CreditCardNumberInput />
+                  <CreditCardNumberInput className="credit-card-input" />
                 </div>
                 <div
                   className="sq-form-third"
@@ -148,7 +155,9 @@ class Checkout extends React.Component {
                   <CreditCardCVVInput />
                 </div>
 
-                <CreditCardSubmitButton>Pay $1.00</CreditCardSubmitButton>
+                <CreditCardSubmitButton inputClasses={classes.checkoutButton}>
+                  pay button
+                </CreditCardSubmitButton>
               </fieldset>
             </SquarePaymentForm>
 
