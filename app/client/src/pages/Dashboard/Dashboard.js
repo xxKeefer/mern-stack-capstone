@@ -1,8 +1,6 @@
 import { Box, Container, Fade, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
-import theme from "../../components/App/theme";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { API } from "../../util/fetch";
 
 const useStyles = makeStyles((theme) => {
@@ -53,7 +51,7 @@ const useStyles = makeStyles((theme) => {
 export default function Dashboard() {
   const classes = useStyles();
 
-  const { register, handleSubmit, errors, setError, reset } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 
   const showSuccessfulSubmit = () => {
@@ -71,16 +69,13 @@ export default function Dashboard() {
     recordInfo.price = parseInt(recordInfo.price);
 
     try {
-      const { data } = await API.post("/shop/add", recordInfo);
-      console.log(data);
+      await API.post("/shop/add", recordInfo);
       showSuccessfulSubmit();
       reset();
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log(successfulSubmit);
 
   return (
     <div>

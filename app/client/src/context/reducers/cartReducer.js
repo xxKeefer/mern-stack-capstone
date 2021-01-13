@@ -1,6 +1,9 @@
 export const ACTIONS = {
   ADD_RECORD: "add-record",
   REMOVE_RECORD: "remove-record",
+  ADD_SHIPPING: "add-shipping",
+  REMOVE_SHIPPING: "remove-shipping",
+  SAVE_SHIPPING: "save-shipping",
 };
 
 export default function cartReducer(cartState, action) {
@@ -44,6 +47,18 @@ export default function cartReducer(cartState, action) {
       }
 
       return { ...cartState, cart: updatedCart };
+    }
+
+    case ACTIONS.ADD_SHIPPING: {
+      return { ...cartState };
+    }
+
+    case ACTIONS.REMOVE_SHIPPING: {
+      return { ...cartState };
+    }
+
+    case ACTIONS.SAVE_SHIPPING: {
+      return { ...cartState };
     }
 
     default:
