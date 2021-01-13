@@ -18,4 +18,21 @@ const buildLineItems = (cart) => {
   return lineItems;
 };
 
-module.exports = { toCurrencyString, evaluateTotalPrice, buildLineItems };
+const buildCustomer = (shipping) => {
+  const { first_name, last_name, phone_number } = shipping;
+  delete shipping.phone_number;
+  shipping.address.country = "AU";
+  return {
+    address: shipping,
+    family_name: first_name,
+    given_name: last_name,
+    phone_number,
+  };
+};
+
+module.exports = {
+  toCurrencyString,
+  evaluateTotalPrice,
+  buildLineItems,
+  buildCustomer,
+};

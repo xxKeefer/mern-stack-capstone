@@ -29,6 +29,10 @@ const AuthContext = ({ children }) => {
     return authState && true;
   };
 
+  const currentUser = () => {
+    return authState;
+  };
+
   const isAdmin = () => {
     return authState && authState.roles.includes("admin");
   };
@@ -56,6 +60,7 @@ const AuthContext = ({ children }) => {
         isSuper,
         logUserOut,
         fetchSessionUser,
+        currentUser,
       }}
     >
       {children}

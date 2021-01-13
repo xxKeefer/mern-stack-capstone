@@ -141,14 +141,14 @@ export default function ShippingDetails(props) {
               </div>
             </div>
             <div className={classes.formGroup}>
-              <label className={classes.formLabel} htmlFor="addressLine1">
+              <label className={classes.formLabel} htmlFor="address_line_1">
                 address line 1
               </label>
               <input
                 ref={register({ required: true })}
                 className={classes.addressLine1Input}
                 type="text"
-                name="addressLine1"
+                name="address_line_1"
               />
               {errors.release_id && errors.release_id.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
@@ -188,6 +188,7 @@ export default function ShippingDetails(props) {
                 )}
               </div>
             </div>
+            {/* this need to be a 2 char country code eg: AU */}
             <div className={classes.inputPairRow}>
               <div className={classes.formGroup}>
                 <label className={classes.formLabel} htmlFor="country">
@@ -204,14 +205,14 @@ export default function ShippingDetails(props) {
                 )}
               </div>
               <div className={classes.formGroup}>
-                <label className={classes.formLabel} htmlFor="postcode">
+                <label className={classes.formLabel} htmlFor="postal_code">
                   postcode
                 </label>
                 <input
                   ref={register({ required: true })}
                   className={classes.formInput}
                   type="text"
-                  name="postcode"
+                  name="postal_code"
                 />
                 {errors.release_id && errors.release_id.type === "required" && (
                   <p className={classes.errorMessage}>This is required</p>

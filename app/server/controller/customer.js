@@ -12,7 +12,7 @@ const createCx = async (req, res) => {
     phone_number,
   } = req.body;
 
-  const reference_id = req.user._id;
+  // const reference_id = req.user._id;
 
   try {
     const { data } = await axios.post(
@@ -23,16 +23,17 @@ const createCx = async (req, res) => {
         family_name,
         given_name,
         phone_number,
-        reference_id,
+        // reference_id,
         idempotency_key: uuidv4(),
       },
       SQUARE_API_CONFIG
     );
 
-    //bind square id to user record in mongo
-    await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
+    // //bind square id to user record in mongo
+    // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
 
     res.status(201).json(data);
+    console.log("CUSTOMER :: created new customer.");
   } catch (e) {
     res.status(400).json(e.message);
   }

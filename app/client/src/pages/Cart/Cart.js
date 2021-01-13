@@ -6,19 +6,42 @@ import CartTotals from "./CartTotals";
 import { useCart } from "../../context/CartContext";
 import Checkout from "./Checkout";
 import ShippingDetails from "./ShippingDetails";
+import { buildCustomer } from "../../util/shop";
+import { useAuth } from "../../context/AuthContext";
+import { API } from "../../util/fetch";
+import { ACTIONS } from "../../context/reducers/cartReducer";
 
 export default function Cart() {
-  const classes = useStyles();
+  const [showCardForm, setShowCardForm] = useState(false);
 
+  const classes = useStyles();
+  const { currentUser } = useAuth();
   const {
     cartState: { cart, shipping },
+    dispatch,
   } = useCart();
 
-  const handleShippingSubmit = (data) => {
-    console.log(data);
-  };
+  const handleShippingSubmit = async (shippingDetails) => {
+    const customerObj = buildCustomer(shippingDetails);
 
-  const [showCardForm, setShowCardForm] = useState(false);
+    if (currentUser()) {
+      customerObj.email_address = currentUser().email;
+    } else {
+      customerObj.note = "guest customer";
+    }
+
+    try {
+      const {
+        data: { customer },
+      } = await API.post("/customer", customerObj);
+      dispatch({
+        type: ACTIONS.SET_CUSTOMER,
+        payload: customer.id,
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   return (
     <Container className={classes.cartContainer}>
