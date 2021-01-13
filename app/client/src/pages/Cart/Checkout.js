@@ -7,29 +7,29 @@ import {
   CreditCardCVVInput,
   CreditCardSubmitButton,
 } from "react-square-payment-form";
-import { withStyles } from "@material-ui/core/styles";
-import { Card, IconButton } from "@material-ui/core";
+import { useTheme, withStyles } from "@material-ui/core/styles";
+import { Button, Card, IconButton } from "@material-ui/core";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { toCurrencyString, evaluateTotalPrice } from "../../util/shop";
+import { useCart } from "../../context/CartContext";
+import "./checkoutStyles.css";
+import { Link } from "react-router-dom";
 
 const useStyles = (theme) => ({
-  paymentContainer: {
-    backgroundColor: "#EEE",
-    display: "relative",
-  },
-  fab: {
-    position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
   checkoutTopBar: {
     display: "flex",
     justifyContent: "space-between",
     padding: "0",
     alignItems: "center",
   },
-  ".sq-input": {},
+  checkoutContainer: {
+    borderRadius: 0,
+    backgroundColor: "#EEE",
+    marginBottom: "1rem",
+    padding: "1rem",
+    position: "relative",
+  },
 });
 class Checkout extends React.Component {
   constructor(props) {
@@ -66,18 +66,10 @@ class Checkout extends React.Component {
     const setShowCardForm = this.props.setShowCardForm;
 
     return (
-      <Card
-        style={{
-          borderRadius: 0,
-          backgroundColor: "#EEE",
-          marginBottom: "1rem",
-          padding: "1rem",
-          position: "relative",
-        }}
-      >
+      <div className={classes.checkoutContainer}>
         <div className={classes.checkoutTopBar}>
-          <h1 style={{ margin: 0 }}>card details</h1>
-          {showCardForm ? (
+          <h1>card details</h1>
+          {/* {showCardForm ? (
             <IconButton onClick={() => setShowCardForm(!showCardForm)}>
               <ExpandLess />
             </IconButton>
@@ -85,78 +77,44 @@ class Checkout extends React.Component {
             <IconButton onClick={() => setShowCardForm(!showCardForm)}>
               <ExpandMore />
             </IconButton>
-          )}
+          )} */}
         </div>
-        {showCardForm && (
-          <React.Fragment>
-            <SquarePaymentForm
-              sandbox={true}
-              applicationId={"sandbox-sq0idb-FjbIBPKhnJ98JvdVZumxIA"} //SANDBOX_APPLICATION_ID
-              locationId={"LWB7HW6Z45KS9"} //SANDBOX_LOCATION_ID
-              cardNonceResponseReceived={this.cardNonceResponseReceived}
+        {/* {showCardForm && ( */}
+        <React.Fragment>
+          <SquarePaymentForm
+            sandbox={true}
+            applicationId={"sandbox-sq0idb-FjbIBPKhnJ98JvdVZumxIA"} //SANDBOX_APPLICATION_ID
+            locationId={"LWB7HW6Z45KS9"} //SANDBOX_LOCATION_ID
+            cardNonceResponseReceived={this.cardNonceResponseReceived}
+          >
+            <fieldset
+              className="sq-fieldset"
+              style={{ border: "none", padding: 0 }}
             >
-              <fieldset
-                className="sq-fieldset"
-                style={{
-                  backgroundColor: "#EEE",
-                  border: "none",
-                  padding: "1rem",
-                }}
-              >
-                <div
-                  className="sq-form-third"
-                  style={{
-                    border: "1px solid #333",
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "0.5rem",
-                    fontSize: "1rem",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  <CreditCardNumberInput />
-                </div>
-                <div
-                  className="sq-form-third"
-                  style={{
-                    border: "1px solid #333",
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "0.5rem",
-                    fontSize: "1rem",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  <CreditCardExpirationDateInput />
-                </div>
-                <div
-                  className="sq-form-third"
-                  style={{
-                    border: "1px solid #333",
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "0.5rem",
-                    fontSize: "1rem",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  <CreditCardCVVInput />
-                </div>
+              <div className="sq-form-third">
+                <CreditCardNumberInput />
+              </div>
+              <div className="sq-form-third">
+                <CreditCardExpirationDateInput />
+              </div>
+              <div className="sq-form-third">
+                <CreditCardCVVInput />
+              </div>
 
-                <CreditCardSubmitButton>
-                  Pay ${toCurrencyString(this.state.price)}
-                </CreditCardSubmitButton>
-              </fieldset>
-            </SquarePaymentForm>
+              <CreditCardSubmitButton>
+                Pay ${toCurrencyString(this.state.price)}
+              </CreditCardSubmitButton>
 
-            <div className="sq-error-message">
-              {this.state.errorMessages.map((errorMessage) => (
-                <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
-              ))}
-            </div>
-          </React.Fragment>
-        )}
-      </Card>
+              <div className="sq-error-message">
+                {this.state.errorMessages.map((errorMessage) => (
+                  <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>
+                ))}
+              </div>
+            </fieldset>
+          </SquarePaymentForm>
+        </React.Fragment>
+        {/* )} */}
+      </div>
     );
   }
 }
