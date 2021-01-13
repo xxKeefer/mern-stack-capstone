@@ -1,9 +1,5 @@
 const express = require("express");
 let router = express.Router();
-const auth = require("../../middleware/auth");
-router.use(auth.user);
-const cx = require("../../middleware/customer");
-
 //THIS ROUTE HANDLES CUSTOMER DATA, INCLUDING SHIPPING AND CARD DETAILS
 
 const {

@@ -23,6 +23,7 @@ export default function Cart() {
 
   const handleShippingSubmit = async (shippingDetails) => {
     const customerObj = buildCustomer(shippingDetails);
+
     if (currentUser()) {
       customerObj.email_address = currentUser().email;
     } else {
