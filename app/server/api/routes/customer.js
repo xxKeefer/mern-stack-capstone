@@ -17,7 +17,7 @@ router.route("/").put(updateCx);
 
 router.route("/").delete(deleteCx);
 
-router.route("/").get(retrieveCx);
+router.route("/:id").get(retrieveCx);
 
 router.route("/card").post(addCardPayment);
 

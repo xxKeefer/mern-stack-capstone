@@ -1,5 +1,6 @@
 import React from "react";
 import { API } from "../../util/fetch";
+import { ACTIONS } from "../../context/reducers/cartReducer";
 import {
   SquarePaymentForm,
   CreditCardNumberInput,
@@ -7,14 +8,13 @@ import {
   CreditCardCVVInput,
   CreditCardSubmitButton,
 } from "react-square-payment-form";
-import { useTheme, withStyles } from "@material-ui/core/styles";
-import { Button, Card, IconButton } from "@material-ui/core";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import { toCurrencyString, evaluateTotalPrice } from "../../util/shop";
-import { useCart } from "../../context/CartContext";
+import { withStyles } from "@material-ui/core/styles";
+import {
+  toCurrencyString,
+  evaluateTotalPrice,
+  buildLineItems,
+} from "../../util/shop";
 import "./checkoutStyles.css";
-import { Link } from "react-router-dom";
 
 const useStyles = (theme) => ({
   checkoutTopBar: {
@@ -37,12 +37,51 @@ class Checkout extends React.Component {
     this.state = {
       errorMessages: [],
       price: evaluateTotalPrice(this.props.cart),
+      customer: this.props.customer,
+      cart: this.props.cart,
     };
   }
 
-  submitPayment = async (nonce, price) => {
-    const payDetails = { nonce, price };
+  handleCheckout = async () => {
+    const orderDetails = {
+      line_items: buildLineItems(this.state.cart),
+      customer_id: this.state.customer,
+    };
+
     try {
+      const {
+        data: { order },
+      } = await API.post("/orders", orderDetails);
+
+      this.props.dispatch({
+        type: ACTIONS.SET_ORDER,
+        payload: order.id,
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  submitPayment = async (nonce, price, customer) => {
+    const orderDetails = {
+      line_items: buildLineItems(this.state.cart),
+      customer_id: this.state.customer,
+    };
+    console.log({ orderDetails });
+
+    try {
+      const {
+        data: { order },
+      } = await API.post("/orders", orderDetails);
+      const payDetails = {
+        nonce,
+        price,
+        order: order.id,
+        customer: this.state.customer,
+      };
+
+      console.log({ payDetails });
+
       const { data } = await API.post(`/payments/`, payDetails);
       if (data) return data;
     } catch (e) {
@@ -69,17 +108,7 @@ class Checkout extends React.Component {
       <div className={classes.checkoutContainer}>
         <div className={classes.checkoutTopBar}>
           <h1>card details</h1>
-          {/* {showCardForm ? (
-            <IconButton onClick={() => setShowCardForm(!showCardForm)}>
-              <ExpandLess />
-            </IconButton>
-          ) : (
-            <IconButton onClick={() => setShowCardForm(!showCardForm)}>
-              <ExpandMore />
-            </IconButton>
-          )} */}
         </div>
-        {/* {showCardForm && ( */}
         <React.Fragment>
           <SquarePaymentForm
             sandbox={true}
@@ -102,7 +131,7 @@ class Checkout extends React.Component {
               </div>
 
               <CreditCardSubmitButton>
-                Pay ${toCurrencyString(this.state.price)}
+                PAY ${toCurrencyString(this.state.price)}
               </CreditCardSubmitButton>
 
               <div className="sq-error-message">
@@ -113,7 +142,6 @@ class Checkout extends React.Component {
             </fieldset>
           </SquarePaymentForm>
         </React.Fragment>
-        {/* )} */}
       </div>
     );
   }
