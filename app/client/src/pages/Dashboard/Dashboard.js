@@ -1,11 +1,11 @@
-import { Box, Container, Fade, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { API } from "../../util/fetch";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { light, primary, secondary },
+    palette: { fluro, primary, secondary },
     breakpoints,
   } = theme;
   return {
@@ -40,10 +40,13 @@ const useStyles = makeStyles((theme) => {
     errorMessage: { color: "#ed2e38" },
     formTitle: {},
     successfulSubmit: {
-      padding: "0.5rem, 2rem",
-      backgroundColor: light.main,
+      padding: "0.5rem",
+      backgroundColor: fluro.main,
       color: secondary.main,
-      border: `2px solid ${secondary.main}`,
+      borderRadius: "5px",
+      margin: "auto",
+      textAlign: "center",
+      fontSize: "0.8rem",
     },
   };
 });
@@ -58,7 +61,7 @@ export default function Dashboard() {
     setSuccessfulSubmit(true);
     setTimeout(() => {
       setSuccessfulSubmit(false);
-    }, 1000);
+    }, 2000);
   };
 
   const submitAddRecord = async (recordInfo) => {
@@ -150,7 +153,7 @@ export default function Dashboard() {
             </div>
             {successfulSubmit && (
               <p className={classes.successfulSubmit}>
-                Record Submitted Successfully
+                RECORD ADDED SUCCESSFULLY
               </p>
             )}
             <input
