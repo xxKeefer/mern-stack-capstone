@@ -10,12 +10,8 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       width: "90vw",
-      // boxShadow: "none",
-      // border: `1px solid ${secondary.main}`,
-
-      [breakpoints.up("md")]: {
+      [breakpoints.up("lg")]: {
         width: "15vw",
-        height: "23vw",
       },
       maxWidth: "200px",
       borderRadius: 0,
@@ -30,7 +26,7 @@ const useStyles = makeStyles((theme) => {
       width: "90vw",
       maxWidth: "200px",
       maxHeight: "200px",
-      [breakpoints.up("md")]: {
+      [breakpoints.up("lg")]: {
         height: "15vw",
         width: "15vw",
         filter: "blur(0px)",
