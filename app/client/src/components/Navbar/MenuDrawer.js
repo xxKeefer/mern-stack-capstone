@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import {
-  Collapse,
   Divider,
   IconButton,
   List,
@@ -13,9 +12,10 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core";
 import SearchField from "./SearchField";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
 import ToolBarDrawer from "./ToolBarDrawer";
+import { Link } from "react-router-dom";
+import { useGlobal } from "../../context/GlobalState";
+import { useAuth } from "../../context/AuthContext";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -72,12 +72,12 @@ const useStyles = makeStyles((theme) => {
 export default function MenuDrawer() {
   const [isOpen, setOpen] = useState(false);
   const classes = useStyles();
+  const globe = useGlobal();
+  const auth = useAuth();
 
   const handleClick = (state) => {
     setOpen(state);
   };
-
-  const [genresOpen, setGenresOpen] = useState(false);
 
   const menuItems = [
     "my account",
@@ -87,56 +87,33 @@ export default function MenuDrawer() {
     "staff picks",
     "contact",
   ];
-  const genresArray = [
-    "techno",
-    "house",
-    "bass",
-    "disco",
-    "jazz",
-    "acid",
-    "trance",
-    "footwork",
-  ];
 
-  const genresListItem = function (item, genres) {
+  const ListItemLink = function (props) {
+    const { onClick, primary, to } = props;
+
+    const CustomLink = React.useMemo(
+      () =>
+        React.forwardRef((linkProps, ref) => (
+          <Link ref={ref} to={to} {...linkProps} />
+        )),
+      [to]
+    );
+
     return (
-      <React.Fragment>
+      <li>
         <ListItem
-          key={item}
+          className={classes.listItems}
           button
-          primary={`${item}`}
-          onClick={() => setGenresOpen(!genresOpen)}
+          component={CustomLink}
+          onClick={onClick}
         >
           <ListItemText
-            inset={true}
-            primary="genres"
             classes={{ primary: classes.listItemText }}
+            inset={true}
+            primary={primary}
           />
-          {genresOpen ? (
-            <ExpandLess className={classes.genresChevron} />
-          ) : (
-            <ExpandMore className={classes.genresChevron} />
-          )}
         </ListItem>
-        <Collapse in={genresOpen} timeout="auto" unmountOnExit>
-          <List>
-            {genres.map((genre) => {
-              return (
-                <ListItem
-                  button
-                  key={genre}
-                  classes={{ primary: classes.genreItems }}
-                >
-                  <ListItemText
-                    primary={`${genre}`}
-                    classes={{ primary: classes.genresItemText }}
-                  />
-                </ListItem>
-              );
-            })}
-          </List>
-        </Collapse>
-      </React.Fragment>
+      </li>
     );
   };
 
@@ -163,6 +140,7 @@ export default function MenuDrawer() {
           <ListItem className={classes.toolBarContainer} key="toolBarContainer">
             <ToolBarDrawer
               state={isOpen}
+              setState={setOpen}
               handleClick={(e) => {
                 handleClick(e);
               }}
@@ -175,20 +153,49 @@ export default function MenuDrawer() {
           >
             <SearchField />
           </ListItem>
+          {auth.authState ? (
+            <ListItemLink
+              to="/account"
+              primary="my account"
+              onClick={() => setOpen(false)}
+            />
+          ) : (
+            <ListItemLink
+              primary="log in"
+              onClick={() => globe.setModalState(true)}
+            />
+          )}
 
-          {menuItems.map((item) => {
-            return item === "genres" ? (
-              genresListItem(item, genresArray)
-            ) : (
-              <ListItem key={item} button className={classes.listItems}>
-                <ListItemText
-                  inset={true}
-                  primary={`${item}`}
-                  classes={{ primary: classes.listItemText }}
-                />
-              </ListItem>
-            );
-          })}
+          <ListItemLink
+            to="/new"
+            primary="new vinyl"
+            onClick={() => setOpen(false)}
+          />
+
+          <ListItemLink
+            to="/genres"
+            primary="genres"
+            onClick={() => setOpen(false)}
+          />
+
+          <ListItemLink
+            to="/news"
+            primary="news"
+            onClick={() => setOpen(false)}
+          />
+
+          <ListItemLink
+            to="/staffpicks"
+            primary="staff picks"
+            onClick={() => setOpen(false)}
+          />
+
+          <ListItemLink
+            to="/contact"
+            primary="contact"
+            onClick={() => setOpen(false)}
+          />
+
           <Divider className={classes.divider} classes={classes.light} />
           <ListItem>
             <ListItemText inset={true}>catalog music 2020</ListItemText>
