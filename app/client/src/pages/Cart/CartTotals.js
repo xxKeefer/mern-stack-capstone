@@ -1,13 +1,9 @@
-import { Button, Card } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
-import {
-  toCurrencyString,
-  evaluateTotalPrice,
-  buildLineItems,
-} from "../../util/shop";
+import { toCurrencyString, evaluateTotalPrice } from "../../util/shop";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -50,28 +46,43 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function CartTotals(props) {
+export default function CartTotals({ setShowCardForm }) {
   const classes = useStyles();
   const {
-    cartState: { cart, shipping },
+    cartState,
+    cartState: { cart, customer },
   } = useCart();
 
   return (
-    <div>
-      <div className={classes.card}>
-        <div className={classes.totalContainer}>
-          <h1 className={classes.totalsTitle}>total</h1>
-          <h1 className={classes.totalPrice}>
-            ${toCurrencyString(evaluateTotalPrice(cart))}
-          </h1>
-        </div>
-        <Link to="/checkout">
-          <Button className={classes.checkoutButton}>Checkout</Button>
-        </Link>
-        <Link to="/">
-          <Button className={classes.shoppingButton}>Continue Shopping</Button>
-        </Link>
+    <div className={classes.card}>
+      <div className={classes.totalContainer}>
+        <h1 className={classes.totalsTitle}>total</h1>
+        <h1 className={classes.totalPrice}>
+          ${toCurrencyString(evaluateTotalPrice(cart))}
+        </h1>
       </div>
+      {/* <Link to="/checkout"> */}
+      <Button
+        className={classes.checkoutButton}
+        disabled={!customer && true}
+        onClick={() => {
+          setShowCardForm(true);
+        }}
+      >
+        {!customer ? "No shipping details" : "Checkout"}
+      </Button>
+      {/* </Link> */}
+      <Link to="/">
+        <Button className={classes.shoppingButton}>Continue Shopping</Button>
+      </Link>
+      <Button
+        className={classes.checkoutButton}
+        onClick={() => {
+          console.log({ cartState });
+        }}
+      >
+        get cart state
+      </Button>
     </div>
   );
 }

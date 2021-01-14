@@ -71,7 +71,7 @@ export default function ToolBarUpper() {
   const globe = useGlobal();
 
   const {
-    cartState: { cart, shipping },
+    cartState: { cart },
   } = useCart();
 
   const matchTabletDown = useMediaQuery(theme.breakpoints.down("sm"));

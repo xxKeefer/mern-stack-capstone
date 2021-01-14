@@ -33,7 +33,7 @@ const createCx = async (req, res) => {
     // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
 
     res.status(201).json(data);
-    console.log("CUSTOMER :: created new customer.");
+    console.log(`CUSTOMER :: Created: ${data.customer.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -48,26 +48,27 @@ const updateCx = async (req, res) => {
     phone_number,
   } = req.body;
 
-  const reference_id = req.user._id;
+  // const reference_id = req.user._id;
 
   try {
     const { data } = await axios.put(
-      `/customers/${req.user.square_id}`,
+      "/customers",
       {
         address,
         email_address,
         family_name,
         given_name,
         phone_number,
-        reference_id,
+        // reference_id,
       },
       SQUARE_API_CONFIG
     );
 
-    //bind square id to user record in mongo
-    await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
+    // //bind square id to user record in mongo
+    // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
 
     res.status(200).json(data);
+    console.log(`CUSTOMER :: Updated: ${data.customer.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }
@@ -75,27 +76,24 @@ const updateCx = async (req, res) => {
 
 const deleteCx = async (req, res) => {
   try {
-    const { data } = await axios.delete(
-      `/customers/${req.user.square_id}`,
-      SQUARE_API_CONFIG
-    );
+    const { data } = await axios.delete("/customers", SQUARE_API_CONFIG);
 
     //remove square id from user record in mongo
-    await User.findByIdAndUpdate(req.user._id, { square_id: null });
+    // await User.findByIdAndUpdate(req.user._id, { square_id: null });
 
     res.status(200).json(data);
+    console.log(`CUSTOMER :: Deleted: ${data.customer.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }
 };
 
 const retrieveCx = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { data } = await axios.get(
-      `/customers/${req.user.square_id}`,
-      SQUARE_API_CONFIG
-    );
+    const { data } = await axios.get(`/customers/${id}`, SQUARE_API_CONFIG);
     res.status(200).json(data);
+    console.log(`CUSTOMER :: Retrieved: ${data.customer.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }

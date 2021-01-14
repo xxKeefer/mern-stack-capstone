@@ -8,11 +8,15 @@ export const useCart = () => {
 };
 
 const CartContext = ({ children }) => {
-  const localStorageCart = JSON.parse(localStorage.getItem("myCart"));
+  let localStorageCart = JSON.parse(localStorage.getItem("myCart"));
+  if (!localStorageCart) {
+    localStorageCart = [];
+    localStorage.setItem("myCart", JSON.stringify([]));
+  }
 
   const initialCart = {
     cart: localStorageCart,
-    shipping: {},
+    order: null,
     customer: null,
   };
   const [cartState, dispatch] = useReducer(cartReducer, initialCart);

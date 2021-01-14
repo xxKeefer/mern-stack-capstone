@@ -1,19 +1,16 @@
-import {
-  Box,
-  Card,
-  Container,
-  Fade,
-  IconButton,
-  makeStyles,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import theme from "../../components/App/theme";
+import { Card, IconButton, makeStyles } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { API } from "../../util/fetch";
+
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import { API } from "../../util/fetch";
+import { ACTIONS } from "../../context/reducers/cartReducer";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { buildCustomer } from "../../util/shop";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -83,20 +80,103 @@ const useStyles = makeStyles((theme) => {
 
 export default function ShippingDetails(props) {
   const classes = useStyles();
-
+  const { currentUser } = useAuth();
+  const { register, handleSubmit, errors } = useForm();
   const {
-    cartState: { cart, shipping },
+    cartState: { customer },
+    dispatch,
   } = useCart();
 
   const [showShippingForm, setShowShippingForm] = useState(false);
-
-  const { register, handleSubmit, errors, setError, reset } = useForm();
+  const [shippingDetails, setShippingDetails] = useState({});
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+
+  useEffect(() => {
+    const getCurrentShipping = async () => {
+      if (customer) {
+        const { data } = await API.get(`/customer/${customer}`);
+        setShippingDetails(data.customer);
+      } else {
+        setShippingDetails(null);
+      }
+    };
+    getCurrentShipping();
+  }, [customer]);
+
+  const placeHoldShipping = (fieldName) => {
+    switch (fieldName) {
+      case "first_name":
+        return (shippingDetails && shippingDetails.given_name) || "Vinyl";
+      case "last_name":
+        return (
+          (shippingDetails && shippingDetails.family_name) || "Enthusiasts"
+        );
+      case "phone_number":
+        return (
+          (shippingDetails && shippingDetails.phone_number) || "0400000000"
+        );
+      case "address_line_1":
+        return (
+          (shippingDetails && shippingDetails.address.address_line_1) ||
+          "74 Wickham Street"
+        );
+      case "locality":
+        return (
+          (shippingDetails && shippingDetails.address.locality) ||
+          "Fortitude Valley"
+        );
+      case "administrative_district_level_1":
+        return (
+          (shippingDetails &&
+            shippingDetails.address.administrative_district_level_1) ||
+          "QLD"
+        );
+      case "postal_code":
+        return (
+          (shippingDetails && shippingDetails.address.postal_code) || "4006"
+        );
+
+      default:
+        break;
+    }
+  };
+
+  const handleShippingSubmit = async (shippingDetails) => {
+    const customerObj = buildCustomer(shippingDetails);
+
+    if (currentUser()) {
+      customerObj.email_address = currentUser().email;
+    } else {
+      customerObj.note = "guest customer";
+    }
+
+    try {
+      if (!shippingDetails.id) {
+        const {
+          data: { customer },
+        } = await API.post("/customer", customerObj);
+        dispatch({
+          type: ACTIONS.SET_CUSTOMER,
+          payload: customer.id,
+        });
+      } else {
+        await API.put("/customer", customerObj);
+      }
+      setShowShippingForm(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <div>
       <Card className={classes.formContainer}>
         <div className={classes.shippingTopBar}>
-          <h1 className={classes.formTitle}>shipping details</h1>
+          <h1 className={classes.formTitle}>
+            shipping details{" "}
+            <span>{customer && <CheckCircleIcon fontSize="large" />}</span>
+          </h1>
+
           {showShippingForm ? (
             <IconButton onClick={() => setShowShippingForm(!showShippingForm)}>
               <ExpandLess />
@@ -109,7 +189,10 @@ export default function ShippingDetails(props) {
         </div>
 
         {showShippingForm && (
-          <form onSubmit={handleSubmit(props.onSubmit)} id="shippingDetails">
+          <form
+            onSubmit={handleSubmit(handleShippingSubmit)}
+            id="shippingDetails"
+          >
             <div className={classes.inputPairRow}>
               <div className={classes.formGroup}>
                 <label className={classes.formLabel} htmlFor="first_name">
@@ -120,6 +203,7 @@ export default function ShippingDetails(props) {
                   className={classes.formInput}
                   type="text"
                   name="first_name"
+                  placeholder={placeHoldShipping("first_name")}
                 />
                 {errors.release_id && errors.release_id.type === "required" && (
                   <p className={classes.errorMessage}>This is required</p>
@@ -134,6 +218,7 @@ export default function ShippingDetails(props) {
                   className={classes.formInput}
                   type="text"
                   name="last_name"
+                  placeholder={placeHoldShipping("last_name")}
                 />
                 {errors.release_id && errors.release_id.type === "required" && (
                   <p className={classes.errorMessage}>This is required</p>
@@ -149,6 +234,7 @@ export default function ShippingDetails(props) {
                 className={classes.addressLine1Input}
                 type="text"
                 name="address_line_1"
+                placeholder={placeHoldShipping("address_line_1")}
               />
               {errors.release_id && errors.release_id.type === "required" && (
                 <p className={classes.errorMessage}>This is required</p>
@@ -165,6 +251,7 @@ export default function ShippingDetails(props) {
                   className={classes.formInput}
                   type="text"
                   name="locality"
+                  placeholder={placeHoldShipping("locality")}
                 />
                 {errors.release_id && errors.release_id.type === "required" && (
                   <p className={classes.errorMessage}>This is required</p>
@@ -182,28 +269,16 @@ export default function ShippingDetails(props) {
                   className={classes.formInput}
                   type="text"
                   name="administrative_district_level_1"
+                  placeholder={placeHoldShipping(
+                    "administrative_district_level_1"
+                  )}
                 />
                 {errors.release_id && errors.release_id.type === "required" && (
                   <p className={classes.errorMessage}>This is required</p>
                 )}
               </div>
             </div>
-            {/* this need to be a 2 char country code eg: AU */}
             <div className={classes.inputPairRow}>
-              <div className={classes.formGroup}>
-                <label className={classes.formLabel} htmlFor="country">
-                  country
-                </label>
-                <input
-                  ref={register({ required: true })}
-                  className={classes.formInput}
-                  type="text"
-                  name="country"
-                />
-                {errors.release_id && errors.release_id.type === "required" && (
-                  <p className={classes.errorMessage}>This is required</p>
-                )}
-              </div>
               <div className={classes.formGroup}>
                 <label className={classes.formLabel} htmlFor="postal_code">
                   postcode
@@ -213,35 +288,40 @@ export default function ShippingDetails(props) {
                   className={classes.formInput}
                   type="text"
                   name="postal_code"
+                  placeholder={placeHoldShipping("postal_code")}
+                />
+                {errors.release_id && errors.release_id.type === "required" && (
+                  <p className={classes.errorMessage}>This is required</p>
+                )}
+              </div>
+              <div className={classes.formGroup}>
+                <label className={classes.formLabel} htmlFor="phone_number">
+                  phone number
+                </label>
+                <input
+                  ref={register({ required: true })}
+                  className={classes.formInput}
+                  type="text"
+                  name="phone_number"
+                  placeholder={placeHoldShipping("phone_number")}
                 />
                 {errors.release_id && errors.release_id.type === "required" && (
                   <p className={classes.errorMessage}>This is required</p>
                 )}
               </div>
             </div>
-            <div className={classes.formGroup}>
-              <label className={classes.formLabel} htmlFor="phone_number">
-                phone number
-              </label>
-              <input
-                ref={register({ required: true })}
-                className={classes.formInput}
-                type="text"
-                name="phone_number"
-              />
-              {errors.release_id && errors.release_id.type === "required" && (
-                <p className={classes.errorMessage}>This is required</p>
-              )}
-            </div>
             {successfulSubmit && (
               <p className={classes.successfulSubmit}>
                 Record Submitted Successfully
               </p>
             )}
+            {/* TODO: syle this bottun with the fluro colour and ripple animation */}
             <input
               className={classes.submitButton}
               type="submit"
-              value="Add Shipping Details"
+              value={
+                customer ? "Update Shipping Details" : "Add Shipping Details"
+              }
               name="submit"
             />
           </form>

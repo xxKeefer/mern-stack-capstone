@@ -111,9 +111,7 @@ const useStyles = makeStyles((theme) => {
 export default function CartItem(props) {
   const classes = useStyles();
   const { dispatch } = useCart();
-
   const { cartItem } = props;
-  console.log({ cartItem });
 
   const {
     artists_sort: artistName,

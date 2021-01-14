@@ -5,7 +5,7 @@ const { SQUARE_API_CONFIG } = require("../utils/squareConfig");
 const LOC_ID = "LWB7HW6Z45KS9";
 
 const payNow = async (req, res) => {
-  const { nonce, price } = req.body;
+  const { nonce, price, customer, order } = req.body;
   const squarePayment = {
     amount_money: {
       amount: price,
@@ -13,7 +13,8 @@ const payNow = async (req, res) => {
     },
     idempotency_key: uuidv4(),
     source_id: nonce,
-    customer_id: "5H2TCV1R1WYJHEF1MRZBGP0N1W",
+    customer_id: customer,
+    order_id: order,
     location_id: LOC_ID,
   };
 
@@ -24,6 +25,7 @@ const payNow = async (req, res) => {
       SQUARE_API_CONFIG
     );
     res.status(200).json(payment);
+    console.log(`PAYMENT :: Received: ${payment.id}`);
   } catch (e) {
     res.status(400).json(e.message);
   }
