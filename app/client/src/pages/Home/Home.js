@@ -40,7 +40,7 @@ export default function Home(props) {
         className={classes.recordsGrid}
         justify="space-evenly"
         container
-        spacing={2}
+        spacing={1}
       >
         {status === "success" &&
           newReleases.map((record) => (

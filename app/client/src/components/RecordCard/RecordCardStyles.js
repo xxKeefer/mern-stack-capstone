@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { secondary, primary },
+    palette: { fluro, secondary, primary },
     breakpoints,
   } = theme;
 
@@ -12,13 +12,13 @@ const useStyles = makeStyles((theme) => {
       width: "90vw",
       // boxShadow: "none",
       // border: `1px solid ${secondary.main}`,
+
       [breakpoints.up("md")]: {
         width: "15vw",
-        minHeight: "23vw",
+        height: "23vw",
       },
       maxWidth: "200px",
       borderRadius: 0,
-      margin: "auto",
     },
     artistName: { margin: "0px", fontSize: "14px" },
     recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => {
       textAlign: "justify",
       cursor: "pointer",
       margin: 0,
+      color: secondary.main,
+      fontSize: "1rem",
     },
     iconContainer: {
       display: "flex",
@@ -61,6 +63,14 @@ const useStyles = makeStyles((theme) => {
     addIcon: {
       fontSize: "0.5rem",
       color: secondary.main,
+    },
+    preLovedChip: {
+      color: secondary.main,
+      backgroundColor: fluro.main,
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      margin: "1rem 0.5rem",
     },
   };
 });
