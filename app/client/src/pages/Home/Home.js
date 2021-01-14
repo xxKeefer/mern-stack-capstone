@@ -15,7 +15,7 @@ export default function Home(props) {
   });
 
   return (
-    <Grid container style={{}}>
+    <div>
       <HeroImage>
         <div className={classes.heroContainer}>
           <Typography className={classes.heroText}>
@@ -26,11 +26,6 @@ export default function Home(props) {
           </Typography>
           <Divider />
         </div>
-        {/* <img
-          alt="catalog records"
-          src={shopImage}
-          style={{ width: "100%", height: "100%", margin: "auto" }}
-        ></img> */}
       </HeroImage>
 
       <Paper className={classes.categoryTitle}>
@@ -40,11 +35,11 @@ export default function Home(props) {
         className={classes.recordsGrid}
         justify="space-evenly"
         container
-        spacing={2}
+        spacing={1}
       >
         {status === "success" &&
           newReleases.map((record) => (
-            <Grid item xs={12} sm="auto" key={record.discogs_id}>
+            <Grid item sm="auto" key={record.discogs_id}>
               <RecordCard record={record} />
             </Grid>
           ))}
@@ -58,6 +53,6 @@ export default function Home(props) {
         container
         spacing={2}
       ></Grid>
-    </Grid>
+    </div>
   );
 }

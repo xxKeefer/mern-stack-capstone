@@ -17,8 +17,10 @@ export default function LoginForm(props) {
   const submitLoginInfo = async (userInfo) => {
     try {
       const { data } = await API.post("/auth/login", userInfo);
-      globe.setModalState(false);
       auth.setAuthState(data);
+      setTimeout(() => {
+        globe.setModalState(false);
+      }, 1300);
       setRedirectOnLogin(true);
     } catch (error) {
       if (error.response) {

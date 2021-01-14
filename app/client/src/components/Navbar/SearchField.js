@@ -70,6 +70,7 @@ export default function SearchField() {
     getRecords();
   }, []);
 
+
   const options = records.map((option) => {
     return { ...option };
   });

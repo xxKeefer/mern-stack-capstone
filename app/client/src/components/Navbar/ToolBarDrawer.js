@@ -7,6 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -52,21 +53,28 @@ export default function ToolBarDrawer(props) {
 
   return (
     <Toolbar className={classes.toolBarDrawer}>
-      <IconButton edge="start" aria-label="menuClose">
-        <CloseIcon className={classes.closeIcon} onClick={closeClick} />
+      <IconButton edge="start" aria-label="menuClose" onClick={closeClick}>
+        <CloseIcon className={classes.closeIcon} />
       </IconButton>
       <h1 className={classes.catalogHeading}>catalog</h1>
       <div>
         {matchTabletOnly && (
-          <IconButton aria-label="account" className={classes.accountButton}>
-            <AccountCircleIcon className={classes.navIcons} />
-          </IconButton>
+          <Link to="/account">
+            <IconButton
+              aria-label="account"
+              className={classes.accountButton}
+              onClick={closeClick}
+            >
+              <AccountCircleIcon className={classes.navIcons} />
+            </IconButton>
+          </Link>
         )}
-
-        <IconButton edge="end" aria-label="cart">
-          {/*! Change to BoxEmpty instead of Dark/Light*/}
-          <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
-        </IconButton>
+        <Link to="/cart">
+          <IconButton edge="end" aria-label="cart" onClick={closeClick}>
+            {/*! Change to BoxEmpty instead of Dark/Light*/}
+            <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
+          </IconButton>
+        </Link>
       </div>
     </Toolbar>
   );

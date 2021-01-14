@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
-import { Box, CardContent, IconButton, Typography } from "@material-ui/core";
+import {
+  Box,
+  CardContent,
+  Chip,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import useStyles from "./RecordCardStyles";
 import CartIcon from "../../icons/BoxFullDark";
 import { toCurrencyString } from "../../util/shop";
@@ -22,6 +28,7 @@ export default function RecordCard(props) {
     variations: {
       stock: { price },
     },
+    preloved,
   } = props.record;
 
   const [blur, setBlur] = useState("blur(0px)");
@@ -45,10 +52,19 @@ export default function RecordCard(props) {
     }
   };
 
+  const abbreviateTitle = (title, length) => {
+    if (title.length > length) {
+      const abbreviated = title.slice(0, length);
+      return `${abbreviated}...`;
+    } else {
+      return title;
+    }
+  };
+
   return (
     <Card className={classes.root} raised>
       <Box
-        onMouseEnter={() => handleHover("blur(4px)", "block")}
+        onMouseEnter={() => handleHover("blur(50px)", "block")}
         onMouseLeave={() => handleHover("blur(0px)", "none")}
         style={{ position: "relative" }}
       >
@@ -72,17 +88,26 @@ export default function RecordCard(props) {
             {description}
           </p>
         )}
+        {preloved && (
+          <Chip
+            label="pre-loved"
+            size="small"
+            className={classes.preLovedChip}
+          />
+        )}
       </Box>
       <CardContent style={{ position: "relative", padding: "2px" }}>
         <div className={classes.flexedRow}>
-          <Typography className={classes.artistName}>{artist}</Typography>
+          <Typography className={classes.artistName}>
+            {abbreviateTitle(artist, 19)}
+          </Typography>
           <Typography className={classes.recordPrice}>
             ${toCurrencyString(price)}
           </Typography>
         </div>
         <div className={classes.flexedRow}>
           <Typography className={classes.recordTitle}>
-            {releaseTitle}
+            {abbreviateTitle(releaseTitle, 22)}
           </Typography>
         </div>
         <div className={classes.flexedRow}>

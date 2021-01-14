@@ -69,6 +69,7 @@ export default function ToolBarUpper() {
   const theme = useTheme();
   const auth = useAuth();
   const globe = useGlobal();
+
   const {
     cartState: { cart },
   } = useCart();

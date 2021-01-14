@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { primary, secondary },
+    palette: { fluro, primary, secondary },
     breakpoints,
   } = theme;
   return {
@@ -10,6 +10,13 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+    },
+    successMessage: {
+      width: "100%",
+      margin: "3rem",
+      fontSize: "1.5rem",
+      color: primary.main,
+      borderBottom: `4px double ${fluro.main}`,
     },
     card: {
       padding: "2rem",
