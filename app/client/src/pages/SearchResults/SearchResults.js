@@ -86,7 +86,7 @@ export default function SearchResults() {
         <TitleBar title="No results... try another search." />
       )}
       {status === "loading" && <p>loading...</p>}
-      {status === "success" && <ResultsGrid query={results} />}
+      {status === "success" && <ResultsGrid query={results} status={status} />}
     </div>
   );
 }
