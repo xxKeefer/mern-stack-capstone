@@ -24,7 +24,7 @@ const sendCompactDB = async (req, res) => {
   const compactDB = [];
   try {
     const titles = await Vinyl.distinct("release_title");
-    titles.forEach((i) => compactDB.push({ group: "Records", title: i }));
+    titles.forEach((i) => compactDB.push({ group: "Titles", title: i }));
     const artists = await Vinyl.distinct("artists_sort");
     artists.forEach((i) => compactDB.push({ group: "Artists", title: i }));
     const genres = await Vinyl.distinct("genres");

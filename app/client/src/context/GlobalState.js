@@ -13,7 +13,7 @@ export const useGlobal = () => {
 
 const GlobalState = ({ children }) => {
   const [modalState, setModalState] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(null);
+  const [searchQuery, setSearchQuery] = useState();
 
   const fetchNewReleases = async () => {
     const promise = await API.get("/records/year/2012");
