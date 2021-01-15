@@ -10,11 +10,11 @@ const query = async (req, res) => {
       locale: "en",
       strength: 2,
     });
-    console.log(res);
+    // console.log(res);
     res.status(200).json(results);
   } catch (e) {
     res.status(400).json(e.message);
-    console.log(res);
+    // console.log(res);
   }
 };
 

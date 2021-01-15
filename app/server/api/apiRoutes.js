@@ -1,5 +1,7 @@
 const express = require("express");
 let router = express.Router();
+const log = require("../middleware/logger");
+router.use(log.route);
 
 const admin = require("./routes/admin");
 const auth = require("./routes/auth");
