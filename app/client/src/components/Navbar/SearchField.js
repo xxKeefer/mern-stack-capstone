@@ -5,6 +5,7 @@ import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { API } from "../../util/fetch";
+import { useGlobal } from "../../context/GlobalState";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -57,6 +58,9 @@ export default function SearchField() {
   const [inputValue, setInputValue] = useState("");
   const [open, setOpen] = useState(false);
   const [records, setRecords] = useState([]);
+  const globe = useGlobal();
+
+  const { searchQuery, setSearchQuery } = globe;
 
   useEffect(() => {
     const getRecords = async () => {
@@ -69,7 +73,6 @@ export default function SearchField() {
     };
     getRecords();
   }, []);
-
 
   const options = records.map((option) => {
     return { ...option };

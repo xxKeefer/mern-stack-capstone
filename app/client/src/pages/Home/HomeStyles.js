@@ -7,7 +7,10 @@ const useStyles = makeStyles((theme) => {
   } = theme;
   return {
     recordsGrid: {
-      padding: "0rem",
+      padding: "1rem 0rem",
+    },
+    homeContainer: {
+      width: "100%",
     },
     categoryTitle: {
       width: "100%",

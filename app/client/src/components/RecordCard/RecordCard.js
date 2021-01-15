@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import useStyles from "./RecordCardStyles";
-import CartIcon from "../../icons/BoxFullDark";
+import CartIcon from "../../icons/BoxFull";
 import { toCurrencyString } from "../../util/shop";
 import { useCart } from "../../context/CartContext";
 import { ACTIONS } from "../../context/reducers/cartReducer";
@@ -53,16 +53,17 @@ export default function RecordCard(props) {
   };
 
   const abbreviateTitle = (title, length) => {
-    if (title.length > length) {
+    let newTitle = title.split(" (")[0];
+    if (newTitle.length > length) {
       const abbreviated = title.slice(0, length);
       return `${abbreviated}...`;
     } else {
-      return title;
+      return newTitle;
     }
   };
 
   return (
-    <Card className={classes.root} raised>
+    <Card className={classes.card} raised>
       <Box
         onMouseEnter={() => handleHover("blur(50px)", "block")}
         onMouseLeave={() => handleHover("blur(0px)", "none")}
@@ -99,7 +100,7 @@ export default function RecordCard(props) {
       <CardContent style={{ position: "relative", padding: "2px" }}>
         <div className={classes.flexedRow}>
           <Typography className={classes.artistName}>
-            {abbreviateTitle(artist, 19)}
+            {abbreviateTitle(artist, 18)}
           </Typography>
           <Typography className={classes.recordPrice}>
             ${toCurrencyString(price)}
@@ -107,7 +108,7 @@ export default function RecordCard(props) {
         </div>
         <div className={classes.flexedRow}>
           <Typography className={classes.recordTitle}>
-            {abbreviateTitle(releaseTitle, 22)}
+            {abbreviateTitle(releaseTitle, 21)}
           </Typography>
         </div>
         <div className={classes.flexedRow}>

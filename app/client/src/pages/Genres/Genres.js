@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, Paper } from "@material-ui/core";
 import { API } from "../../util/fetch";
-import { useQuery } from "react-query";
-import RecordCard from "../../components/RecordCard/RecordCard";
-import Results from "../../components/Results/Results";
+import Results from "../../components/ResultsGrid/ResultsGrid";
+import TitleBar from "../../components/TitleBar/TitleBar";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -14,19 +13,16 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: primary.main,
       width: "100%",
       height: "100%",
-      padding: "1rem",
     },
     genresListContainer: {
       width: "100%",
       backgroundColor: primary.main,
       borderRadius: 0,
       padding: "1rem",
+      outline: `4px double ${secondary.main}`,
+      outlineOffset: "-3px",
     },
     genresList: {
-      // display: "flex",
-      // flexDirection: "column",
-      // height: "100%",
-      // flexWrap: "wrap",
       columnCount: "5",
     },
     genreListItem: {
@@ -44,6 +40,7 @@ const useStyles = makeStyles((theme) => {
     pageTitle: {
       color: secondary.main,
       marginTop: 0,
+      padding: "1rem",
     },
   };
 });
@@ -86,52 +83,6 @@ export default function Genres() {
     }
   }, [genre]);
 
-  const testGenres = [
-    "afro",
-    "ambient ",
-    "bass ",
-    "beats",
-    "blues",
-    "Boogie",
-    "breakbeat ",
-    "broken beats",
-    "Classical",
-    "drum and bass",
-    "Dub",
-    "dubstep",
-    "electronic ",
-    "experiental",
-    "folk",
-    "Funk ",
-    "fusion",
-    "grime",
-    "hip hop",
-    "house",
-    "indie",
-    "jazz",
-    "jungle",
-    "kraut ",
-    "latin",
-    "library",
-    "metal",
-    "modern soul",
-    "new wave",
-    "nujazz",
-    "prog ",
-    "psyche",
-    "punk ",
-    "Reggae",
-    "RnB",
-    "rock",
-    "Soul ",
-    "soundtracks ",
-    "Special effects",
-    "spoken word",
-    "synth",
-    "techno",
-    "world",
-  ];
-
   return (
     <div className={classes.genresContainer}>
       <h1 className={classes.pageTitle}>genres</h1>
@@ -147,25 +98,16 @@ export default function Genres() {
               </li>
             );
           })}
-          {/*           
-           {testGenres.map((genre) => { 
-          //   return (
-          //     <li
-          //       className={classes.genreListItem}
-          //       onClick={() => setGenre(genre)}
-          //     >
-          //       {genre}
-          //     </li>
-          //   );
-          // })} */}
         </ul>
       </Paper>
-      <Results>
-        {records.length > 0 &&
-          records.map((record) => {
-            return <RecordCard record={record}></RecordCard>;
-          })}
-      </Results>
+      {genre ? (
+        <React.Fragment>
+          <TitleBar title={genre} />
+          <Results records={records} />
+        </React.Fragment>
+      ) : (
+        <TitleBar title="techno" />
+      )}
     </div>
   );
 }
