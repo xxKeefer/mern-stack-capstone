@@ -20,7 +20,7 @@ export default function RecordCard(props) {
   const {
     release_title: releaseTitle,
     artists_sort: artist,
-    genres,
+    styles,
     image,
     labels,
     year,
@@ -118,11 +118,7 @@ export default function RecordCard(props) {
         </div>
         <div className={classes.flexedRow}>
           <Typography className={classes.cardGenres}>
-            {genres === 1
-              ? genres[0]
-              : genres.map((genre, index) => {
-                  return index === genres.length - 1 ? genre : `${genre} / `;
-                })}
+            {styles.length === 1 ? styles[0] : styles[0] + " / " + styles[1]}
           </Typography>
         </div>
         <IconButton
