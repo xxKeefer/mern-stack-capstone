@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Link as MuiLink } from "@material-ui/core/";
 import { useTheme } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import BoxEmptyDark from "../../icons/BoxEmptyDark";
+import BoxEmptyDark from "../../icons/BoxEmpty";
 import IconButton from "@material-ui/core/IconButton";
 import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,7 +12,7 @@ import MenuDrawer from "./MenuDrawer";
 import LoginModal from "../LoginModal/LoginModal";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import { useCart } from "../../context/CartContext";
-import BoxFullDark from "../../icons/BoxFullDark";
+import BoxFullDark from "../../icons/BoxFull";
 import { useAuth } from "../../context/AuthContext";
 import { useGlobal } from "../../context/GlobalState";
 

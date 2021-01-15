@@ -16,6 +16,7 @@ import GlobalState from "../../context/GlobalState";
 import Genres from "../../pages/Genres/Genres";
 import { useAuth } from "../../context/AuthContext";
 import Account from "../../pages/Account/Account";
+import SearchResults from "../../pages/SearchResults/SearchResults";
 
 const App = () => {
   const auth = useAuth();
@@ -44,9 +45,10 @@ const App = () => {
                 <Route path="/cart" component={Cart} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/news" component={News} />
-                <Route path="/genres" component={Genres} />
+                <Route path="/genres/" component={Genres} />
                 <Route path="/account" component={Account} />
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/results" component={SearchResults} />
                 <Route exact path="/" component={Home} />
               </MainContainer>
             </Switch>

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
-import BoxEmptyDark from "../../icons/BoxEmptyDark";
+import BoxEmptyDark from "../../icons/BoxEmpty";
 import IconButton from "@material-ui/core/IconButton";
 import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +8,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
+import BoxFullDark from "../../icons/BoxFull";
+import { useCart } from "../../context/CartContext";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -39,12 +41,30 @@ const useStyles = makeStyles((theme) => {
       fontSize: "2.5rem",
       color: primary.main,
     },
+    cartIconDiv: {
+      height: "1rem",
+      width: "1rem",
+      backgroundColor: "red",
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      borderRadius: "50%",
+      "& p": {
+        fontSize: "0.7rem",
+        color: "white",
+        margin: "auto",
+      },
+    },
   };
 });
 
 export default function ToolBarDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const {
+    cartState: { cart },
+  } = useCart();
+
   const matchTabletOnly = useMediaQuery(theme.breakpoints.only("sm"));
 
   const closeClick = (state) => {
@@ -71,8 +91,16 @@ export default function ToolBarDrawer(props) {
         )}
         <Link to="/cart">
           <IconButton edge="end" aria-label="cart" onClick={closeClick}>
-            {/*! Change to BoxEmpty instead of Dark/Light*/}
-            <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
+            {cart.length > 0 ? (
+              <div style={{ position: "relative" }}>
+                <BoxFullDark className={classes.navIcons} viewBox="0 0 60 60" />
+                <div className={classes.cartIconDiv}>
+                  <p>{cart.reduce((a, b) => a + b.quantity, 0)}</p>
+                </div>
+              </div>
+            ) : (
+              <BoxEmptyDark className={classes.navIcons} viewBox="0 0 60 60" />
+            )}
           </IconButton>
         </Link>
       </div>
