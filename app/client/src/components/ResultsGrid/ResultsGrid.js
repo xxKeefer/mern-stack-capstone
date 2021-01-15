@@ -33,14 +33,13 @@ export default function ResultsGrid(props) {
       className={classes.gridContainer}
       spacing={1}
     >
-      {status === "success" &&
-        query.map((record) => {
-          return (
-            <Grid item key={record.discogs_id}>
-              <RecordCard record={record} />
-            </Grid>
-          );
-        })}
+      {query.map((record) => {
+        return (
+          <Grid item key={record.discogs_id}>
+            <RecordCard record={record} />
+          </Grid>
+        );
+      })}
     </Grid>
   );
 }

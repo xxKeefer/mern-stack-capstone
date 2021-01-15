@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { API } from "../../util/fetch";
 import { useQuery } from "react-query";
@@ -53,14 +53,24 @@ const useStyles = makeStyles((theme) => {
 export default function SearchResults() {
   const classes = useStyles();
   const globe = useGlobal();
+  const [title, setTitle] = useState();
+  const [category, setCategory] = useState();
 
   const { searchQuery } = globe;
 
-  console.log(searchQuery.title);
-  const title = searchQuery.title.replace(/\s+/g, "").toLowerCase();
-  const category = searchQuery.group.replace(/\s+/g, "").toLowerCase();
-  console.log(title);
-  console.log(category);
+  useEffect(() => {
+    if (searchQuery) {
+      if (searchQuery.group === "Titles") {
+        setCategory("release_title");
+      } else if (searchQuery.group === "Artists") {
+        setCategory("artists_sort");
+      } else {
+        setCategory(searchQuery.group.replace(/\s+/g, "").toLowerCase());
+      }
+      setTitle(searchQuery.title.replace(/\s+/g, "").toLowerCase());
+    }
+  }, [searchQuery, setTitle, setCategory]);
+
   const { data: results, status } = useQuery(`${title}`, async () => {
     const { data } = await API.get(`/records/${category}/${title}`);
     console.log(data);
@@ -68,19 +78,15 @@ export default function SearchResults() {
     return data;
   });
 
-  //   const { data: results, status } = useQuery(`${title}`, async () => {
-  //     const { data } = await API.get(`/records/artists/fourtet`);
-  //     console.log(data);
-  //     return data;
-  //   });
-
   return (
     <div className={classes.searchContainer}>
-      {searchQuery && (
+      {searchQuery ? (
         <TitleBar title={`search results: ${searchQuery.title}`} />
+      ) : (
+        <TitleBar title="No results... try another search." />
       )}
       {status === "loading" && <p>loading...</p>}
-      <ResultsGrid query={results} status={status} />
+      {status === "success" && <ResultsGrid query={results} />}
     </div>
   );
 }

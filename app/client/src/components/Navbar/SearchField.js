@@ -63,7 +63,7 @@ export default function SearchField() {
   const [redirect, setRedirect] = useState(false);
   const globe = useGlobal();
 
-  const { setSearchQuery } = globe;
+  const { setSearchQuery, setModalState, modalState } = globe;
 
   useEffect(() => {
     const getRecords = async () => {
@@ -80,8 +80,10 @@ export default function SearchField() {
   const options = records.map((option) => {
     return { ...option };
   });
-
-  const handleOpen = () => {};
+  console.log(options);
+  const handleOpen = () => {
+    setOpen(!open);
+  };
 
   useEffect(() => {
     inputValue.length > 0 ? setOpen(true) : setOpen(false);
@@ -93,13 +95,13 @@ export default function SearchField() {
 
   useEffect(() => {
     console.log(value);
-
     setSearchQuery(value);
     setOpen(false);
     setTimeout(() => {
       setInputValue("");
+      if (modalState === true) setModalState(false);
     }, 1000);
-  }, [value, setSearchQuery, setRedirect]);
+  }, [value, setSearchQuery, setRedirect, modalState, setModalState]);
 
   return (
     <React.Fragment>
