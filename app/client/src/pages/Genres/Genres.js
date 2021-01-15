@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, Paper } from "@material-ui/core";
 import { API } from "../../util/fetch";
-import Results from "../../components/ResultsGrid/ResultsGrid";
+import ResultsGrid from "../../components/ResultsGrid/ResultsGrid";
 import TitleBar from "../../components/TitleBar/TitleBar";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme) => {
       marginTop: 0,
       padding: "1rem",
     },
+    linkComponent: {
+      textDecoration: "none",
+    },
   };
 });
 
@@ -50,15 +55,15 @@ export default function Genres() {
   const [genresList, setGenresList] = useState([]);
   const [genre, setGenre] = useState("");
   const [records, setRecords] = useState([]);
+  const [genreStatus, setGenreStatus] = useState("loading");
 
   useEffect(() => {
     const getGenres = async () => {
       try {
         const { data } = await API.get("/records/search");
         const genresGrep = data.filter((obj) => {
-          return obj.group === "Genres";
+          return obj.group === "Styles";
         });
-        console.log(genresGrep);
         setGenresList(genresGrep);
       } catch (error) {
         console.log(error);
@@ -72,20 +77,33 @@ export default function Genres() {
       const getRecords = async () => {
         const cleanedGenre = genre.toLowerCase();
         console.log(cleanedGenre);
-
-        const { data } = await API.get(`/records/genres/${cleanedGenre}`);
-        console.log(data);
-        if (data.length > 0) {
-          setRecords(data);
+        try {
+          const { data } = await API.get(`/records/styles/${cleanedGenre}`);
+          if (data.length > 0) {
+            setRecords(data);
+          }
+          setGenreStatus("success");
+        } catch (error) {
+          setGenreStatus("error");
         }
       };
       getRecords();
     }
   }, [genre]);
 
+  const { data: electronic, status: electronicStatus } = useQuery(
+    "electronic",
+    async () => {
+      const { data } = await API.get("/records/styles/techno");
+      return data;
+    }
+  );
+
   return (
     <div className={classes.genresContainer}>
-      <h1 className={classes.pageTitle}>genres</h1>
+      <Link to="/genres" className={classes.linkComponent}>
+        <h1 className={classes.pageTitle}>genres</h1>
+      </Link>
       <Paper className={classes.genresListContainer}>
         <ul className={classes.genresList}>
           {genresList.map((genre) => {
@@ -103,10 +121,13 @@ export default function Genres() {
       {genre ? (
         <React.Fragment>
           <TitleBar title={genre} />
-          <Results records={records} />
+          <ResultsGrid query={records} status={genreStatus} />
         </React.Fragment>
       ) : (
-        <TitleBar title="techno" />
+        <React.Fragment>
+          <TitleBar title="electronic" />
+          <ResultsGrid query={electronic} status={electronicStatus} />
+        </React.Fragment>
       )}
     </div>
   );

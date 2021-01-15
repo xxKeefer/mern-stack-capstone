@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { API } from "../../util/fetch";
 import { useGlobal } from "../../context/GlobalState";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -56,11 +57,13 @@ const useStyles = makeStyles((theme) => {
 export default function SearchField() {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState("");
+  const [value, setValue] = useState(null);
   const [open, setOpen] = useState(false);
   const [records, setRecords] = useState([]);
+  const [redirect, setRedirect] = useState(false);
   const globe = useGlobal();
 
-  const { searchQuery, setSearchQuery } = globe;
+  const { setSearchQuery } = globe;
 
   useEffect(() => {
     const getRecords = async () => {
@@ -78,67 +81,89 @@ export default function SearchField() {
     return { ...option };
   });
 
-  const handleOpen = () => {
-    inputValue.length > 0 && setOpen(true);
-  };
+  const handleOpen = () => {};
+
+  useEffect(() => {
+    inputValue.length > 0 ? setOpen(true) : setOpen(false);
+  }, [inputValue]);
 
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
-    if (newInputValue.length > 0) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
   };
 
+  useEffect(() => {
+    console.log(value);
+
+    setSearchQuery(value);
+    setOpen(false);
+    setTimeout(() => {
+      setInputValue("");
+    }, 1000);
+  }, [value, setSearchQuery, setRedirect]);
+
   return (
-    <div>
-      <Autocomplete
-        open={open}
-        onOpen={handleOpen}
-        onClose={() => {
-          setOpen(false);
-        }}
-        freeSolo={true}
-        noOptionsText={"No Results"}
-        inputValue={inputValue}
-        onInputChange={handleInputChange}
-        selectOnFocus
-        popupIcon={null}
-        classes={{
-          root: classes.root,
-          groupLabel: classes.groupLabel,
-          paper: classes.paper,
-          options: classes.options,
-          noOptions: classes.noOptions,
-          focused: classes.focused,
-        }}
-        options={options}
-        groupBy={(option) => option.group}
-        getOptionLabel={(option) => option.title}
-        ListboxProps={{
-          style: { height: "15rem", border: "solid 2px white", margin: "0px" },
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <>
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                  {params.InputProps.startAdornment}
-                </>
-              ),
-            }}
-            placeholder="search..."
-            size="small"
-            className={classes.searchTextField}
-          ></TextField>
-        )}
-      ></Autocomplete>
-    </div>
+    <React.Fragment>
+      {redirect && <Redirect to="/results" />}
+
+      <div>
+        <Autocomplete
+          open={open}
+          onOpen={handleOpen}
+          onClose={() => {
+            setOpen(false);
+          }}
+          value={value}
+          freeSolo
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            setRedirect(true);
+          }}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) =>
+            handleInputChange(event, newInputValue)
+          }
+          noOptionsText={"No Results"}
+          selectOnFocus
+          popupIcon={null}
+          classes={{
+            root: classes.root,
+            groupLabel: classes.groupLabel,
+            paper: classes.paper,
+            options: classes.options,
+            noOptions: classes.noOptions,
+            focused: classes.focused,
+          }}
+          options={options}
+          groupBy={(option) => option.group}
+          getOptionLabel={(option) => option.title}
+          ListboxProps={{
+            style: {
+              height: "15rem",
+              border: "solid 2px white",
+              margin: "0px",
+            },
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                    {params.InputProps.startAdornment}
+                  </>
+                ),
+              }}
+              placeholder="search..."
+              size="small"
+              className={classes.searchTextField}
+            ></TextField>
+          )}
+        ></Autocomplete>
+      </div>
+    </React.Fragment>
   );
 }

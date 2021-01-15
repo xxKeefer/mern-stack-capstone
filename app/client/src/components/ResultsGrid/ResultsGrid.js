@@ -18,31 +18,29 @@ const useStyles = makeStyles((theme) => {
     gridContainer: {
       padding: 0,
       width: "100%",
-      height: "100%",
     },
   };
 });
 
 export default function ResultsGrid(props) {
   const classes = useStyles();
-  const { records } = props;
+  const { query, status } = props;
+
   return (
-    <div className={classes.resultsContainer}>
-      <Grid
-        container
-        justify="space-evenly"
-        className={classes.gridContainer}
-        spacing={1}
-      >
-        {records.length > 0 &&
-          records.map((record) => {
-            return (
-              <Grid item key={record.discogs_id}>
-                <RecordCard record={record} />
-              </Grid>
-            );
-          })}
-      </Grid>
-    </div>
+    <Grid
+      container
+      justify="space-evenly"
+      className={classes.gridContainer}
+      spacing={1}
+    >
+      {status === "success" &&
+        query.map((record) => {
+          return (
+            <Grid item key={record.discogs_id}>
+              <RecordCard record={record} />
+            </Grid>
+          );
+        })}
+    </Grid>
   );
 }

@@ -26,6 +26,8 @@ const GlobalState = ({ children }) => {
         modalState,
         setModalState,
         fetchNewReleases,
+        searchQuery,
+        setSearchQuery,
       }}
     >
       <QueryClientProvider client={queryClient}>

@@ -12,6 +12,7 @@ import HeroImage from "../../components/HeroImage/HeroImage";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";
 import useStyles from "./HomeStyles";
+import ResultsGrid from "../../components/ResultsGrid/ResultsGrid";
 
 export default function Home(props) {
   const classes = useStyles();
@@ -71,7 +72,7 @@ export default function Home(props) {
       <Paper className={classes.categoryTitle}>
         <h1 className={classes.titleText}>new releases</h1>
       </Paper>
-      <RecordGrid query={newReleases} status={newReleasesStatus} />
+      <ResultsGrid query={newReleases} status={newReleasesStatus} />
       <Paper className={classes.categoryTitle}>
         <h1 className={classes.titleText}>fresh pre-loved</h1>
       </Paper>
