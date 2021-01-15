@@ -13,6 +13,7 @@ export const useGlobal = () => {
 
 const GlobalState = ({ children }) => {
   const [modalState, setModalState] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(null);
 
   const fetchNewReleases = async () => {
     const promise = await API.get("/records/year/2012");
@@ -25,6 +26,8 @@ const GlobalState = ({ children }) => {
         modalState,
         setModalState,
         fetchNewReleases,
+        searchQuery,
+        setSearchQuery,
       }}
     >
       <QueryClientProvider client={queryClient}>

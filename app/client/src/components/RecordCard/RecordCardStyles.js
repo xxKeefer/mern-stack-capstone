@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => {
   } = theme;
 
   return {
-    root: {
+    card: {
       backgroundColor: primary.main,
       width: "90vw",
       [breakpoints.up("lg")]: {
@@ -15,12 +15,8 @@ const useStyles = makeStyles((theme) => {
       },
       maxWidth: "200px",
       borderRadius: 0,
+      margin: 0,
     },
-    artistName: { margin: "0px", fontSize: "14px" },
-    recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
-    recordTitle: { fontSize: "12px" },
-    labelAndYear: { fontSize: "12px", color: "#808080" },
-    cardGenres: { textTransform: "uppercase", fontSize: "10px" },
     coverImage: {
       height: "90vw",
       width: "90vw",
@@ -33,6 +29,12 @@ const useStyles = makeStyles((theme) => {
         transition: "1s filter",
       },
     },
+    artistName: { margin: "0px", fontSize: "14px" },
+    recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
+    recordTitle: { fontSize: "12px" },
+    labelAndYear: { fontSize: "12px", color: "#808080" },
+    cardGenres: { textTransform: "uppercase", fontSize: "10px" },
+
     flexedRow: {
       display: "flex",
       justifyContent: "space-between",
