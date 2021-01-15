@@ -12,7 +12,10 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 //CORS CONFIGURATION
-const allowList = ["http://localhost:3000"]; // allow to server to accept request from different origin
+const allowList = [
+  "http://localhost:3000",
+  "https://dogolatmusicco.herokuapp.com/",
+]; // allow to server to accept request from different origin
 const corsConfig = {
   origin: (origin, callback) => {
     // Check each url in allowList and see if it includes the origin (instead of matching exact string)
