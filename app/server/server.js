@@ -15,6 +15,7 @@ const port = process.env.PORT || 8080;
 const allowList = [
   "http://localhost:3000",
   "https://dogolatmusicco.herokuapp.com/",
+  "https://dogolatmusicco.netlify.app/",
 ]; // allow to server to accept request from different origin
 const corsConfig = {
   origin: (origin, callback) => {
