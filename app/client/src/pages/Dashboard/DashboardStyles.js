@@ -11,6 +11,12 @@ const useStyles = makeStyles((theme) => {
       height: "100%",
       display: "flex",
     },
+    componentContainer: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      border: "2px solid red",
+    },
     formContainer: {
       border: "2px solid red",
       display: "flex",

@@ -23,6 +23,9 @@ const theme = createMuiTheme({
       primary: "#2D2926",
       gray: "#808080",
     },
+    red: {
+      main: "#ed2e38",
+    },
   },
   typography: {
     fontFamilyCoolvetica: "Coolvetica, Arial",

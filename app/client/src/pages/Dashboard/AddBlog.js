@@ -28,7 +28,7 @@ export default function AddRecords() {
   };
 
   return (
-    <div className={classes.newFormContainer}>
+    <div className={classes.formContainer}>
       <h3 className={classes.formTitle}>Add Blog</h3>
       <form onSubmit={handleSubmit(submitAddBlog)} id="adBlogForm">
         <div className={classes.formGroup}>
@@ -87,14 +87,14 @@ export default function AddRecords() {
         </div>
 
         <div className={classes.formGroup}>
-          <label className={classes.formLabel} htmlFor="image_url">
+          <label className={classes.formLabel} htmlFor="image_str">
             image url
           </label>
           <input
             ref={register({ required: false })}
             className={classes.formInput}
             type="text"
-            name="image_url"
+            name="image_str"
           />
         </div>
 
