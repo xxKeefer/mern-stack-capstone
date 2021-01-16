@@ -1,13 +1,6 @@
 import React from "react";
 import RecordCard from "../../components/RecordCard/RecordCard";
-import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Divider, Grid, Paper, Typography } from "@material-ui/core";
 import HeroImage from "../../components/HeroImage/HeroImage";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";

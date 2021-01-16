@@ -13,11 +13,17 @@ import { toCurrencyString } from "../../util/shop";
 import { useCart } from "../../context/CartContext";
 import { ACTIONS } from "../../context/reducers/cartReducer";
 import { useAuth } from "../../context/AuthContext";
+import { useGlobal } from "../../context/GlobalState";
+import RecordModal from "../RecordModal/RecordModal";
 
 export default function RecordCard(props) {
   const classes = useStyles();
   const { dispatch } = useCart();
   const auth = useAuth();
+  const globe = useGlobal();
+  const record = props;
+
+  const { recordModalState, setRecordModalState } = globe;
 
   const { isSuper } = auth;
 
@@ -33,7 +39,7 @@ export default function RecordCard(props) {
       stock: { price },
     },
     preloved,
-  } = props.record;
+  } = record;
 
   const [blur, setBlur] = useState("blur(0px)");
   const [display, setDisplay] = useState("none");
@@ -68,6 +74,7 @@ export default function RecordCard(props) {
 
   return (
     <Card className={classes.card} raised>
+      {recordModalState && <RecordModal record={record} />}
       <Box
         onMouseEnter={() => handleHover("blur(50px)", "block")}
         onMouseLeave={() => handleHover("blur(0px)", "none")}
@@ -107,6 +114,7 @@ export default function RecordCard(props) {
             label="more info"
             size="small"
             className={classes.moreInfoChip}
+            onClick={() => setRecordModalState(true)}
           />
         )}
       </Box>
@@ -144,7 +152,7 @@ export default function RecordCard(props) {
           onClick={() => {
             dispatch({
               type: ACTIONS.ADD_RECORD,
-              payload: props.record,
+              payload: record,
             });
           }}
         >

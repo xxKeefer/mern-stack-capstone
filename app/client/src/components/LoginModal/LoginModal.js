@@ -12,14 +12,14 @@ export default function LoginModal(props) {
   const auth = useAuth();
 
   const closeClick = () => {
-    globe.setModalState(false);
+    globe.setLoginModalState(false);
   };
 
   return (
     <div>
       <Modal
         className={classes.modal}
-        open={globe.modalState}
+        open={globe.loginModalState}
         onClose={closeClick}
       >
         <Card className={classes.card}>
