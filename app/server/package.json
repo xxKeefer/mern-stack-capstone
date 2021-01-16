@@ -4,15 +4,19 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx mocha \"test/**/*.test.js\" --recursive --file test/mocha-setup.js",
     "devStart": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.2.0",
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.6"
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "regenerator-runtime": "^0.13.7",
+    "supertest": "^6.1.1"
   },
   "dependencies": {
     "axios": "^0.21.1",
