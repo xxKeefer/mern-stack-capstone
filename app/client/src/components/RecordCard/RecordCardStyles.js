@@ -70,6 +70,20 @@ const useStyles = makeStyles((theme) => {
       right: 0,
       margin: "1rem 0.5rem",
     },
+    moreInfoChip: {
+      color: secondary.main,
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      margin: "1rem 0.5rem",
+    },
+    editChip: {
+      color: secondary.main,
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      margin: "1rem 0.5rem",
+    },
   };
 });
 

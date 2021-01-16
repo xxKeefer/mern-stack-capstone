@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText, makeStyles } from "@material-ui/core";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 import React, { useState } from "react";
 import AddRecords from "./AddRecords";
 import AddBlog from "./AddBlog";
@@ -7,7 +7,6 @@ import useStyles from "./DashboardStyles";
 export default function Dashboard() {
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
   const [component, setComponent] = useState("");
 
   return (

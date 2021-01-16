@@ -14,12 +14,13 @@ import { useCart } from "../../context/CartContext";
 import { ACTIONS } from "../../context/reducers/cartReducer";
 import { useAuth } from "../../context/AuthContext";
 
-export default function RecordCard(props) {
+export default function RecordModal(props) {
   const classes = useStyles();
   const { dispatch } = useCart();
   const auth = useAuth();
 
-  const { isSuper } = auth;
+  const { isSuper, authState } = auth;
+  console.log(isSuper);
 
   const {
     release_title: releaseTitle,
@@ -100,7 +101,7 @@ export default function RecordCard(props) {
             className={classes.preLovedChip}
           />
         )}
-        {isSuper() ? (
+        {isSuper ? (
           <Chip label="edit" size="small" className={classes.editChip} />
         ) : (
           <Chip
