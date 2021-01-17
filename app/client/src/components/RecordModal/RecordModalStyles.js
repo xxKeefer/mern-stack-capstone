@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => {
       borderBottom: `4px double ${fluro.main}`,
     },
     recordModalCard: {
-      padding: "2rem",
+      padding: "1rem",
       display: "flex",
       justifyContent: "center",
       flexDirection: "column",
@@ -27,8 +27,9 @@ const useStyles = makeStyles((theme) => {
       borderRadius: "0px",
       border: `3px solid ${secondary.main}`,
       backgroundColor: primary.main,
-      [breakpoints.only("sm")]: {
-        padding: "2rem 3rem",
+      height: "80vh",
+      [breakpoints.only("xs")]: {
+        padding: "3rem 1.5rem",
       },
       [breakpoints.up("md")]: {
         padding: "2rem 5rem",
@@ -80,16 +81,12 @@ const useStyles = makeStyles((theme) => {
     },
     signUpMessage: { color: primary.main },
     coverImage: {
-      height: "90vw",
-      width: "90vw",
-      maxWidth: "200px",
-      maxHeight: "200px",
-      [breakpoints.up("lg")]: {
-        height: "15vw",
-        width: "15vw",
-        filter: "blur(0px)",
-        transition: "1s filter",
-      },
+      width: "100%",
+    },
+    imageContainer: {
+      width: "300px",
+      height: "300px",
+      [breakpoints.only("xs")]: { width: "80%" },
     },
     artistName: { margin: "0px", fontSize: "14px" },
     recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
@@ -113,6 +110,12 @@ const useStyles = makeStyles((theme) => {
       color: secondary.main,
       fontSize: "1rem",
     },
+    descriptionContainer: {
+      paddingTop: "1rem",
+    },
+    description: {
+      fontStyle: "italic",
+    },
     iconContainer: {
       display: "flex",
       flexDirection: "column",
@@ -132,19 +135,22 @@ const useStyles = makeStyles((theme) => {
       right: 0,
       margin: "1rem 0.5rem",
     },
-    moreInfoChip: {
-      color: secondary.main,
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      margin: "1rem 0.5rem",
-    },
     editChip: {
       color: secondary.main,
       position: "absolute",
       bottom: 0,
       left: 0,
       margin: "1rem 0.5rem",
+    },
+    trackListContainer: { width: "100%", padding: "1rem 0rem" },
+    infoTitles: {
+      letterSpacing: "3px",
+      fontWeight: "200",
+      width: "100%",
+      textAlign: "center",
+    },
+    catalogNumber: {
+      textAlign: "center",
     },
   };
 });

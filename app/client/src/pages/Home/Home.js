@@ -65,11 +65,15 @@ export default function Home(props) {
       <Paper className={classes.categoryTitle}>
         <h1 className={classes.titleText}>new releases</h1>
       </Paper>
-      <ResultsGrid query={newReleases} status={newReleasesStatus} />
+      {newReleasesStatus === "success" && (
+        <ResultsGrid query={newReleases} status={newReleasesStatus} />
+      )}
       <Paper className={classes.categoryTitle}>
         <h1 className={classes.titleText}>fresh pre-loved</h1>
       </Paper>
-      <RecordGrid query={preLoved} status={preLovedStatus} />
+      {preLovedStatus === "success" && (
+        <RecordGrid query={preLoved} status={preLovedStatus} />
+      )}
     </div>
   );
 }

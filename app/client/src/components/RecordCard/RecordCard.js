@@ -20,13 +20,9 @@ export default function RecordCard(props) {
   const classes = useStyles();
   const { dispatch } = useCart();
   const auth = useAuth();
-  const globe = useGlobal();
-  const record = props;
-
-  const { recordModalState, setRecordModalState } = globe;
-
+  const { record } = props;
+  const [recordModalState, setRecordModalState] = useState();
   const { isSuper } = auth;
-
   const {
     release_title: releaseTitle,
     artists_sort: artist,
@@ -35,6 +31,7 @@ export default function RecordCard(props) {
     labels,
     year,
     description,
+    review,
     variations: {
       stock: { price },
     },
@@ -45,7 +42,7 @@ export default function RecordCard(props) {
   const [display, setDisplay] = useState("none");
 
   const handleHover = (blurState, displayState) => {
-    if (description.length > 0) {
+    if (review.length > 0) {
       setBlur(blurState);
 
       setTimeout(() => {
@@ -56,7 +53,7 @@ export default function RecordCard(props) {
 
   const parseLabelData = (labels) => {
     if (labels.length < 1) {
-      return "Year";
+      return "";
     } else {
       return labels[0].name;
     }
@@ -74,7 +71,13 @@ export default function RecordCard(props) {
 
   return (
     <Card className={classes.card} raised>
-      {recordModalState && <RecordModal record={record} />}
+      {recordModalState && (
+        <RecordModal
+          record={record}
+          recordModalState={recordModalState}
+          setRecordModalState={setRecordModalState}
+        />
+      )}
       <Box
         onMouseEnter={() => handleHover("blur(50px)", "block")}
         onMouseLeave={() => handleHover("blur(0px)", "none")}
@@ -92,12 +95,12 @@ export default function RecordCard(props) {
 
         {blur && (
           <p
-            className={classes.recordDescription}
+            className={classes.recordReview}
             style={{
               display: display,
             }}
           >
-            {description}
+            {review}
           </p>
         )}
         {preloved && (

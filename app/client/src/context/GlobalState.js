@@ -12,7 +12,6 @@ export const useGlobal = () => {
 };
 
 const GlobalState = ({ children }) => {
-  const [recordModalState, setRecordModalState] = useState(false);
   const [loginModalState, setLoginModalState] = useState(false);
   const [searchQuery, setSearchQuery] = useState(null);
 
@@ -29,8 +28,6 @@ const GlobalState = ({ children }) => {
         fetchNewReleases,
         searchQuery,
         setSearchQuery,
-        recordModalState,
-        setRecordModalState,
       }}
     >
       <QueryClientProvider client={queryClient}>

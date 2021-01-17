@@ -54,8 +54,8 @@ export default function Genres() {
   const classes = useStyles();
   const [genresList, setGenresList] = useState([]);
   const [genre, setGenre] = useState("");
-  const [records, setRecords] = useState([]);
   const [genreStatus, setGenreStatus] = useState("loading");
+  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     const getGenres = async () => {

@@ -21,12 +21,11 @@ export default function RecordModal(props) {
   const classes = useStyles();
   const { dispatch } = useCart();
   const auth = useAuth();
-  const globe = useGlobal();
 
   const { isSuper } = auth;
-  console.log(isSuper);
 
-  const { recordModalState, setRecordModalState } = globe;
+  const { recordModalState, setRecordModalState } = props;
+  console.log(props.record);
 
   const {
     release_title: releaseTitle,
@@ -40,31 +39,8 @@ export default function RecordModal(props) {
       stock: { price },
     },
     preloved,
+    tracklist,
   } = props.record;
-
-  // const record = {
-  //   releaseTitle: "releaseTitle",
-  //   artist: "artist",
-  //   styles: "genre",
-  //   image: "image",
-  //   labels: "labels",
-  //   year: "year",
-  //   description: "description",
-  //   price: "20",
-  //   preloved: "true",
-  // // };
-
-  // const {
-  //   releaseTitle,
-  //   artist,
-  //   styles,
-  //   image,
-  //   labels,
-  //   year,
-  //   description,
-  //   price,
-  //   preloved,
-  // } = record;
 
   const parseLabelData = (labels) => {
     if (labels.length < 1) {
@@ -94,89 +70,129 @@ export default function RecordModal(props) {
       className={classes.recordModal}
       onClose={closeClick}
     >
-      <Card className={classes.recordModalCard}>
+      <Card
+        className={classes.recordModalCard}
+        style={{
+          overflowY: "auto",
+          position: "relative",
+        }}
+      >
         <IconButton className={classes.closeButton}>
           <CloseIcon onClick={closeClick} />
         </IconButton>
         <div
           style={{
-            width: "300px",
-            height: "300px",
-            border: "2px solid red",
+            width: "100%",
+            height: "100%",
             position: "relative",
           }}
         >
-          <img alt="record cover" src={image} className={classes.coverImage} />
-          {preloved && (
-            <Chip
-              label="pre-loved"
-              size="small"
-              className={classes.preLovedChip}
-            />
-          )}
-          {isSuper ? (
-            <Chip label="edit" size="small" className={classes.editChip} />
-          ) : (
-            <Chip
-              label="more info"
-              size="small"
-              className={classes.moreInfoChip}
-            />
-          )}
-        </div>
-        <CardContent style={{ position: "relative", padding: "2px" }}>
-          <div className={classes.flexedRow}>
-            <Typography className={classes.artistName}>
-              {abbreviateTitle(artist, 18)}
-            </Typography>
-            <Typography className={classes.recordPrice}>
-              ${toCurrencyString(price)}
-            </Typography>
-          </div>
-          <div className={classes.flexedRow}>
-            <Typography className={classes.recordTitle}>
-              {abbreviateTitle(releaseTitle, 21)}
-            </Typography>
-          </div>
-          <div className={classes.flexedRow}>
-            <Typography className={classes.labelAndYear}>
-              {parseLabelData(labels)} • {year}
-            </Typography>
-          </div>
-          <div className={classes.flexedRow}>
-            <Typography className={classes.cardGenres}>
-              {styles.length === 1 ? styles[0] : styles[0] + " / " + styles[1]}
-            </Typography>
-          </div>
-          <IconButton
-            edge="end"
+          <div
+            className={classes.imageContainer}
             style={{
-              position: "absolute",
-              bottom: -4,
-              right: 8,
-            }}
-            onClick={() => {
-              dispatch({
-                type: ACTIONS.ADD_RECORD,
-                payload: props.record,
-              });
+              width: "300px",
+              height: "300px",
+              position: "relative",
             }}
           >
-            <div className={classes.iconContainer}>
-              <span className={classes.addIcon}>ADD</span>
-              <CartIcon
-                className={classes.cartIcon}
-                color="secondary"
-                viewBox="0 0 60 60"
+            <img
+              alt="record cover"
+              src={image}
+              className={classes.coverImage}
+            />
+            {preloved && (
+              <Chip
+                label="pre-loved"
+                size="small"
+                className={classes.preLovedChip}
               />
+            )}
+            {isSuper() && (
+              <Chip label="edit" size="small" className={classes.editChip} />
+            )}
+          </div>
+          <CardContent style={{ position: "relative", padding: "2px" }}>
+            <div className={classes.flexedRow}>
+              <Typography className={classes.artistName}>
+                {abbreviateTitle(artist, 18)}
+              </Typography>
+              <Typography className={classes.recordPrice}>
+                ${toCurrencyString(price)}
+              </Typography>
             </div>
-          </IconButton>
-        </CardContent>
-        <div className={classes.descriptionContainer}>
-          <p className={classes.description}>{description}</p>
-        </div>
-        <div className={classes.trackListContainer}>
-          <p className={classes.trackList}>{}</p>
+            <div className={classes.flexedRow}>
+              <Typography className={classes.recordTitle}>
+                {abbreviateTitle(releaseTitle, 21)}
+              </Typography>
+            </div>
+            <div className={classes.flexedRow}>
+              <Typography className={classes.labelAndYear}>
+                {parseLabelData(labels)} • {year}
+              </Typography>
+            </div>
+            <div className={classes.flexedRow}>
+              <Typography className={classes.cardGenres}>
+                {styles.length === 1
+                  ? styles[0]
+                  : styles[0] + " / " + styles[1]}
+              </Typography>
+            </div>
+            <IconButton
+              edge="end"
+              style={{
+                position: "absolute",
+                bottom: -4,
+                right: 8,
+              }}
+              onClick={() => {
+                dispatch({
+                  type: ACTIONS.ADD_RECORD,
+                  payload: props.record,
+                });
+              }}
+            >
+              <div className={classes.iconContainer}>
+                <span className={classes.addIcon}>ADD</span>
+                <CartIcon
+                  className={classes.cartIcon}
+                  color="secondary"
+                  viewBox="0 0 60 60"
+                />
+              </div>
+            </IconButton>
+          </CardContent>
+          {description && (
+            <div className={classes.descriptionContainer}>
+              <h3 className={classes.infoTitles}>description</h3>
+              <p className={classes.description}>{description}</p>
+            </div>
+          )}
+
+          <div className={classes.trackListContainer}>
+            <h3 className={classes.infoTitles}>tracklist</h3>
+            {tracklist.map((track) => {
+              return (
+                <span
+                  className={classes.trackList}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
+                  <h5>{track.position}</h5>
+                  <h5>{track.title}</h5>
+                  <h5>{track.duration}</h5>
+                </span>
+              );
+            })}
+          </div>
+          <div className={classes.catalogNumberContainer}>
+            <h3 className={classes.infoTitles}>catalog number</h3>
+            <p className={classes.catalogNumber}>{labels[0].catno}</p>
+          </div>
         </div>
       </Card>
     </Modal>
