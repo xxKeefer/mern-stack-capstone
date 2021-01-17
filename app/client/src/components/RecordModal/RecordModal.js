@@ -25,7 +25,6 @@ export default function RecordModal(props) {
   const { isSuper } = auth;
 
   const { recordModalState, setRecordModalState } = props;
-  console.log(props.record);
 
   const {
     release_title: releaseTitle,
@@ -189,7 +188,7 @@ export default function RecordModal(props) {
               );
             })}
           </div>
-          {labels && (
+          {labels.length > 0 && (
             <div className={classes.catalogNumberContainer}>
               <h3 className={classes.infoTitles}>catalog number</h3>
               <p className={classes.catalogNumber}>{labels[0].catno}</p>
