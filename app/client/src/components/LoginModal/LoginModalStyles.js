@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { fluro, primary, secondary },
+    palette: { red, fluro, primary, secondary },
     breakpoints,
   } = theme;
   return {
@@ -70,9 +70,7 @@ const useStyles = makeStyles((theme) => {
     },
     formLabel: { fontSize: "1rem", color: primary.main },
     errorMessage: {
-      color: "#ed2e38",
-      padding: "0.3rem 1rem",
-      border: `3px double ${primary.main}`,
+      color: red.main,
     },
     bottomLinks: {
       color: primary.main,

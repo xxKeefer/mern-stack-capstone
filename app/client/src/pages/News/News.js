@@ -1,6 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
+import { Divider, Grid, makeStyles } from "@material-ui/core";
 import NewsHero from "./NewsHero";
+import { useQuery } from "react-query";
+import { API } from "../../util/fetch";
+import NewsCard from "./NewsCard";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -21,21 +24,29 @@ const useStyles = makeStyles((theme) => {
 
 export default function News() {
   const classes = useStyles();
+
+  const { data: blogPosts, status: blogPostStatus } = useQuery(
+    "blogPosts",
+    async () => {
+      const { data } = await API.get("/blog/posts");
+      console.log(data);
+      return data;
+    }
+  );
   return (
     <div className={classes.newsContainer}>
       <h1 className={classes.pageTitle}>news</h1>
-      <NewsHero></NewsHero>
-      <span
-        style={{
-          display: "inline-flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <h1 style={{ display: "inline-block", padding: "1rem" }}>01/10/2021</h1>
-        <h1 style={{ display: "inline-block", padding: "1rem" }}>
-          Title of the the thingy
-        </h1>
-      </span>
+      {blogPostStatus === "success" && (
+        <React.Fragment>
+          <NewsHero post={blogPosts[0]}></NewsHero>
+          <Divider style={{ margin: "2rem" }} />
+          <Grid container spacing={2} style={{ paddingTop: "1rem" }}>
+            {blogPosts.map((post, index) => {
+              return index === 0 ? null : <NewsCard post={post} />;
+            })}
+          </Grid>
+        </React.Fragment>
+      )}
     </div>
   );
 }
