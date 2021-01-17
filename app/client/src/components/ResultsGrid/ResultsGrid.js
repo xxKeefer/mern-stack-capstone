@@ -27,12 +27,7 @@ export default function ResultsGrid(props) {
   const { query, status } = props;
 
   return (
-    <Grid
-      container
-      justify="space-evenly"
-      className={classes.gridContainer}
-      spacing={1}
-    >
+    <Grid container justify="space-evenly" className={classes.gridContainer}>
       {status === "success" &&
         query.map((record) => {
           return (

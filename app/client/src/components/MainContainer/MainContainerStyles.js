@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       width: "90vw",
-      position: "relative",
       display: "flex",
       [breakpoints.only("lg")]: {
         width: "80vw",

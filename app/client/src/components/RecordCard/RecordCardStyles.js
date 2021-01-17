@@ -9,24 +9,31 @@ const useStyles = makeStyles((theme) => {
   return {
     card: {
       backgroundColor: primary.main,
-      width: "90vw",
+      width: "100%",
+      margin: "0.5rem auto",
+      [breakpoints.only("sm")]: {
+        width: "40vw",
+      },
+      [breakpoints.only("md")]: {
+        width: "20vw",
+      },
       [breakpoints.up("lg")]: {
         width: "15vw",
+        maxWidth: "200px",
       },
-      maxWidth: "200px",
       borderRadius: 0,
-      margin: 0,
     },
     coverImage: {
-      height: "90vw",
-      width: "90vw",
-      maxWidth: "200px",
-      maxHeight: "200px",
-      [breakpoints.up("lg")]: {
+      width: "100%",
+      filter: "blur(0px)",
+      transition: "1s filter",
+      [breakpoints.only("md")]: {
+        width: "20vw",
+        height: "20vw",
+      },
+      [breakpoints.only("lg")]: {
         height: "15vw",
         width: "15vw",
-        filter: "blur(0px)",
-        transition: "1s filter",
       },
     },
     artistName: { margin: "0px", fontSize: "14px" },
@@ -40,7 +47,7 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "space-between",
       padding: "0px",
     },
-    recordDescription: {
+    recordReview: {
       position: "absolute",
       top: 0,
       left: 0,
@@ -68,6 +75,20 @@ const useStyles = makeStyles((theme) => {
       position: "absolute",
       bottom: 0,
       right: 0,
+      margin: "1rem 0.5rem",
+    },
+    moreInfoChip: {
+      color: secondary.main,
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      margin: "1rem 0.5rem",
+    },
+    editChip: {
+      color: secondary.main,
+      position: "absolute",
+      bottom: 0,
+      left: 0,
       margin: "1rem 0.5rem",
     },
   };

@@ -73,8 +73,6 @@ export default function SearchResults() {
 
   const { data: results, status } = useQuery(`${title}`, async () => {
     const { data } = await API.get(`/records/${category}/${title}`);
-    console.log(data);
-    console.log(status);
     return data;
   });
 

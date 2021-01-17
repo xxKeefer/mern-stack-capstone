@@ -79,15 +79,6 @@ export default function MenuDrawer() {
     setOpen(state);
   };
 
-  const menuItems = [
-    "my account",
-    "new vinyl",
-    "genres",
-    "news",
-    "staff picks",
-    "contact",
-  ];
-
   const ListItemLink = function (props) {
     const { onClick, primary, to } = props;
 
@@ -162,7 +153,7 @@ export default function MenuDrawer() {
           ) : (
             <ListItemLink
               primary="log in"
-              onClick={() => globe.setModalState(true)}
+              onClick={() => globe.setLoginModalState(true)}
             />
           )}
 

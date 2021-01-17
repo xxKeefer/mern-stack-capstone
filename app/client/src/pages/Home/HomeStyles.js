@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => {
     },
     homeContainer: {
       width: "100%",
+      padding: "auto",
     },
     categoryTitle: {
       width: "100%",

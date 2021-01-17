@@ -126,7 +126,7 @@ export default function ToolBarUpper() {
           ) : (
             <MuiLink
               onClick={() => {
-                globe.setModalState(true);
+                globe.setLoginModalState(true);
               }}
             >
               {matchDesktopUp && <h2 className={classes.navLinks}>log in</h2>}
