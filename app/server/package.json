@@ -4,14 +4,17 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "npx mocha \"test/**/*.test.js\" --recursive --file test/mocha-setup.js",
+    "test": "mocha test/test.js",
     "devStart": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
+    "chai-exclude": "^2.0.2",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",

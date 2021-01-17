@@ -3,6 +3,11 @@ let router = express.Router();
 const log = require("../middleware/logger");
 router.use(log.route);
 
+// for testing up status of API
+router.get("/", (req, res) => {
+  res.status(200).json({ message: "API is active." });
+});
+
 const admin = require("./routes/admin");
 const auth = require("./routes/auth");
 const blog = require("./routes/blog");
