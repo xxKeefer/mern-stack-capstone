@@ -189,10 +189,12 @@ export default function RecordModal(props) {
               );
             })}
           </div>
-          <div className={classes.catalogNumberContainer}>
-            <h3 className={classes.infoTitles}>catalog number</h3>
-            <p className={classes.catalogNumber}>{labels[0].catno}</p>
-          </div>
+          {labels && (
+            <div className={classes.catalogNumberContainer}>
+              <h3 className={classes.infoTitles}>catalog number</h3>
+              <p className={classes.catalogNumber}>{labels[0].catno}</p>
+            </div>
+          )}
         </div>
       </Card>
     </Modal>
