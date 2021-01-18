@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useStyles from "./LoginModalStyles";
+import useStyles from "./LoginStyles";
 import { API } from "../../util/fetch";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
