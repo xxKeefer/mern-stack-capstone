@@ -14,6 +14,9 @@ export const useGlobal = () => {
 const GlobalState = ({ children }) => {
   const [loginModalState, setLoginModalState] = useState(false);
   const [searchQuery, setSearchQuery] = useState(null);
+  const [editRecordId, setEditRecordId] = useState(null);
+  const [editBlogId, setEditBlogId] = useState(null);
+  const [dashComponent, setDashComponent] = useState("addRecord");
 
   const fetchNewReleases = async () => {
     const promise = await API.get("/records/year/2012");
@@ -28,6 +31,12 @@ const GlobalState = ({ children }) => {
         fetchNewReleases,
         searchQuery,
         setSearchQuery,
+        dashComponent,
+        setDashComponent,
+        editRecordId,
+        setEditRecordId,
+        editBlogId,
+        setEditBlogId,
       }}
     >
       <QueryClientProvider client={queryClient}>

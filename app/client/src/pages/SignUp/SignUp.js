@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useGlobal } from "../../context/GlobalState";
 
-export default function SignUp() {
+export default function SignUp({ userData }) {
   const classes = useStyles();
   const auth = useAuth();
   const globe = useGlobal();
@@ -16,10 +16,10 @@ export default function SignUp() {
 
   const submitSignupInfo = async (userInfo) => {
     try {
-      const { data } = await API.post("/auth/signup", userInfo);
-      console.log(data);
+      const { data: userData } = await API.post("/auth/signup", userInfo);
+      console.log(userData);
       // send user object to auth
-      auth.setAuthState(data);
+      auth.setAuthState(userData);
       setRedirectOnLogin(true);
     } catch (error) {
       if (error.response) {
@@ -49,10 +49,12 @@ export default function SignUp() {
                 name="username"
               />
               {errors.username && errors.username.type === "required" && (
-                <p className={classes.errorMessage}>This is required</p>
+                <p role="alert" className={classes.errorMessage}>
+                  This is required
+                </p>
               )}
               {errors.username && errors.username.type === "manual" && (
-                <p className={classes.errorMessage}>
+                <p role="alert" className={classes.errorMessage}>
                   {errors.username.message}
                 </p>
               )}
@@ -69,10 +71,14 @@ export default function SignUp() {
                 name="email"
               />
               {errors.email && errors.email.type === "required" && (
-                <p className={classes.errorMessage}>This is required</p>
+                <p role="alert" className={classes.errorMessage}>
+                  This is required
+                </p>
               )}
               {errors.email && errors.email.type === "manual" && (
-                <p className={classes.errorMessage}>{errors.email.message}</p>
+                <p role="alert" className={classes.errorMessage}>
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -87,10 +93,14 @@ export default function SignUp() {
                 className={classes.formInput}
               />{" "}
               {errors.password && errors.password.type === "required" && (
-                <p className={classes.errorMessage}>This is required</p>
+                <p role="alert" className={classes.errorMessage}>
+                  This is required
+                </p>
               )}
               {errors.password && errors.password.type === "minLength" && (
-                <p className={classes.errorMessage}>Minimum 7 characters</p>
+                <p role="alert" className={classes.errorMessage}>
+                  Minimum 7 characters
+                </p>
               )}
             </div>
 
@@ -112,12 +122,16 @@ export default function SignUp() {
                 type="password"
                 name="confirmPassword"
                 className={classes.formInput}
-              />{" "}
+              />
               {errors.password && errors.password.type === "required" && (
-                <p className={classes.errorMessage}>This is required</p>
+                <p role="alert" className={classes.errorMessage}>
+                  This is required
+                </p>
               )}
               {errors.password && errors.password.type === "minLength" && (
-                <p className={classes.errorMessage}>Minimum 7 characters</p>
+                <p role="alert" className={classes.errorMessage}>
+                  Minimum 7 characters
+                </p>
               )}
             </div>
 
