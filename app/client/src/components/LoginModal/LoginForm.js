@@ -19,7 +19,7 @@ export default function LoginForm(props) {
       const { data } = await API.post("/auth/login", userInfo);
       auth.setAuthState(data);
       setTimeout(() => {
-        globe.setModalState(false);
+        globe.setLoginModalState(false);
       }, 1300);
       setRedirectOnLogin(true);
     } catch (error) {

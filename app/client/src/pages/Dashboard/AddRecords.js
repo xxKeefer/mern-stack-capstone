@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useGlobal } from "../../context/GlobalState";
 import { API } from "../../util/fetch";
-import useStyles from "./DashboardStyles"
+import useStyles from "./DashboardStyles";
 
 export default function AddRecords() {
   const classes = useStyles();
-
+  const globe = useGlobal();
   const { register, handleSubmit, errors, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+  const { editRecordId, setEditRecordId } = globe;
 
   const submitAddRecord = async (recordInfo) => {
     console.log(recordInfo);
@@ -33,7 +35,7 @@ export default function AddRecords() {
   };
 
   return (
-    <div className={classes.formContainer}>
+    <div className={classes.componentContainer}>
       <h3 className={classes.formTitle}>Add Record</h3>
       <form onSubmit={handleSubmit(submitAddRecord)} id="addRecordForm">
         <div className={classes.formGroup}>

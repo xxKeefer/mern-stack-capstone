@@ -29,7 +29,6 @@ export default function News() {
     "blogPosts",
     async () => {
       const { data } = await API.get("/blog/posts");
-      console.log(data);
       return data;
     }
   );

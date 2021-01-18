@@ -11,10 +11,10 @@ import React, { useState } from "react";
 import useStyles from "./NewsStyles";
 import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useGlobal } from "../../context/GlobalState";
 
 const getDate = (date) => {
   const formattedDate = date.slice(0, 10).split("-").reverse().join("-");
-  console.log(formattedDate);
   return formattedDate;
 };
 
@@ -22,16 +22,20 @@ export default function NewsCard(props) {
   const classes = useStyles();
   const { post } = props;
   const auth = useAuth();
-  const [edit, setEdit] = useState(false);
+  const globe = useGlobal();
+  const { setEditBlogId, setDashComponent } = globe;
+  const [editRedirect, setEditRedirect] = useState(false);
 
   const handleEdit = () => {
-    setEdit(true);
+    setDashComponent("editBlog");
+    setEditRedirect(true);
+    setEditBlogId(post._id);
   };
   const { isSuper } = auth;
 
   return (
     <React.Fragment>
-      {edit && <Redirect to="/dashboard" />}
+      {editRedirect && <Redirect to="/dashboard" />}
       <Grid item xs={12} md={6}>
         <Card
           className={classes.newsCard}
