@@ -19,7 +19,7 @@ export default function NewsHero(props) {
   };
 
   const handleEdit = () => {
-    setDashComponent('editBlog')
+    setDashComponent("editBlog");
     setEditRedirect(true);
     setEditBlogId(post._id);
   };
@@ -28,7 +28,7 @@ export default function NewsHero(props) {
     <Paper
       className={classes.imageContainer}
       style={{
-        backgroundImage: `url(${post.image_url})`,
+        backgroundImage: "url(https://source.unsplash.com/random/800x600)",
       }}
     >
       {editRedirect && <Redirect to="/dashboard" />}
