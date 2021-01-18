@@ -57,7 +57,6 @@ const useStyles = makeStyles((theme) => {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      paddingBottom: "10%",
     },
     cardTitle: {
       margin: "0.5rem",
@@ -83,6 +82,22 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: fluro.main,
       padding: "0rem 1rem",
       margin: "auto",
+    },
+    moreIconContainer: {
+      backgroundColor: primary.main,
+    },
+    lessIconContainer: {
+      backgroundColor: secondary.main,
+    },
+    bodyContainer: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "1rem",
+    },
+    cardActionsContainer: {
+      display: "flex",
+      justifyContent: "center",
     },
   };
 });
