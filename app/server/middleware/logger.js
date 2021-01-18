@@ -1,5 +1,5 @@
 function route(req, res, next) {
-  console.log("ROUTE :: ", req.url);
+  if (process.env.NODE_ENV !== "test") console.log("ROUTE :: ", req.url);
   return next();
 }
 

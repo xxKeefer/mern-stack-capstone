@@ -22,6 +22,7 @@ const corsConfig = {
     // Check each url in allowList and see if it includes the origin (instead of matching exact string)
     const allowListIndex = allowList.findIndex((url) => url.includes(origin));
     // console.log("ORIGIN :: ", allowList[allowListIndex]);
+    // console.log("ORIGIN :: ", origin);
     callback(null, allowListIndex > -1);
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -32,14 +33,22 @@ app.use(express.urlencoded({ limit: "50mb", extended: false }));
 app.use(express.json({ limit: "50mb" }));
 
 //DATABASE
-mongoose.connect(process.env.DB_URL, {
+const database =
+  process.env.NODE_ENV === "test"
+    ? process.env.DB_URL_TEST
+    : process.env.DB_URL;
+
+mongoose.connect(database, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
 const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
-db.once("open", () => console.log("DB :: connected successfully."));
+db.once("open", () => {
+  if (process.env.NODE_ENV !== "test")
+    console.log("DB :: connected successfully.");
+});
 
 //SESSION CONFIGURATION
 const sessionConfig = {
@@ -78,6 +87,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(port, () => {
-  console.log("PORT :: Listening @ port:" + port);
+const server = app.listen(port, () => {
+  if (process.env.NODE_ENV !== "test")
+    console.log("PORT :: Listening @ port:" + port);
 });
+
+module.exports = { server, app, db }; //export for testing
