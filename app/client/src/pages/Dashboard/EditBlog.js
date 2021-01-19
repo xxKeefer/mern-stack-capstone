@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -10,6 +11,7 @@ export default function AddRecords(props) {
   const globe = useGlobal();
   const { register, handleSubmit, setValue, errors, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+  const [successfulDelete, setSuccessfulDelete] = useState(false);
   const { editBlogId: blogId, setEditBlogId } = globe;
 
   const { data: blogInfo, status: blogInfoStatus } = useQuery(
@@ -28,6 +30,17 @@ export default function AddRecords(props) {
     }
   }, [blogInfo, blogInfoStatus, setValue]);
 
+  const handleDelete = async () => {
+    try {
+      await API.delete(`/blog/delete/${blogId}`);
+      showSuccessfulDelete();
+      setEditBlogId(null);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const submitEditBlog = async (blogEditData) => {
     try {
       await API.post(`/blog/edit/${blogId}`, blogEditData);
@@ -45,11 +58,22 @@ export default function AddRecords(props) {
     }, 2000);
   };
 
+  const showSuccessfulDelete = () => {
+    setSuccessfulDelete(true);
+    setTimeout(() => {
+      setSuccessfulDelete(false);
+    }, 2000);
+  };
+
   return (
     <div className={classes.componentContainer}>
       <h3 className={classes.formTitle}>Edit Blog</h3>
 
-      <form onSubmit={handleSubmit(submitEditBlog)} id="editBlogForm">
+      <form
+        className={classes.formContainer}
+        onSubmit={handleSubmit(submitEditBlog)}
+        id="editBlogForm"
+      >
         <div className={classes.formGroup}>
           <label className={classes.formLabel} htmlFor="title">
             title
@@ -123,9 +147,15 @@ export default function AddRecords(props) {
         <input
           className={classes.submitButton}
           type="submit"
-          value="Edit Blog"
+          value="Edit Post"
           name="submit"
         />
+        {successfulDelete && (
+          <p className={classes.successfulSubmit}>BLOG DELETED SUCCESSFULLY</p>
+        )}
+        <Button className={classes.deleteButton} onClick={() => handleDelete()}>
+          Delet Post
+        </Button>
       </form>
     </div>
   );

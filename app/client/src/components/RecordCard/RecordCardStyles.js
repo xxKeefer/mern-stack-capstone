@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => {
       },
       [breakpoints.up("lg")]: {
         width: "15vw",
-        maxWidth: "200px",
       },
       borderRadius: 0,
     },

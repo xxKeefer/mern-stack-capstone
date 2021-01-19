@@ -1,11 +1,8 @@
 import React from "react";
-import { Container, Grid, GridList, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import RecordCard from "../RecordCard/RecordCard";
 
 const useStyles = makeStyles((theme) => {
-  const {
-    palette: { primary, secondary },
-  } = theme;
   return {
     resultsContainer: {
       width: "100%",
