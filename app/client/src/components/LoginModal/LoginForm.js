@@ -13,7 +13,7 @@ export default function LoginForm({ login }) {
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const auth = useAuth();
   const globe = useGlobal();
-  const { setModalState } = globe;
+  const { setMenuDrawer } = globe;
 
   const submitLoginInfo = async (userInfo) => {
     try {
@@ -23,6 +23,7 @@ export default function LoginForm({ login }) {
         globe.setLoginModalState(false);
       }, 1300);
       setRedirectOnLogin(true);
+      setMenuDrawer(false);
     } catch (error) {
       if (error.response) {
         console.error(error.response.data.formError);
