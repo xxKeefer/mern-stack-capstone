@@ -27,13 +27,14 @@ const createCx = async (req, res) => {
   // const reference_id = req.user._id;
   const payload = {
     address,
-    email_address,
     family_name,
     given_name,
     phone_number,
     // reference_id,
     idempotency_key: uuidv4(),
   };
+
+  if (email_address) payload.email_address = email_address;
 
   try {
     if (!dataChecker(payload)) {
@@ -78,6 +79,8 @@ const updateCx = async (req, res) => {
     // reference_id,
     idempotency_key: uuidv4(),
   };
+
+  if (email_address) payload.email_address = email_address;
 
   // const reference_id = req.user._id;
 

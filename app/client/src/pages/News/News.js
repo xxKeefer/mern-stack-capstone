@@ -19,7 +19,7 @@ export default function News() {
   return (
     <div className={classes.newsContainer}>
       <h1 className={classes.pageTitle}>news</h1>
-      {blogPostStatus === "success" && (
+      {blogPostStatus === "success" && blogPosts.length && (
         <React.Fragment>
           <NewsHero post={blogPosts[0]}></NewsHero>
           <Divider style={{ margin: "2rem" }} />
