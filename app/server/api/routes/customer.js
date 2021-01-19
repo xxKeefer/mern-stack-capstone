@@ -13,9 +13,9 @@ const {
 
 router.route("/").post(createCx);
 
-router.route("/").put(updateCx);
+router.route("/:id").put(updateCx);
 
-router.route("/").delete(deleteCx);
+router.route("/:id").delete(deleteCx);
 
 router.route("/:id").get(retrieveCx);
 

@@ -1,0 +1,141 @@
+{
+  "user": {
+    "username": "JoeBlow",
+    "email": "joeblow@email.com",
+    "password": "Some_password1"
+  },
+  "admin": {
+    "username": "JaneDoe",
+    "email": "janedoe@email.com",
+    "password": "Some_password1"
+  },
+  "valid_items": {
+    "single_item": {
+      "release_id": 13983230,
+      "price": 1500,
+      "description": "Some longer form review of the item.",
+      "review": "A short desc.",
+      "preloved": false
+    },
+    "multiple_items": [
+      {
+        "release_id": 3808070,
+        "price": "1500",
+        "description": "Some longer form review of the item.",
+        "review": "A short desc."
+      },
+      {
+        "release_id": 5756801,
+        "price": "1500",
+        "description": "Some longer form review of the item.",
+        "review": "A short desc."
+      },
+      {
+        "release_id": 91972,
+        "price": "1500",
+        "description": "Some longer form review of the item.",
+        "review": "A short desc.",
+        "preloved": true
+      }
+    ]
+  },
+  "invalid_items": {
+    "missing_fields": {
+      "single_item": { "release_id": 4974660 },
+      "multiple_items": [
+        {
+          "release_id": 4974660,
+          "price": "1200",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        },
+        { "price": "99" }
+      ]
+    },
+    "malformed": {
+      "single_item": {
+        "no_release": {
+          "release_id": "",
+          "price": "1000",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        },
+        "wrong_release": {
+          "release_id": "not allowed",
+          "price": "1000",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        },
+        "no_price": {
+          "release_id": 8834071,
+          "price": "",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        },
+        "string_price": {
+          "release_id": 8834071,
+          "price": "twenty",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        },
+        "float_price": {
+          "release_id": 308832,
+          "price": "10.00",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        }
+      },
+      "multiple_items": [
+        {
+          "release_id": "380 8070",
+          "price": "1500",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc."
+        },
+        {
+          "release_id": 5756801,
+          "price": "1500",
+          "description": ["Some longer form review of the item."],
+          "review": "A short desc."
+        },
+        {
+          "release_id": 91972,
+          "price": "1500",
+          "description": "Some longer form review of the item.",
+          "review": "A short desc.",
+          "preloved": "so true"
+        }
+      ]
+    }
+  },
+  "responses": {
+    "exclusions": [
+      "__v",
+      "_id",
+      "square_id",
+      "variations",
+      "tracklist",
+      "labels"
+    ],
+    "single_item": {
+      "artists": ["Bag Raiders"],
+      "genres": ["Electronic", "Pop"],
+      "styles": [
+        "House",
+        "Breaks",
+        "Disco",
+        "Nu-Disco",
+        "Electro",
+        "Indie Pop"
+      ],
+      "preloved": false,
+      "discogs_id": 13983230,
+      "release_title": "Bag Raiders (Deluxe Edition)",
+      "artists_sort": "Bag Raiders",
+      "image": "https://img.discogs.com/F-91lKuSlCnhl3KT1j0js0fzDZM=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-13983230-1565451276-7817.jpeg.jpg",
+      "year": "2012",
+      "description": "Some longer form review of the item.",
+      "review": "A short desc."
+    }
+  }
+}

@@ -41,31 +41,36 @@ const buildVariation = (type, idRef, price) => {
 //EXPORTS -- CATALOG
 const addItem = async (release_title, artist, genres, styles, price, year) => {
   const catalogId = `#${release_title}_${artist}::${uuidv4()}`;
-
-  const item = await axios.post(
-    "/catalog/object",
-    {
-      idempotency_key: uuidv4(),
-      object: {
-        id: catalogId,
-        type: "ITEM",
-        item_data: {
-          available_electronically: true,
-          available_for_pickup: true,
-          available_online: true,
-          product_type: "REGULAR",
-          skip_modifier_screen: true,
-          abbreviation: abbreviate(release_title, artist, year),
-          description: describe(release_title, artist, genres, styles),
-          name: `${release_title} - ${artist}`,
-          variations: [buildVariation("stock", catalogId, price)],
-        },
+  const payload = {
+    idempotency_key: uuidv4(),
+    object: {
+      id: catalogId,
+      type: "ITEM",
+      item_data: {
+        available_electronically: true,
+        available_for_pickup: true,
+        available_online: true,
+        product_type: "REGULAR",
+        skip_modifier_screen: true,
+        abbreviation: abbreviate(release_title, artist, year),
+        description: describe(release_title, artist, genres, styles),
+        name: `${release_title} - ${artist}`,
+        variations: [buildVariation("stock", catalogId, price)],
       },
     },
-    SQUARE_API_CONFIG
-  );
+  };
 
-  return item.data;
+  try {
+    const item = await axios.post(
+      "/catalog/object",
+      payload,
+      SQUARE_API_CONFIG
+    );
+    //TODO: give all other functions this tryCatch make over with the "e.response.data"
+    return item.data;
+  } catch (e) {
+    return e.response.data;
+  }
 };
 
 const addItems = async (itemInfoArray) => {
