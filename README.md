@@ -30,15 +30,51 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 - Express.js
 - React.js
 - Node.js
-- Mocha.js
-- Chai.js
-- Supertest.js
-- Sinon.js
 - Material UI
 - Heroku
+- Netlify
 - Discogs API
 - Square API
 - Cloudinary
+
+##### **--- Packages (backend) ---**
+
+- **axios**: utilized to make requests to the various API's the app connects to.
+- **cloudinary**: utilized for the hosting of uploaded images for the apps blog functions.
+- **connect-mongo**: allows the storing of session cookies on the mongo database
+- **cors**: configures the the way the app handles resources between two different servers for the front end and the back end.
+- **express**: used to route requests in an un-opinionated way
+- **express-session**: lets express utilise sessions to store current user credentials
+- **mongoose**: is a wrapper for Mongo DB that lets he app interface with the database.
+- **mongoose-bcrypt**: is an extension for mongoose so that app can hash user passwords.
+- **passport**: is a library that handles authorization and authentication.
+- **passport-local**: allows passport to authenticate through the use of session cookies
+- **uuid**: generates standardized unique strings. is used for idempotency of requests to Square API's
+
+##### **--- Packages (frontend) ---**
+
+- **axios:**
+- **react:**
+- **react-dom:**
+- **react-hook-form:**
+- **react-query:**
+- **react-reveal:**
+- **react-router-dom:**
+- **react-scripts:**
+- **react-square-payment-form:**
+- **@material-ui/core:**
+- **@material-ui/icons:**
+- **@material-ui/lab:**
+
+##### **--- Packages (testing/development) ---**
+
+- **bcrypt:** utilized to compared hashed passwords in testing
+- **chai:** assertion library used for writing automated tests.
+- **chai-exclude:** extension for chai that allows deep equal testing of returned objects "excluding" so keys, like ids, etc... that cannot be determined before the test.
+- **chai-http:** extension for chai that allows chai to make http requests to the app. Also mock user to login in and make requests and hold a session
+- **dotenv:** creates a mock set of environment variables for use when in development.
+- **mocha:** testing frame work that is used to run chai tests
+- **nodemon:** automates the restarting of the server file when any changes are made.
 
 ---
 
