@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Grid, makeStyles } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import NewsHero from "./NewsHero";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";
