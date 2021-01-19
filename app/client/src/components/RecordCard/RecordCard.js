@@ -15,6 +15,7 @@ import { ACTIONS } from "../../context/reducers/cartReducer";
 import { useAuth } from "../../context/AuthContext";
 import { useGlobal } from "../../context/GlobalState";
 import RecordModal from "../RecordModal/RecordModal";
+import { Redirect } from "react-router-dom";
 
 export default function RecordCard(props) {
   const classes = useStyles();
@@ -37,9 +38,11 @@ export default function RecordCard(props) {
     },
     preloved,
   } = record;
-
+  const globe = useGlobal();
+  const { setEditRecordId } = globe;
   const [blur, setBlur] = useState("blur(0px)");
   const [display, setDisplay] = useState("none");
+  const [editRedirect, setEditRedirect] = useState(false);
 
   const handleHover = (blurState, displayState) => {
     if (review.length > 0) {
@@ -51,8 +54,13 @@ export default function RecordCard(props) {
     }
   };
 
+  const handleEditClick = () => {
+    setEditRecordId(record._id);
+    setEditRedirect(true);
+  };
+
   const parseLabelData = (labels) => {
-    if (labels.length < 1) {
+    if (!labels.length) {
       return "";
     } else {
       return labels[0].name;
@@ -71,6 +79,7 @@ export default function RecordCard(props) {
 
   return (
     <Card className={classes.card} raised>
+      {editRedirect && <Redirect to="/dashboard" />}
       {recordModalState && (
         <RecordModal
           record={record}
@@ -111,7 +120,12 @@ export default function RecordCard(props) {
           />
         )}
         {isSuper() ? (
-          <Chip label="edit" size="small" className={classes.editChip} />
+          <Chip
+            label="edit"
+            size="small"
+            className={classes.editChip}
+            onClick={() => handleEditClick()}
+          />
         ) : (
           <Chip
             label="more info"
