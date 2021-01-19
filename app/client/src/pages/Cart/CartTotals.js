@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => {
 export default function CartTotals({ setShowCardForm }) {
   const classes = useStyles();
   const {
-    cartState,
     cartState: { cart, customer },
   } = useCart();
 
@@ -61,7 +60,6 @@ export default function CartTotals({ setShowCardForm }) {
           ${toCurrencyString(evaluateTotalPrice(cart))}
         </h1>
       </div>
-      {/* <Link to="/checkout"> */}
       <Button
         className={classes.checkoutButton}
         disabled={!customer && true}
@@ -71,18 +69,17 @@ export default function CartTotals({ setShowCardForm }) {
       >
         {!customer ? "No shipping details" : "Checkout"}
       </Button>
-      {/* </Link> */}
       <Link to="/">
         <Button className={classes.shoppingButton}>Continue Shopping</Button>
       </Link>
-      <Button
+      {/* <Button
         className={classes.checkoutButton}
         onClick={() => {
           console.log({ cartState });
         }}
       >
         get cart state
-      </Button>
+      </Button> */}
     </div>
   );
 }

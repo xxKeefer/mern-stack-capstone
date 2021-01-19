@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Box, Chip, Grid, makeStyles, Paper } from "@material-ui/core";
+import { Box, CardActions, Chip, IconButton, Paper } from "@material-ui/core";
 import { Link, Redirect } from "react-router-dom";
 import useStyles from "./NewsStyles";
 import { useGlobal } from "../../context/GlobalState";
 import { useAuth } from "../../context/AuthContext";
+import { getDate, handleEdit } from "../../util/helpers/newsHelpers";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
 export default function NewsHero(props) {
   const { post } = props;
@@ -12,49 +15,57 @@ export default function NewsHero(props) {
   const globe = useGlobal();
   const { setEditBlogId, setDashComponent } = globe;
   const [editRedirect, setEditRedirect] = useState(false);
-
-  const getDate = (date) => {
-    const formattedDate = date.slice(0, 10).split("-").reverse().join("-");
-    return formattedDate;
-  };
+  const [showBody, setShowBody] = useState(false);
 
   const handleEdit = () => {
-    setDashComponent('editBlog')
+    setDashComponent("editBlog");
     setEditRedirect(true);
     setEditBlogId(post._id);
   };
   const { isSuper } = auth;
+
   return (
     <Paper
       className={classes.imageContainer}
       style={{
-        backgroundImage: "url(https://source.unsplash.com/random/800x600)",
+        backgroundImage: `url(${post.image_url})`,
       }}
     >
       {editRedirect && <Redirect to="/dashboard" />}
 
-      {/* Material UI says it increases the priority of the hero background image */}
-      {
-        <img
-          style={{ display: "none" }}
-          src={post.image_url}
-          alt={post.title}
-        />
-      }
-      <Link to={`./blog/${post._id}`} className={classes.continueReading}>
-        <Box width={1} height={1} className={classes.heroPost}>
-          <h1 className={classes.heroTitle}>{post.title}</h1>
-          <h5 className={classes.heroDate}>{getDate(post.created_at)}</h5>
-          <h3 className={classes.heroByline}>{post.byline}</h3>
-        </Box>
-      </Link>
-      {isSuper && (
-        <Chip
-          size="small"
-          label="edit"
-          className={classes.editChip}
-          onClick={() => handleEdit()}
-        />
+      <Box width={1} height={1} className={classes.heroPost}>
+        <h1 className={classes.heroTitle}>{post.title}</h1>
+        <h5 className={classes.heroDate}>{getDate(post.created_at)}</h5>
+        <h3 className={classes.heroByline}>{post.byline}</h3>
+      </Box>
+      <CardActions className={classes.cardActionsContainer}>
+        {!showBody && (
+          <IconButton
+            className={classes.moreIconContainer}
+            onClick={() => setShowBody(true)}
+          >
+            <ExpandMoreIcon size="large" color="secondary" />
+          </IconButton>
+        )}
+        {isSuper() && (
+          <Chip
+            size="small"
+            label="edit"
+            className={classes.editChip}
+            onClick={() => handleEdit()}
+          />
+        )}
+      </CardActions>
+      {showBody && (
+        <div className={classes.bodyContainer}>
+          <p className={classes.cardBody}>{post.body}</p>
+          <IconButton
+            className={classes.lessIconContainer}
+            onClick={() => setShowBody(false)}
+          >
+            <ExpandLessIcon size="large" color="primary" />
+          </IconButton>
+        </div>
       )}
     </Paper>
   );

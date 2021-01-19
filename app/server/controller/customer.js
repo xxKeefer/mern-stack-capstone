@@ -36,16 +36,22 @@ const createCx = async (req, res) => {
   };
 
   try {
-    if (!dataChecker(payload))
+    if (!dataChecker(payload)) {
       res.status(400).json({ message: "data malformed." });
-    const { data } = await axios.post("/customers", payload, SQUARE_API_CONFIG);
+    } else {
+      const { data } = await axios.post(
+        "/customers",
+        payload,
+        SQUARE_API_CONFIG
+      );
 
-    // //bind square id to user record in mongo
-    // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
+      // //bind square id to user record in mongo
+      // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
 
-    res.status(201).json(data);
-    if (process.env.NODE_ENV !== "test") {
-      console.log(`CUSTOMER :: Created: ${data.customer.id}`);
+      res.status(201).json(data);
+      if (process.env.NODE_ENV !== "test") {
+        console.log(`CUSTOMER :: Created: ${data.customer.id}`);
+      }
     }
   } catch (e) {
     res.status(400).json(e.message);
@@ -76,20 +82,22 @@ const updateCx = async (req, res) => {
   // const reference_id = req.user._id;
 
   try {
-    if (!dataChecker(payload))
+    if (!dataChecker(payload)) {
       res.status(400).json({ message: "data malformed." });
-    const { data } = await axios.put(
-      `/customers/${id}`,
-      payload,
-      SQUARE_API_CONFIG
-    );
+    } else {
+      const { data } = await axios.put(
+        `/customers/${id}`,
+        payload,
+        SQUARE_API_CONFIG
+      );
 
-    // //bind square id to user record in mongo
-    // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
+      // //bind square id to user record in mongo
+      // await User.findByIdAndUpdate(req.user._id, { square_id: data.customer.id });
 
-    res.status(200).json(data);
-    if (process.env.NODE_ENV !== "test")
-      console.log(`CUSTOMER :: Updated: ${data.customer.id}`);
+      res.status(200).json(data);
+      if (process.env.NODE_ENV !== "test")
+        console.log(`CUSTOMER :: Updated: ${data.customer.id}`);
+    }
   } catch (e) {
     res.status(400).json(e.message);
   }

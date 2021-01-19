@@ -4,23 +4,7 @@ import NewsHero from "./NewsHero";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";
 import NewsCard from "./NewsCard";
-
-const useStyles = makeStyles((theme) => {
-  const {
-    palette: { light, secondary },
-  } = theme;
-
-  return {
-    newsContainer: {
-      width: "100%",
-      paddingBottom: "5vh",
-    },
-    pageTitle: {
-      color: secondary.main,
-      margin: "1rem",
-    },
-  };
-});
+import useStyles from "./NewsStyles";
 
 export default function News() {
   const classes = useStyles();

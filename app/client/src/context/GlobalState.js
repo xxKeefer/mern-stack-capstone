@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import CartContext from "./CartContext";
-import { API } from "../util/fetch";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
@@ -18,17 +17,12 @@ const GlobalState = ({ children }) => {
   const [editBlogId, setEditBlogId] = useState(null);
   const [dashComponent, setDashComponent] = useState("addRecord");
 
-  const fetchNewReleases = async () => {
-    const promise = await API.get("/records/year/2012");
-    return promise;
-  };
-
+ 
   return (
     <GlobalStateContext.Provider
       value={{
         loginModalState,
         setLoginModalState,
-        fetchNewReleases,
         searchQuery,
         setSearchQuery,
         dashComponent,

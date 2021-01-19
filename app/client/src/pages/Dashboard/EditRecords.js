@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useGlobal } from "../../context/GlobalState";
 import { API } from "../../util/fetch";
 import useStyles from "./DashboardStyles";
 
 export default function EditRecords() {
   const classes = useStyles();
-  const globe = useGlobal();
-  const { editRecordId, setEditRecordId } = globe;
   const { register, handleSubmit, errors, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
-
 
   const submitAddRecord = async (recordInfo) => {
     console.log(recordInfo);

@@ -2,7 +2,7 @@ import { Card, IconButton, Modal } from "@material-ui/core";
 import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import LoginForm from "./LoginForm";
-import useStyles from "./LoginModalStyles";
+import useStyles from "./LoginStyles";
 import { useGlobal } from "../../context/GlobalState";
 import { useAuth } from "../../context/AuthContext";
 
