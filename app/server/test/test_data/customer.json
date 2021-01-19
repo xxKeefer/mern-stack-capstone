@@ -1,0 +1,42 @@
+{
+  "user": {
+    "username": "JoeBlow",
+    "email": "joeblow@email.com",
+    "password": "Some_password1"
+  },
+  "admin": {
+    "username": "JaneDoe",
+    "email": "janedoe@email.com",
+    "password": "Some_password1"
+  },
+  "shipping": {
+    "address": {
+      "address_line_1": "1 Example St",
+      "administrative_district_level_1": "QLD",
+      "country": "AU",
+      "first_name": "Harry",
+      "last_name": "Dresden",
+      "locality": "Redbank Plains",
+      "postal_code": "4301"
+    },
+    "email_address": "email@email.com",
+    "family_name": "Dresden",
+    "given_name": "Harry",
+    "phone_number": "0456789000",
+    "updated": {
+      "address": {
+        "address_line_1": "10 Fake St",
+        "administrative_district_level_1": "VIC",
+        "country": "AU",
+        "first_name": "Tony",
+        "last_name": "Stark",
+        "locality": "Some Town",
+        "postal_code": "5020"
+      },
+      "email_address": "email@email.com",
+      "family_name": "Stark",
+      "given_name": "Tony",
+      "phone_number": "04444444444"
+    }
+  }
+}

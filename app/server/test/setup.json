@@ -1,0 +1,13 @@
+{
+  "user": {
+    "username": "JoeBlow",
+    "email": "joeblow@email.com",
+    "password": "Some_password1"
+  },
+  "admin": {
+    "username": "JaneDoe",
+    "email": "janedoe@email.com",
+    "password": "Some_password1",
+    "roles": ["user", "admin"]
+  }
+}
