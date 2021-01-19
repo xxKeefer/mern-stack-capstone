@@ -62,9 +62,13 @@ const processBatch = async (batch) => {
 //EXPORTS
 
 const getReleaseInfo = async (release_id) => {
-  const raw = await Discogs.get(`/releases/${release_id}`);
-  data = processRaw(raw);
-  return data;
+  try {
+    const raw = await Discogs.get(`/releases/${release_id}`);
+    data = processRaw(raw);
+    return data;
+  } catch (e) {
+    return e;
+  }
 };
 
 const batchGetInfo = async (items) => {

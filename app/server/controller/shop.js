@@ -1,10 +1,18 @@
 const square = require("../utils/shopController/squareUtils");
 const Discogs = require("../utils/shopController/discogsUtils");
 const Vinyl = require("../models/vinyl");
+const cloudinaryConfig = require("../utils/cloudinaryConfig");
+
+//HELPER FUNCTIONS
+const parsePrice = (price) => {
+  if (typeof price === "number") return price;
+  const parsedPrice = parseInt(price.replace(".", ""));
+  return isNaN(parsedPrice) ? "NaN" : parsedPrice;
+};
+
+//EXPORTS
 
 const addItem = async (req, res) => {
-  console.log(req.body);
-
   const {
     release_id, // from Discogs
     price, // manual entry
@@ -12,8 +20,17 @@ const addItem = async (req, res) => {
     review, // manual entry, summary review
     preloved = false,
   } = req.body;
+  let response, data, item, newVinyl;
+
   try {
-    const data = await Discogs.getReleaseInfo(release_id);
+    response = await Discogs.getReleaseInfo(release_id);
+    //check for error response from discogs
+    if (response.message) {
+      throw response;
+    } else {
+      data = response;
+    }
+
     const {
       id,
       year,
@@ -28,15 +45,27 @@ const addItem = async (req, res) => {
       labels,
     } = data;
 
-    const item = await square.addItem(
+    //parsePrice fixes decimal currency string in AU dollar to be in cents
+    // assuming the string has two trailing digits. will be incorrect if
+    // given a number like 30.7 (converts to 307 instead of 3070)
+    const fixedPrice = parsePrice(price);
+
+    response = await square.addItem(
       release_title,
       artists[0].name,
       genres,
       styles,
-      price
+      fixedPrice,
+      year
     );
 
-    const newVinyl = await Vinyl.create({
+    if (response.errors) {
+      throw response.errors[0];
+    } else {
+      item = response;
+    }
+
+    newVinyl = await Vinyl.create({
       discogs_id: id,
       square_id: item.catalog_object.id,
       release_title,
@@ -59,10 +88,10 @@ const addItem = async (req, res) => {
       preloved,
       labels,
     });
-
     res.status(201).json(newVinyl);
   } catch (e) {
-    res.status(400).json(e.message);
+    // console.log({ e });
+    res.status(400).json(e);
   }
 };
 
