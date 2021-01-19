@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       padding: "0.5rem",
-      justifyContent: "center",
+      alignItems: "center",
       backgroundColor: primary.main,
       marginBottom: "1.5rem",
     },

@@ -53,18 +53,12 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 
 ##### **--- Packages (frontend) ---**
 
-- **axios:**
-- **react:**
-- **react-dom:**
-- **react-hook-form:**
-- **react-query:**
-- **react-reveal:**
-- **react-router-dom:**
-- **react-scripts:**
-- **react-square-payment-form:**
-- **@material-ui/core:**
-- **@material-ui/icons:**
-- **@material-ui/lab:**
+- **react query**: React Query is a relatively new, lightweight library for React that offers numerous features for querying, caching and updating data. It minimises the need for global state management and using reducers for the purposes of querying and provides easy access to query statuses to control logic based around loading, success and error states.
+- **react hook form**: React Hook Form is a simple API designed to handle form building that can be added onto HTML (or JSX) markup. It provides an easy structure for dealing with form responses as well as error and success messages. It also boosts performance by cutting down on re-renders.
+- **react reveal**: React Reveal is an animation library used for smooth animations that can be used with scroll and on click events.
+- **material-UI**: Material UI is a React UI framework that provides styled React components for fast, responsive web design. Components can be used out of the box or further styled to requirement.
+- **axios**: JS library for asynchronous API requests
+- **react-router-dom:** React library for routing with features for maximizing performance through lazy code loading and dynamic route matching.
 
 ##### **--- Packages (testing/development) ---**
 

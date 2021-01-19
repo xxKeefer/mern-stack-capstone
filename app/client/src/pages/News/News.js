@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Grid, makeStyles } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import NewsHero from "./NewsHero";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";
@@ -19,7 +19,7 @@ export default function News() {
   return (
     <div className={classes.newsContainer}>
       <h1 className={classes.pageTitle}>news</h1>
-      {blogPostStatus === "success" && (
+      {blogPostStatus === "success" && blogPosts.length && (
         <React.Fragment>
           <NewsHero post={blogPosts[0]}></NewsHero>
           <Divider style={{ margin: "2rem" }} />

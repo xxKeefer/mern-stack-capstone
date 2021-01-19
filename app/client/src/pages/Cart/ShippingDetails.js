@@ -160,7 +160,7 @@ export default function ShippingDetails(props) {
           payload: customer.id,
         });
       } else {
-        await API.put("/customer", customerObj);
+        await API.put(`/customer/${shippingDetails.id}`, customerObj);
       }
       setShowShippingForm(false);
     } catch (e) {

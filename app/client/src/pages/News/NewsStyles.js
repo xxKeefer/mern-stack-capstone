@@ -101,7 +101,8 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      padding: "1rem",
+      padding: "2rem",
+      background: primary.main,
     },
     cardActionsContainer: {
       display: "flex",
