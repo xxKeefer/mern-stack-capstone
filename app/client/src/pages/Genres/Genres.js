@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   const {
     palette: { primary, secondary },
+    breakpoints,
   } = theme;
   return {
     genresContainer: {
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => {
     },
     genresList: {
       columnCount: "5",
+      [breakpoints.down("md")]: {
+        columnCount: "3",
+      },
     },
     genreListItem: {
       listStyle: "none",

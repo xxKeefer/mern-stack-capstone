@@ -16,8 +16,8 @@ const GlobalState = ({ children }) => {
   const [editRecordId, setEditRecordId] = useState(null);
   const [editBlogId, setEditBlogId] = useState(null);
   const [dashComponent, setDashComponent] = useState("addRecord");
+  const [menuDrawer, setMenuDrawer] = useState(false);
 
- 
   return (
     <GlobalStateContext.Provider
       value={{
@@ -31,6 +31,8 @@ const GlobalState = ({ children }) => {
         setEditRecordId,
         editBlogId,
         setEditBlogId,
+        menuDrawer,
+        setMenuDrawer,
       }}
     >
       <QueryClientProvider client={queryClient}>
