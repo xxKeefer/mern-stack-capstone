@@ -13,7 +13,10 @@ export default function Home(props) {
   const { data: newReleases, status: newReleasesStatus } = useQuery(
     "newReleases",
     async () => {
-      const { data } = await API.get("/records/year/2020");
+      const { data } = await API.post("/records/query", {
+        category: "year",
+        title: "2020",
+      });
       return data;
     }
   );
@@ -21,7 +24,10 @@ export default function Home(props) {
   const { data: preLoved, status: preLovedStatus } = useQuery(
     "preLoved",
     async () => {
-      const { data } = await API.get("/records/preloved/true");
+      const { data } = await API.post("/records/query", {
+        category: "preloved",
+        title: true,
+      });
       return data;
     }
   );
