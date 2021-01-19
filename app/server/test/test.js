@@ -39,18 +39,6 @@ describe("Shop API", () => {
   require("./shop.test");
 });
 
-describe("Customer API", () => {
-  require("./customer.test");
-});
-
-// describe('Products API', () => {
-//   require('./products');
-// });
-
-// describe('Collection API', () => {
-//   require('./collections');
-// });
-
-// describe('Orders API', () => {
-//   require('./orders');
+// describe("Customer API", () => {
+//   require("./customer.test");
 // });
