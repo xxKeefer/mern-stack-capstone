@@ -7,6 +7,14 @@ const useStyles = makeStyles((theme) => {
   } = theme;
 
   return {
+    newsContainer: {
+      width: "100%",
+      paddingBottom: "5vh",
+    },
+    pageTitle: {
+      color: secondary.main,
+      margin: "1rem",
+    },
     imageContainer: {
       margin: "auto",
       width: "100%",

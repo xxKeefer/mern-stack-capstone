@@ -16,6 +16,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useGlobal } from "../../context/GlobalState";
 import RecordModal from "../RecordModal/RecordModal";
 import { Redirect } from "react-router-dom";
+import { parseLabelData, abbreviateTitle } from "../../util/helpers/recordCardHelpers";
 
 export default function RecordCard(props) {
   const classes = useStyles();
@@ -57,24 +58,6 @@ export default function RecordCard(props) {
   const handleEditClick = () => {
     setEditRecordId(record._id);
     setEditRedirect(true);
-  };
-
-  const parseLabelData = (labels) => {
-    if (!labels.length) {
-      return "";
-    } else {
-      return labels[0].name;
-    }
-  };
-
-  const abbreviateTitle = (title, length) => {
-    let newTitle = title.split(" (")[0];
-    if (newTitle.length > length) {
-      const abbreviated = title.slice(0, length);
-      return `${abbreviated}...`;
-    } else {
-      return newTitle;
-    }
   };
 
   return (

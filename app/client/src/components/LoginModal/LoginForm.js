@@ -7,12 +7,13 @@ import { Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useGlobal } from "../../context/GlobalState";
 
-export default function LoginForm(props) {
+export default function LoginForm({ login }) {
   const classes = useStyles();
-  const { register, handleSubmit, errors, setError } = useForm();
+  const { register, handleSubmit, errors, setError, setValue } = useForm();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const auth = useAuth();
   const globe = useGlobal();
+  const { setModalState } = globe;
 
   const submitLoginInfo = async (userInfo) => {
     try {
@@ -38,7 +39,7 @@ export default function LoginForm(props) {
         <h1 className={classes.formTitle}>log in</h1>
         <form onSubmit={handleSubmit(submitLoginInfo)} id="loginForm">
           <div className={classes.formGroup}>
-            <label className={classes.formLabel} htmlFor="email">
+            <label className={classes.formLabel} htmlFor="email" name="email">
               email
             </label>
             <input
@@ -46,12 +47,17 @@ export default function LoginForm(props) {
               className={classes.formInput}
               type="email"
               name="email"
+              aria-label="email"
             />
             {errors.email && errors.email.type === "required" && (
-              <p className={classes.errorMessage}>This is required</p>
+              <span aria-label="alert" className={classes.errorMessage}>
+                This is required
+              </span>
             )}
             {errors.email && errors.email.type === "manual" && (
-              <p className={classes.errorMessage}>{errors.email.message}</p>
+              <span aria-label="alert" className={classes.errorMessage}>
+                {errors.email.message}
+              </span>
             )}
           </div>
           <div className={classes.formGroup}>
@@ -63,12 +69,17 @@ export default function LoginForm(props) {
               type="password"
               name="password"
               className={classes.formInput}
-            />{" "}
+              aria-label="password"
+            />
             {errors.password && errors.password.type === "required" && (
-              <p className={classes.errorMessage}>This is required</p>
+              <span role="alert" className={classes.errorMessage}>
+                This is required
+              </span>
             )}
             {errors.password && errors.password.type === "minLength" && (
-              <p className={classes.errorMessage}>Minimum 7 characters</p>
+              <span role="alert" className={classes.errorMessage}>
+                Minimum 7 characters
+              </span>
             )}
           </div>
           <input
@@ -76,19 +87,20 @@ export default function LoginForm(props) {
             type="submit"
             value="Submit"
             name="submit"
+            aria-label="Submit"
           />
         </form>
-        <p className={classes.signUpMessage}>
+        <span className={classes.signUpMessage}>
           Don't have an account?
           <Link
             to="/signup"
             className={classes.bottomLinks}
             color="secondary"
-            onClick={() => globe.setModalState(false)}
+            onClick={() => globe.setLoginModalState(false)}
           >
             Sign Up
           </Link>
-        </p>
+        </span>
         <Link to="/" className={classes.bottomLinks} color="secondary">
           Reset Password
         </Link>
