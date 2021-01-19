@@ -65,7 +65,7 @@ export default function SearchResults() {
       } else if (searchQuery.group === "Artists") {
         setCategory("artists_sort");
       } else {
-        setCategory(searchQuery.group);
+        setCategory(searchQuery.group.toLowerCase());
       }
       setTitle(searchQuery.title);
     }
