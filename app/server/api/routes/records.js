@@ -7,8 +7,7 @@ const {
   sendCompactDB,
 } = require("../../controller/records");
 
-//router.route("/genre/Jazz").post(query);
-router.route("/:category/:query").get(query);
+router.route("/query").post(query);
 
 router.route("/complex/:queryObj").post(complexQuery);
 

@@ -8,7 +8,6 @@ import { API } from "../../util/fetch";
 import { useGlobal } from "../../context/GlobalState";
 import { Redirect } from "react-router-dom";
 
-
 const useStyles = makeStyles((theme) => {
   const {
     breakpoints,
@@ -99,7 +98,6 @@ export default function SearchField() {
     setTimeout(() => {
       setInputValue("");
       //TODO add check for menudrawer state to close on search
-      // if (modalState === true) setModalState(false);
     }, 1000);
   }, [value, setSearchQuery, setRedirect]);
 
