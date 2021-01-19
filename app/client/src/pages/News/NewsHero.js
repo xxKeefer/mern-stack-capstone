@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Box, CardActions, Chip, IconButton, Paper } from "@material-ui/core";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import useStyles from "./NewsStyles";
 import { useGlobal } from "../../context/GlobalState";
 import { useAuth } from "../../context/AuthContext";
-import { getDate, handleEdit } from "../../util/helpers/newsHelpers";
+import { getDate } from "../../util/helpers/newsHelpers";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 

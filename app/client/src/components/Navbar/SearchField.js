@@ -63,7 +63,7 @@ export default function SearchField() {
   const [redirect, setRedirect] = useState(false);
   const globe = useGlobal();
 
-  const { setSearchQuery } = globe;
+  const { setSearchQuery, setMenuDrawer } = globe;
 
   useEffect(() => {
     const getRecords = async () => {
@@ -113,10 +113,10 @@ export default function SearchField() {
             setOpen(false);
           }}
           value={value}
-          freeSolo
           onChange={(event, newValue) => {
             setValue(newValue);
             setRedirect(true);
+            setMenuDrawer(false);
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) =>
