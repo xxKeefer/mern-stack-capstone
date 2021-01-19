@@ -84,7 +84,7 @@ export default function LoginForm(props) {
             to="/signup"
             className={classes.bottomLinks}
             color="secondary"
-            onClick={() => globe.setModalState(false)}
+            onClick={() => globe.setLoginModalState(false)}
           >
             Sign Up
           </Link>

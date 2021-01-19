@@ -94,8 +94,9 @@ const sessionCheck = async (req, res) => {
   //TODO: this does not feel like it is the right logic, but it passes my tests and uncommenting the lines above cause the test to time out so, yeah...
   if (req.user && req.session) {
     res.status(200).json({ user: req.user });
+  } else {
+    res.status(404).json({ message: "no session found." });
   }
-  res.status(404).json({ message: "no session found." });
 };
 
 module.exports = {

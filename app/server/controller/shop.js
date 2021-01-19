@@ -5,6 +5,7 @@ const cloudinaryConfig = require("../utils/cloudinaryConfig");
 
 //HELPER FUNCTIONS
 const parsePrice = (price) => {
+  if (typeof price === "number") return price;
   const parsedPrice = parseInt(price.replace(".", ""));
   return isNaN(parsedPrice) ? "NaN" : parsedPrice;
 };
@@ -63,8 +64,6 @@ const addItem = async (req, res) => {
     } else {
       item = response;
     }
-
-    // console.log({ item });
 
     newVinyl = await Vinyl.create({
       discogs_id: id,
