@@ -163,3 +163,115 @@ We have managed to plan very rapidly, which is why there isn't many screen shots
 ![Day One](./docs/devlog/day_one.png)
 ![Day Four](./docs/devlog/day_four.png)
 ![Day Five](./docs/devlog/day_five.png)
+
+---
+
+### Testing logs ---
+
+#### Development Desktop
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                                           |
+| -----------: | ------------------------------------- | :-----: | ------------------------------------------------------------------ |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success | doesn't alert user to succesfull login                             |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success | ugly focus css when click on cart                                  |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success | button has no animation                                            |
+|     customer | user can update shipping details      | sort of | placeholder looks like prefill, no validation text required fields |
+|      payment | user can submit payment               |  fail   | remove cart state button payment form does not load                |
+|       search | user can search for records           |  fail   | search field works, doesn't load results                           |
+|       search | user can filter based on genre        | sort of | unexpected bugs, not deloading                                     |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success | dropdown feature buggy, needs white background                     |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend                            |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 | success | not obvious you have to use release id                             |
+|        admin | admin can add blogs                   | success |
+|        admin | admin can edit blogs                  | sort of | can't edit image                                                   |
+|        admin | admin can delete blogs                | success |
+
+#### Development Mobile
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                                           |
+| -----------: | ------------------------------------- | :-----: | ------------------------------------------------------------------ |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success | doesn't alert user to successfully login                           |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success | ugly focus css when click on cart                                  |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success | button has no animation                                            |
+|     customer | user can update shipping details      | sort of | placeholder looks like prefill, no validation text required fields |
+|      payment | user can submit payment               |  fail   | remove cart state button payment form does not load                |
+|       search | user can search for records           |  fail   | search field works, doesn't load results                           |
+|       search | user can filter based on genre        | sort of | unexpected bugs, not deloading                                     |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success | dropdown feature buggy, needs white background                     |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend                            |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 |  fail   | dashboard doesn't show on mobile                                   |
+|        admin | admin can add blogs                   |  fail   | dashboard doesn't show on mobile                                   |
+|        admin | admin can edit blogs                  |  fail   | dashboard doesn't show on mobile                                   |
+|        admin | admin can delete blogs                |  fail   | dashboard doesn't show on mobile                                   |
+
+#### Production Desktop
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                |
+| -----------: | ------------------------------------- | :-----: | --------------------------------------- |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success |                                         |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success |                                         |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success |                                         |
+|     customer | user can update shipping details      | success |                                         |
+|      payment | user can submit payment               | success |                                         |
+|       search | user can search for records           | success |                                         |
+|       search | user can filter based on genre        | success |                                         |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success |                                         |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 | success |                                         |
+|        admin | admin can add blogs                   | success |
+|        admin | admin can edit blogs                  | success |                                         |
+|        admin | admin can delete blogs                | success |
+
+#### Production Mobile
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                                 |
+| -----------: | ------------------------------------- | :-----: | -------------------------------------------------------- |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success |                                                          |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success |                                                          |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success |                                                          |
+|     customer | user can update shipping details      | success |                                                          |
+|      payment | user can submit payment               | success |                                                          |
+|       search | user can search for records           | success | minor trouble finding search - menu drawer doesn't close |
+|       search | user can filter based on genre        | success | genres are squished unreadable                           |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success |                                                          |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend                  |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 |  fail   | dashboard doesn't show on mobile                         |
+|        admin | admin can add blogs                   |  fail   | dashboard doesn't show on mobile                         |
+|        admin | admin can edit blogs                  |  fail   | dashboard doesn't show on mobile                         |
+|        admin | admin can delete blogs                |  fail   | dashboard doesn't show on mobile                         |
