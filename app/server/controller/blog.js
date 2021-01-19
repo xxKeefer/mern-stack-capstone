@@ -48,12 +48,17 @@ const getBlog = async (req, res, next) => {
 const editBlog = async (req, res, next) => {
   const { _id } = req.params;
   const { title, byline, body } = req.body;
+  const blogObj = { title, byline, body };
 
   try {
-    const updatedBlog = await Blog.findOneAndUpdate(
-      { _id },
-      { $set: { title, byline, body } }
-    );
+    if (imageStr) {
+      const imgResp = await cloudinary.uploader.upload(imageStr, {
+        upload_preset: "dogolat",
+      });
+      blogObj.image_url = imgResp.secure_url;
+    }
+
+    const updatedBlog = await Blog.findOneAndUpdate({ _id }, { $set: blogObj });
     res.status(200).json(updatedBlog);
   } catch (e) {
     res.status(400).json(e.message);
