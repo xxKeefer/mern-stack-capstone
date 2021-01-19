@@ -1,16 +1,19 @@
 const Vinyl = require("../models/vinyl");
 
 const query = async (req, res) => {
-  const { category, query } = req.params;
+  const { category, title } = req.body;
+  console.log(req.body);
   const findQuery = {};
-  findQuery[`${category}`] = query;
-
+  findQuery[`${category}`] = title;
+  console.log("findQuery:", findQuery);
   try {
     const results = await Vinyl.find(findQuery).collation({
       locale: "en",
-      strength: 2,
+      caseLevel: false,
+      alternate: "shifted",
     });
     // console.log(res);
+    console.log(results);
     res.status(200).json(results);
   } catch (e) {
     res.status(400).json(e.message);
