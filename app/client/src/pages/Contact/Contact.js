@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
 import useStyles from "./ContactStyles";
+import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
 export default function Contact() {
   const classes = useStyles();
@@ -13,6 +14,7 @@ export default function Contact() {
 
   return (
     <div className={classes.contactContainer}>
+      <LoadingAnimation></LoadingAnimation>
       <div className={classes.formContainer}>
         <h1 className={classes.formTitle}>contact</h1>
         <form onSubmit={handleSubmit(onSubmit)} id="contactForm">

@@ -2,7 +2,6 @@ const Vinyl = require("../models/vinyl");
 
 const query = async (req, res) => {
   const { category, title } = req.body;
-  console.log(req.body);
   const findQuery = {};
   findQuery[`${category}`] = title;
   console.log("findQuery:", findQuery);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useStyles from "./CartStyles";
 import CartItem from "./CartItem";
-import { Card, Container, Button } from "@material-ui/core";
+import { Card, Container, Button, Box } from "@material-ui/core";
 import CartTotals from "./CartTotals";
 import { useCart } from "../../context/CartContext";
 import Checkout from "./Checkout";
@@ -19,9 +19,8 @@ export default function Cart() {
   } = useCart();
 
   return (
-    <Container className={classes.cartContainer}>
+    <Box className={classes.cartContainer}>
       <h1 className={classes.pageTitle}>your cart</h1>
-
       <Card className={classes.cartItemsContainer}>
         {cart.length <= 0 && (
           <h2 className={classes.noItemsMessage}>
@@ -60,6 +59,6 @@ export default function Cart() {
           </Button>
         </Fade>
       </Card>
-    </Container>
+    </Box>
   );
 }

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => {
       height: "45vw",
       backgroundColor: light.main,
       [breakpoints.up("md")]: {
-        height: "30vw",
+        height: "25vw",
       },
     },
   };
