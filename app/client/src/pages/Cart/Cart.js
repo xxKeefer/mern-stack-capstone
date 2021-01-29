@@ -8,6 +8,7 @@ import Checkout from "./Checkout";
 import ShippingDetails from "./ShippingDetails";
 import Fade from "react-reveal/Fade";
 import { ACTIONS } from "../../context/reducers/cartReducer";
+import ButtonMain from "../../components/ButtonMain/ButtonMain";
 
 export default function Cart() {
   const [showCardForm, setShowCardForm] = useState(false);
@@ -46,7 +47,7 @@ export default function Cart() {
             dispatch={dispatch}
           />
           {/* TODO: style this edit cart button */}
-          <Button
+          <ButtonMain
             fullWidth
             onClick={() => {
               dispatch({
@@ -56,7 +57,7 @@ export default function Cart() {
             }}
           >
             EDIT CART
-          </Button>
+          </ButtonMain>
         </Fade>
       </Card>
     </Box>

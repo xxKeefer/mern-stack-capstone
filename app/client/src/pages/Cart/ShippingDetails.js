@@ -173,7 +173,7 @@ export default function ShippingDetails(props) {
       <Card className={classes.formContainer}>
         <div className={classes.shippingTopBar}>
           <h1 className={classes.formTitle}>
-            shipping details{" "}
+            shipping details
             <span>{customer && <CheckCircleIcon fontSize="large" />}</span>
           </h1>
 

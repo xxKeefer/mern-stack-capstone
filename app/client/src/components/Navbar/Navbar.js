@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => {
   } = theme;
 
   return {
-    root: {
+    appBar: {
       borderBottom: `1px solid ${secondary.main}`,
       boxShadow: `0px 2px 1px -2px ${secondary.main}`,
       margin: "0px auto",
@@ -24,11 +24,6 @@ const useStyles = makeStyles((theme) => {
         width: "70vw",
       },
     },
-    toolBarLower: {
-      [breakpoints.down("md")]: {
-        display: "none",
-      },
-    },
   };
 });
 
@@ -37,9 +32,9 @@ export default function Navbar() {
 
   return (
     <div>
-      <AppBar position="static" className={classes.root}>
+      <AppBar position="static" className={classes.appBar}>
         <ToolBarUpper />
-        <ToolBarLower className={classes.toolBarLower} />
+        <ToolBarLower />
       </AppBar>
     </div>
   );

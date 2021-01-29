@@ -61,6 +61,64 @@ export default function Genres() {
   const [genreStatus, setGenreStatus] = useState("loading");
   const [records, setRecords] = useState([]);
 
+  const showGenres = (allGenres) => {
+    const catalogGenres = [
+      "Dub",
+      "Reggae",
+      "afro",
+      "latin",
+      "world",
+      "Funk",
+      "Soul",
+      "Boogie",
+      "modern soul",
+      "hip hop",
+      "RnB",
+      "grime",
+      "drum and bass",
+      "jungle",
+      "bass",
+      "breakbeat",
+      "dubstep",
+      "techno",
+      "beats",
+      "house",
+      "nujazz",
+      "broken beats",
+      "jazz",
+      "fusion",
+      "indie",
+      "rock",
+      "punk",
+      "metal",
+      "electronic",
+      "ambient",
+      "experiental",
+      "blues",
+      "folk",
+      "prog",
+      "kraut",
+      "synth",
+      "new wave",
+      "psyche",
+      "soundtracks",
+      "library",
+      "Special effects",
+      "spoken word",
+      "Classical",
+    ];
+    const genres = [];
+    console.log(allGenres);
+    console.log(catalogGenres);
+    allGenres.map((genre) => {
+      console.log(genre.title);
+      return catalogGenres.includes(genre.title.toLowerCase())
+        ? genres.push(genre)
+        : (genre.title = "other");
+    });
+    setGenresList(genres);
+  };
+
   useEffect(() => {
     const getGenres = async () => {
       try {
@@ -68,7 +126,7 @@ export default function Genres() {
         const genresGrep = data.filter((obj) => {
           return obj.group === "Styles";
         });
-        setGenresList(genresGrep);
+        showGenres(genresGrep);
       } catch (error) {
         console.log(error);
       }

@@ -1,9 +1,10 @@
 import { Button } from "@material-ui/core";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import { toCurrencyString, evaluateTotalPrice } from "../../util/shop";
+import ButtonMain from "../../components/ButtonMain/ButtonMain";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -51,6 +52,10 @@ export default function CartTotals({ setShowCardForm }) {
   const {
     cartState: { cart, customer },
   } = useCart();
+  const theme = useTheme();
+  const {
+    palette: { fluro },
+  } = theme;
 
   return (
     <div className={classes.card}>
@@ -60,17 +65,17 @@ export default function CartTotals({ setShowCardForm }) {
           ${toCurrencyString(evaluateTotalPrice(cart))}
         </h1>
       </div>
-      <Button
-        className={classes.checkoutButton}
+      <ButtonMain
         disabled={!customer && true}
-        onClick={() => {
-          setShowCardForm(true);
-        }}
+        handleClick={() => setShowCardForm(true)}
+        color={fluro.main}
       >
         {!customer ? "No shipping details" : "Checkout"}
-      </Button>
+      </ButtonMain>
       <Link to="/">
-        <Button className={classes.shoppingButton}>Continue Shopping</Button>
+        <ButtonMain fullWidth color={fluro.main}>
+          Continue Shopping
+        </ButtonMain>
       </Link>
       {/* <Button
         className={classes.checkoutButton}

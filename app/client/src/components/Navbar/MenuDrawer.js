@@ -12,10 +12,11 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core";
 import SearchField from "./SearchField";
-import ToolBarDrawer from "./ToolBarDrawer";
+import ToolBarDrawer from "./ToolBarMenuDrawer";
 import { Link } from "react-router-dom";
 import { useGlobal } from "../../context/GlobalState";
 import { useAuth } from "../../context/AuthContext";
+import ToolBarMenuDrawer from "./ToolBarMenuDrawer";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -62,10 +63,6 @@ const useStyles = makeStyles((theme) => {
       margin: "auto",
       padding: "0px",
     },
-    genresChevron: {
-      fontSize: "1.5rem",
-      marginRight: "2rem",
-    },
   };
 });
 
@@ -74,10 +71,6 @@ export default function MenuDrawer() {
   const globe = useGlobal();
   const auth = useAuth();
   const { menuDrawer, setMenuDrawer } = globe;
-
-  const handleClick = (state) => {
-    setMenuDrawer(state);
-  };
 
   const ListItemLink = function (props) {
     const { onClick, primary, to } = props;
@@ -129,13 +122,7 @@ export default function MenuDrawer() {
       >
         <List style={{ padding: "0px" }}>
           <ListItem className={classes.toolBarContainer} key="toolBarContainer">
-            <ToolBarDrawer
-              state={menuDrawer}
-              setState={setMenuDrawer}
-              handleClick={(e) => {
-                handleClick(e);
-              }}
-            />
+            <ToolBarMenuDrawer />
           </ListItem>
           <ListItem
             className={classes.searchListItem}
