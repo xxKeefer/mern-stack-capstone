@@ -108,14 +108,12 @@ export default function Genres() {
       "Classical",
     ];
     const genres = [];
-    console.log(allGenres);
-    console.log(catalogGenres);
     allGenres.map((genre) => {
-      console.log(genre.title);
       return catalogGenres.includes(genre.title.toLowerCase())
         ? genres.push(genre)
-        : (genre.title = "other");
+        : null;
     });
+    console.log(genres);
     setGenresList(genres);
   };
 

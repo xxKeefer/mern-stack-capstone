@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       justifyContent: "center",
       flexDirection: "column",
-      border: "2px solid red",
       paddingTop: 0,
     },
     cartItemsContainer: {
