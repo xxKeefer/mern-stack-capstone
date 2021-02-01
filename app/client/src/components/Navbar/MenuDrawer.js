@@ -70,13 +70,13 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function MenuDrawer() {
-  const [isOpen, setOpen] = useState(false);
   const classes = useStyles();
   const globe = useGlobal();
   const auth = useAuth();
+  const { menuDrawer, setMenuDrawer } = globe;
 
   const handleClick = (state) => {
-    setOpen(state);
+    setMenuDrawer(state);
   };
 
   const ListItemLink = function (props) {
@@ -114,7 +114,7 @@ export default function MenuDrawer() {
         aria-label="menu"
         edge="start"
         onClick={() => {
-          setOpen(!isOpen);
+          setMenuDrawer(!menuDrawer);
         }}
       >
         <MenuIcon className={classes.menuIcon} />
@@ -124,14 +124,14 @@ export default function MenuDrawer() {
         className={classes.root}
         variant="temporary"
         anchor="left"
-        open={isOpen}
+        open={menuDrawer}
         classes={{ paper: classes.paper }}
       >
         <List style={{ padding: "0px" }}>
           <ListItem className={classes.toolBarContainer} key="toolBarContainer">
             <ToolBarDrawer
-              state={isOpen}
-              setState={setOpen}
+              state={menuDrawer}
+              setState={setMenuDrawer}
               handleClick={(e) => {
                 handleClick(e);
               }}
@@ -148,7 +148,7 @@ export default function MenuDrawer() {
             <ListItemLink
               to="/account"
               primary="my account"
-              onClick={() => setOpen(false)}
+              onClick={() => setMenuDrawer(false)}
             />
           ) : (
             <ListItemLink
@@ -160,31 +160,31 @@ export default function MenuDrawer() {
           <ListItemLink
             to="/new"
             primary="new vinyl"
-            onClick={() => setOpen(false)}
+            onClick={() => setMenuDrawer(false)}
           />
 
           <ListItemLink
             to="/genres"
             primary="genres"
-            onClick={() => setOpen(false)}
+            onClick={() => setMenuDrawer(false)}
           />
 
           <ListItemLink
             to="/news"
             primary="news"
-            onClick={() => setOpen(false)}
+            onClick={() => setMenuDrawer(false)}
           />
 
           <ListItemLink
             to="/staffpicks"
             primary="staff picks"
-            onClick={() => setOpen(false)}
+            onClick={() => setMenuDrawer(false)}
           />
 
           <ListItemLink
             to="/contact"
             primary="contact"
-            onClick={() => setOpen(false)}
+            onClick={() => setMenuDrawer(false)}
           />
 
           <Divider className={classes.divider} classes={classes.light} />

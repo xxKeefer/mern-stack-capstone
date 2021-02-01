@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const passport = require("passport");
+const User = require("./models/user");
 
 // EXPRESS CONFIG
 const app = express();
@@ -86,6 +87,25 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
+
+//INITIALIZE SUPER USER
+const initSuper = async () => {
+  const superAccount = {
+    username: "super",
+    email: "super@super.com",
+    password: process.env.SUPER_PASSWORD || "1234567", //TODO: remove this from production
+    roles: ["user", "admin", "super"],
+  };
+  const superExists = await User.findOne({ username: "super" });
+  if (!superExists) {
+    await User.create(superAccount);
+    if (process.env.NODE_ENV !== "test")
+      console.log("SUPER :: Account created.");
+  } else if (process.env.NODE_ENV !== "test") {
+    console.log("SUPER :: Account exists.");
+  }
+};
+initSuper();
 
 const server = app.listen(port, () => {
   if (process.env.NODE_ENV !== "test")

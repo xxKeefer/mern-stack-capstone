@@ -3,25 +3,27 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   const {
     breakpoints,
-    palette: { fluro, light, primary, secondary },
+    palette: { red, fluro, light, primary, secondary },
   } = theme;
   return {
     dashboardContainer: {
       width: "100%",
       height: "100%",
       display: "flex",
+      border: "4px double black",
     },
     componentContainer: {
       width: "100%",
       display: "flex",
       justifyContent: "center",
-      border: "2px solid red",
+      flexDirection: "column",
+      alignItems: "center",
     },
     formContainer: {
-      border: "2px solid red",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      padding: "1rem",
     },
     formInput: {
       fontSize: "1rem",
@@ -52,6 +54,15 @@ const useStyles = makeStyles((theme) => {
       margin: "auto",
       textAlign: "center",
       fontSize: "0.8rem",
+    },
+    deleteButton: {
+      backgroundColor: red.main,
+      borderRadius: 0,
+      color: primary.main,
+    },
+    cardActionContainer: {
+      display: "flex",
+      justifyContent: "center",
     },
   };
 });

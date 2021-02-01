@@ -1,17 +1,49 @@
-import React, { useState } from "react";
+import { Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import { useGlobal } from "../../context/GlobalState";
 import { API } from "../../util/fetch";
 import useStyles from "./DashboardStyles";
 
 export default function AddRecords(props) {
   const classes = useStyles();
-
-  const { register, handleSubmit, errors, reset } = useForm();
+  const globe = useGlobal();
+  const { register, handleSubmit, setValue, errors, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
+  const [successfulDelete, setSuccessfulDelete] = useState(false);
+  const { editBlogId: blogId, setEditBlogId } = globe;
 
-  const submitAddBlog = async (blogData) => {
+  const { data: blogInfo, status: blogInfoStatus } = useQuery(
+    "blogInfo",
+    async () => {
+      const { data } = await API.get(`/blog/view/${blogId}`);
+      return data;
+    }
+  );
+
+  useEffect(() => {
+    if (blogInfoStatus === "success") {
+      console.log(blogInfo[0]);
+      const fields = ["title", "byline", "body", "author", "image_str"];
+      fields.forEach((field) => setValue(field, blogInfo[0][field]));
+    }
+  }, [blogInfo, blogInfoStatus, setValue]);
+
+  const handleDelete = async () => {
     try {
-      await API.post("/blog/new", blogData);
+      await API.delete(`/blog/delete/${blogId}`);
+      showSuccessfulDelete();
+      setEditBlogId(null);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitEditBlog = async (blogEditData) => {
+    try {
+      await API.post(`/blog/edit/${blogId}`, blogEditData);
       showSuccessfulSubmit();
       reset();
     } catch (error) {
@@ -26,11 +58,22 @@ export default function AddRecords(props) {
     }, 2000);
   };
 
+  const showSuccessfulDelete = () => {
+    setSuccessfulDelete(true);
+    setTimeout(() => {
+      setSuccessfulDelete(false);
+    }, 2000);
+  };
+
   return (
     <div className={classes.componentContainer}>
-      <h3 className={classes.formTitle}>Add Blog</h3>
+      <h3 className={classes.formTitle}>Edit Blog</h3>
 
-      <form onSubmit={handleSubmit(submitAddBlog)} id="adBlogForm">
+      <form
+        className={classes.formContainer}
+        onSubmit={handleSubmit(submitEditBlog)}
+        id="editBlogForm"
+      >
         <div className={classes.formGroup}>
           <label className={classes.formLabel} htmlFor="title">
             title
@@ -99,14 +142,20 @@ export default function AddRecords(props) {
         </div>
 
         {successfulSubmit && (
-          <p className={classes.successfulSubmit}>BLOG ADDED SUCCESSFULLY</p>
+          <p className={classes.successfulSubmit}>BLOG EDITED SUCCESSFULLY</p>
         )}
         <input
           className={classes.submitButton}
           type="submit"
-          value="Add Blog"
+          value="Edit Post"
           name="submit"
         />
+        {successfulDelete && (
+          <p className={classes.successfulSubmit}>BLOG DELETED SUCCESSFULLY</p>
+        )}
+        <Button className={classes.deleteButton} onClick={() => handleDelete()}>
+          Delet Post
+        </Button>
       </form>
     </div>
   );

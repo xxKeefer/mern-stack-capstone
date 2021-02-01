@@ -12,14 +12,13 @@ const useStyles = makeStyles((theme) => {
       width: "100%",
       margin: "0.5rem auto",
       [breakpoints.only("sm")]: {
-        width: "40vw",
+        width: "28vw",
       },
       [breakpoints.only("md")]: {
         width: "20vw",
       },
       [breakpoints.up("lg")]: {
         width: "15vw",
-        maxWidth: "200px",
       },
       borderRadius: 0,
     },
@@ -27,6 +26,10 @@ const useStyles = makeStyles((theme) => {
       width: "100%",
       filter: "blur(0px)",
       transition: "1s filter",
+      [breakpoints.only("sm")]: {
+        width: "28vw",
+        height: "28vw",
+      },
       [breakpoints.only("md")]: {
         width: "20vw",
         height: "20vw",

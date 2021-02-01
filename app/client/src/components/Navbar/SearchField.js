@@ -8,7 +8,6 @@ import { API } from "../../util/fetch";
 import { useGlobal } from "../../context/GlobalState";
 import { Redirect } from "react-router-dom";
 
-
 const useStyles = makeStyles((theme) => {
   const {
     breakpoints,
@@ -64,7 +63,7 @@ export default function SearchField() {
   const [redirect, setRedirect] = useState(false);
   const globe = useGlobal();
 
-  const { setSearchQuery } = globe;
+  const { setSearchQuery, setMenuDrawer } = globe;
 
   useEffect(() => {
     const getRecords = async () => {
@@ -99,7 +98,6 @@ export default function SearchField() {
     setTimeout(() => {
       setInputValue("");
       //TODO add check for menudrawer state to close on search
-      // if (modalState === true) setModalState(false);
     }, 1000);
   }, [value, setSearchQuery, setRedirect]);
 
@@ -115,10 +113,10 @@ export default function SearchField() {
             setOpen(false);
           }}
           value={value}
-          freeSolo
           onChange={(event, newValue) => {
             setValue(newValue);
             setRedirect(true);
+            setMenuDrawer(false);
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) =>

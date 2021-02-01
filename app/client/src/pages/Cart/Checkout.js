@@ -98,8 +98,6 @@ class Checkout extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const showCardForm = this.props.showCardForm;
-    const setShowCardForm = this.props.setShowCardForm;
 
     return (
       <div className={classes.checkoutContainer}>

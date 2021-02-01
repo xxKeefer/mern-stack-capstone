@@ -1,26 +1,10 @@
 import React from "react";
-import { Divider, Grid, makeStyles } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import NewsHero from "./NewsHero";
 import { useQuery } from "react-query";
 import { API } from "../../util/fetch";
 import NewsCard from "./NewsCard";
-
-const useStyles = makeStyles((theme) => {
-  const {
-    palette: { light, secondary },
-  } = theme;
-
-  return {
-    newsContainer: {
-      width: "100%",
-      paddingBottom: "5vh",
-    },
-    pageTitle: {
-      color: secondary.main,
-      margin: "1rem",
-    },
-  };
-});
+import useStyles from "./NewsStyles";
 
 export default function News() {
   const classes = useStyles();
@@ -29,14 +13,13 @@ export default function News() {
     "blogPosts",
     async () => {
       const { data } = await API.get("/blog/posts");
-      console.log(data);
       return data;
     }
   );
   return (
     <div className={classes.newsContainer}>
       <h1 className={classes.pageTitle}>news</h1>
-      {blogPostStatus === "success" && (
+      {blogPostStatus === "success" && blogPosts.length && (
         <React.Fragment>
           <NewsHero post={blogPosts[0]}></NewsHero>
           <Divider style={{ margin: "2rem" }} />

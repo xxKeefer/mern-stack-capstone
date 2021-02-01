@@ -65,14 +65,14 @@ export default function SearchResults() {
       } else if (searchQuery.group === "Artists") {
         setCategory("artists_sort");
       } else {
-        setCategory(searchQuery.group.replace(/\s+/g, "").toLowerCase());
+        setCategory(searchQuery.group.toLowerCase());
       }
-      setTitle(searchQuery.title.replace(/\s+/g, "").toLowerCase());
+      setTitle(searchQuery.title);
     }
   }, [searchQuery, setTitle, setCategory]);
 
   const { data: results, status } = useQuery(`${title}`, async () => {
-    const { data } = await API.get(`/records/${category}/${title}`);
+    const { data } = await API.post(`/records/query`, { category, title });
     return data;
   });
 

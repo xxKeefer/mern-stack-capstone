@@ -30,15 +30,45 @@ There are two target Audiences, firstly an outward facing digital shopfront to e
 - Express.js
 - React.js
 - Node.js
-- Mocha.js
-- Chai.js
-- Supertest.js
-- Sinon.js
 - Material UI
 - Heroku
+- Netlify
 - Discogs API
 - Square API
 - Cloudinary
+
+##### **--- Packages (backend) ---**
+
+- **axios**: utilized to make requests to the various API's the app connects to.
+- **cloudinary**: utilized for the hosting of uploaded images for the apps blog functions.
+- **connect-mongo**: allows the storing of session cookies on the mongo database
+- **cors**: configures the the way the app handles resources between two different servers for the front end and the back end.
+- **express**: used to route requests in an un-opinionated way
+- **express-session**: lets express utilise sessions to store current user credentials
+- **mongoose**: is a wrapper for Mongo DB that lets he app interface with the database.
+- **mongoose-bcrypt**: is an extension for mongoose so that app can hash user passwords.
+- **passport**: is a library that handles authorization and authentication.
+- **passport-local**: allows passport to authenticate through the use of session cookies
+- **uuid**: generates standardized unique strings. is used for idempotency of requests to Square API's
+
+##### **--- Packages (frontend) ---**
+
+- **react query**: React Query is a relatively new, lightweight library for React that offers numerous features for querying, caching and updating data. It minimises the need for global state management and using reducers for the purposes of querying and provides easy access to query statuses to control logic based around loading, success and error states.
+- **react hook form**: React Hook Form is a simple API designed to handle form building that can be added onto HTML (or JSX) markup. It provides an easy structure for dealing with form responses as well as error and success messages. It also boosts performance by cutting down on re-renders.
+- **react reveal**: React Reveal is an animation library used for smooth animations that can be used with scroll and on click events.
+- **material-UI**: Material UI is a React UI framework that provides styled React components for fast, responsive web design. Components can be used out of the box or further styled to requirement.
+- **axios**: JS library for asynchronous API requests
+- **react-router-dom:** React library for routing with features for maximizing performance through lazy code loading and dynamic route matching.
+
+##### **--- Packages (testing/development) ---**
+
+- **bcrypt:** utilized to compared hashed passwords in testing
+- **chai:** assertion library used for writing automated tests.
+- **chai-exclude:** extension for chai that allows deep equal testing of returned objects "excluding" so keys, like ids, etc... that cannot be determined before the test.
+- **chai-http:** extension for chai that allows chai to make http requests to the app. Also mock user to login in and make requests and hold a session
+- **dotenv:** creates a mock set of environment variables for use when in development.
+- **mocha:** testing frame work that is used to run chai tests
+- **nodemon:** automates the restarting of the server file when any changes are made.
 
 ---
 
@@ -133,3 +163,115 @@ We have managed to plan very rapidly, which is why there isn't many screen shots
 ![Day One](./docs/devlog/day_one.png)
 ![Day Four](./docs/devlog/day_four.png)
 ![Day Five](./docs/devlog/day_five.png)
+
+---
+
+### Testing logs ---
+
+#### Development Desktop
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                                           |
+| -----------: | ------------------------------------- | :-----: | ------------------------------------------------------------------ |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success | doesn't alert user to succesfull login                             |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success | ugly focus css when click on cart                                  |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success | button has no animation                                            |
+|     customer | user can update shipping details      | sort of | placeholder looks like prefill, no validation text required fields |
+|      payment | user can submit payment               |  fail   | remove cart state button payment form does not load                |
+|       search | user can search for records           |  fail   | search field works, doesn't load results                           |
+|       search | user can filter based on genre        | sort of | unexpected bugs, not deloading                                     |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success | dropdown feature buggy, needs white background                     |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend                            |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 | success | not obvious you have to use release id                             |
+|        admin | admin can add blogs                   | success |
+|        admin | admin can edit blogs                  | sort of | can't edit image                                                   |
+|        admin | admin can delete blogs                | success |
+
+#### Development Mobile
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                                           |
+| -----------: | ------------------------------------- | :-----: | ------------------------------------------------------------------ |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success | doesn't alert user to successfully login                           |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success | ugly focus css when click on cart                                  |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success | button has no animation                                            |
+|     customer | user can update shipping details      | sort of | placeholder looks like prefill, no validation text required fields |
+|      payment | user can submit payment               |  fail   | remove cart state button payment form does not load                |
+|       search | user can search for records           |  fail   | search field works, doesn't load results                           |
+|       search | user can filter based on genre        | sort of | unexpected bugs, not deloading                                     |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success | dropdown feature buggy, needs white background                     |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend                            |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 |  fail   | dashboard doesn't show on mobile                                   |
+|        admin | admin can add blogs                   |  fail   | dashboard doesn't show on mobile                                   |
+|        admin | admin can edit blogs                  |  fail   | dashboard doesn't show on mobile                                   |
+|        admin | admin can delete blogs                |  fail   | dashboard doesn't show on mobile                                   |
+
+#### Production Desktop
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                |
+| -----------: | ------------------------------------- | :-----: | --------------------------------------- |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success |                                         |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success |                                         |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success |                                         |
+|     customer | user can update shipping details      | success |                                         |
+|      payment | user can submit payment               | success |                                         |
+|       search | user can search for records           | success |                                         |
+|       search | user can filter based on genre        | success |                                         |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success |                                         |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 | success |                                         |
+|        admin | admin can add blogs                   | success |
+|        admin | admin can edit blogs                  | success |                                         |
+|        admin | admin can delete blogs                | success |
+
+#### Production Mobile
+
+|         TYPE | TASK                                  | OUTCOME | COMMENTS                                                 |
+| -----------: | ------------------------------------- | :-----: | -------------------------------------------------------- |
+| authenticate | user can log in                       | success |
+| authenticate | user can sign up                      | success |                                                          |
+| authenticate | user can log out                      | success |
+|         cart | user can add records to cart          | success |
+|         cart | user can access their cart            | success |                                                          |
+|         cart | user can modify there cart            | success |
+|         cart | user can edit quantity in their cart  | success |
+|         cart | user can empty their cart             | success |
+|     customer | user can enter shipping details       | success |                                                          |
+|     customer | user can update shipping details      | success |                                                          |
+|      payment | user can submit payment               | success |                                                          |
+|       search | user can search for records           | success | minor trouble finding search - menu drawer doesn't close |
+|       search | user can filter based on genre        | success | genres are squished unreadable                           |
+|       search | user can find detailed view of record | success |
+|         blog | user can find blogposts               | success |                                                          |
+|      contact | user can send feedback form           |  fail   | fe from works, not connected to backend                  |
+|    authorize | user cannot add records               | success |
+|    authorize | user cannot add blogs                 | success |
+|        admin | admin can add records                 |  fail   | dashboard doesn't show on mobile                         |
+|        admin | admin can add blogs                   |  fail   | dashboard doesn't show on mobile                         |
+|        admin | admin can edit blogs                  |  fail   | dashboard doesn't show on mobile                         |
+|        admin | admin can delete blogs                |  fail   | dashboard doesn't show on mobile                         |

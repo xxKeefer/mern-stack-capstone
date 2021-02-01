@@ -5,7 +5,6 @@ import useStyles from "./DashboardStyles";
 
 export default function EditRecords() {
   const classes = useStyles();
-
   const { register, handleSubmit, errors, reset } = useForm();
   const [successfulSubmit, setSuccessfulSubmit] = useState(false);
 

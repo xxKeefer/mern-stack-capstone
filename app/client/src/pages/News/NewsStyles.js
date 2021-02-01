@@ -7,6 +7,14 @@ const useStyles = makeStyles((theme) => {
   } = theme;
 
   return {
+    newsContainer: {
+      width: "100%",
+      paddingBottom: "5vh",
+    },
+    pageTitle: {
+      color: secondary.main,
+      margin: "1rem",
+    },
     imageContainer: {
       margin: "auto",
       width: "100%",
@@ -57,7 +65,6 @@ const useStyles = makeStyles((theme) => {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      paddingBottom: "10%",
     },
     cardTitle: {
       margin: "0.5rem",
@@ -83,6 +90,23 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: fluro.main,
       padding: "0rem 1rem",
       margin: "auto",
+    },
+    moreIconContainer: {
+      backgroundColor: primary.main,
+    },
+    lessIconContainer: {
+      backgroundColor: secondary.main,
+    },
+    bodyContainer: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "2rem",
+      background: primary.main,
+    },
+    cardActionsContainer: {
+      display: "flex",
+      justifyContent: "center",
     },
   };
 });

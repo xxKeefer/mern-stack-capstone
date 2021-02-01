@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 

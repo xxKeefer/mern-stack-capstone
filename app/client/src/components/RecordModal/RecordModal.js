@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import {
-  Box,
   CardContent,
   Chip,
   IconButton,
@@ -14,8 +13,11 @@ import { toCurrencyString } from "../../util/shop";
 import { useCart } from "../../context/CartContext";
 import { ACTIONS } from "../../context/reducers/cartReducer";
 import { useAuth } from "../../context/AuthContext";
-import { useGlobal } from "../../context/GlobalState";
 import CloseIcon from "@material-ui/icons/Close";
+import {
+  parseLabelData,
+  abbreviateTitle,
+} from "../../util/helpers/recordCardHelpers";
 
 export default function RecordModal(props) {
   const classes = useStyles();
@@ -40,24 +42,6 @@ export default function RecordModal(props) {
     preloved,
     tracklist,
   } = props.record;
-
-  const parseLabelData = (labels) => {
-    if (labels.length < 1) {
-      return "Year";
-    } else {
-      return labels[0].name;
-    }
-  };
-
-  const abbreviateTitle = (title, length) => {
-    let newTitle = title.split(" (")[0];
-    if (newTitle.length > length) {
-      const abbreviated = title.slice(0, length);
-      return `${abbreviated}...`;
-    } else {
-      return newTitle;
-    }
-  };
 
   const closeClick = () => {
     setRecordModalState(false);

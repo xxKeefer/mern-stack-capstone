@@ -2,7 +2,7 @@ process.env.NODE_ENV = "test";
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const { app, server, db } = require("../server");
-const fakeData = require("./data.json");
+const setupData = require("./setup.json");
 const User = require("../models/user");
 
 // Configures Chai to make requests
@@ -12,7 +12,8 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 before(async () => {
-  await User.create(fakeData.users);
+  await User.create(setupData.user);
+  await User.create(setupData.admin);
 });
 
 after(async () => {
@@ -34,22 +35,10 @@ describe("Auth API", () => {
   require("./auth.test");
 });
 
-describe("Customer API", () => {
-  require("./customer.test");
+describe("Shop API", () => {
+  require("./shop.test");
 });
 
-// describe('Consults API', () => {
-//   require('./consults');
-// });
-
-// describe('Products API', () => {
-//   require('./products');
-// });
-
-// describe('Collection API', () => {
-//   require('./collections');
-// });
-
-// describe('Orders API', () => {
-//   require('./orders');
+// describe("Customer API", () => {
+//   require("./customer.test");
 // });

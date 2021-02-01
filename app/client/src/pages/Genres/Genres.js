@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => {
   const {
     palette: { primary, secondary },
+    breakpoints,
   } = theme;
   return {
     genresContainer: {
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => {
     },
     genresList: {
       columnCount: "5",
+      [breakpoints.down("md")]: {
+        columnCount: "3",
+      },
     },
     genreListItem: {
       listStyle: "none",
@@ -75,10 +79,11 @@ export default function Genres() {
   useEffect(() => {
     if (genre !== "") {
       const getRecords = async () => {
-        const cleanedGenre = genre.toLowerCase();
-        console.log(cleanedGenre);
         try {
-          const { data } = await API.get(`/records/styles/${cleanedGenre}`);
+          const { data } = await API.post("/records/query", {
+            category: "styles",
+            title: genre,
+          });
           if (data.length > 0) {
             setRecords(data);
           }
@@ -91,10 +96,13 @@ export default function Genres() {
     }
   }, [genre]);
 
-  const { data: electronic, status: electronicStatus } = useQuery(
-    "electronic",
+  const { data: techno, status: technoStatus } = useQuery(
+    "techno",
     async () => {
-      const { data } = await API.get("/records/styles/techno");
+      const { data } = await API.post("/records/query", {
+        category: "styles",
+        title: "techno",
+      });
       return data;
     }
   );
@@ -125,8 +133,8 @@ export default function Genres() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <TitleBar title="electronic" />
-          <ResultsGrid query={electronic} status={electronicStatus} />
+          <TitleBar title="techno" />
+          <ResultsGrid query={techno} status={technoStatus} />
         </React.Fragment>
       )}
     </div>
