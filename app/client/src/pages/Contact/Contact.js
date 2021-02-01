@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "@material-ui/core/";
 import { useForm } from "react-hook-form";
+import { API } from "../../util/fetch";
 import useStyles from "./ContactStyles";
 
 export default function Contact() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (formData) => {
+    console.log(formData);
+    const { data } = await API.post("/mailer/feedback", formData);
     console.log(data);
   };
 
