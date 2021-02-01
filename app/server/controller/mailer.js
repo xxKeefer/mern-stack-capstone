@@ -22,18 +22,13 @@ const handlebarOptions = {
   extName: ".handlebars",
 };
 
-transporter.use("compile", hbs(handlebarOptions));
+// transporter.use("compile", hbs(handlebarOptions));
 
 let mailOptions = {
   from: "xxkeefer.test@gmail.com",
   to: "xxkeefer.code@gmail.com",
   subject: "Testing Nodemailer",
-  template: "newsletter",
-  context: {
-    text: "This is a test. Mic check 1 2, 1 2.",
-    etc:
-      "other values here and the .hbs file will be able to access them with helpers",
-  },
+  text: "",
 };
 
 //EXPORTS
@@ -52,4 +47,22 @@ const sendNewsletter = (req, res) => {
   );
 };
 
-module.exports = { sendNewsletter };
+const sendFeedback = (req, res) => {
+  const { name, email: user_email, message: feedback } = req.body;
+  const mailOptions = {
+    from: process.env.FEEDBACK_MAILER,
+    to: process.env.FEEDBACK_MAILBOX,
+    subject: `FEEDBACK from ${name} @ ${user_email}`,
+    text: `${name} @ ${user_email} writes: \n ${feedback}`,
+  };
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      res.status(500).json({ message: err.message });
+    } else {
+      res.status(200).json({ message: `mail sent to: ${mailOptions.to}` });
+      console.log(`FEEDBACK:: received from: ${user_email}`);
+    }
+  });
+};
+
+module.exports = { sendNewsletter, sendFeedback };
