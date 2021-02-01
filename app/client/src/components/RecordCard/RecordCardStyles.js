@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => {
         width: "20vw",
         height: "20vw",
       },
-      [breakpoints.only("lg")]: {
+      [breakpoints.up("lg")]: {
         height: "15vw",
         width: "15vw",
       },
@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => {
       color: secondary.main,
       backgroundColor: fluro.main,
       position: "absolute",
-      top: 0,
-      right: 0,
+      bottom: 0,
+      left: 0,
       margin: "1rem 0.5rem",
     },
     moreInfoChip: {
