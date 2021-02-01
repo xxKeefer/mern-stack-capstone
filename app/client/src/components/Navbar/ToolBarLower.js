@@ -48,9 +48,6 @@ export default function ToolBarLower() {
         <Link to="/news" className={classes.navLinks}>
           news
         </Link>
-        <Link to="/contact" className={classes.navLinks}>
-          contact
-        </Link>
       </div>
       <SearchField />
     </Toolbar>
