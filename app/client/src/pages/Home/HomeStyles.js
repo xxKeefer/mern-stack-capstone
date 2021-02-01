@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   const {
     breakpoints,
-    palette: { fluro, light, primary, secondary },
+    palette: { fluro, primary, secondary },
   } = theme;
   return {
     recordsGrid: {
@@ -32,13 +32,13 @@ const useStyles = makeStyles((theme) => {
       margin: 0,
     },
     heroContainer: {
-      backgroundColor: light.main,
       width: "100%",
       height: "100%",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
+      border: `2px solid ${secondary.main}`,
     },
     heroText: {
       fontSize: "2rem",

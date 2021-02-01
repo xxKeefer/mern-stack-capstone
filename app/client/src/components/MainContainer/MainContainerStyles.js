@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => {
     root: {
       backgroundColor: primary.main,
       width: "90vw",
+      height: "100%",
       display: "flex",
       [breakpoints.only("lg")]: {
         width: "80vw",
@@ -17,7 +18,6 @@ const useStyles = makeStyles((theme) => {
       [breakpoints.only("xl")]: {
         width: "70vw",
       },
-      height: "100%",
       margin: "5vh auto",
       borderRadius: 0,
     },
