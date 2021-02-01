@@ -2,6 +2,8 @@ process.env.NODE_ENV = "test";
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const { app, server, db } = require("../server");
+const fakeData = require("./data.json");
+const User = require("../models/user");
 
 // Configures Chai to make requests
 chai.use(chaiHttp);
@@ -10,7 +12,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 before(async () => {
-  //insert fake data here
+  await User.create(fakeData.users);
 });
 
 after(async () => {
@@ -32,9 +34,9 @@ describe("Auth API", () => {
   require("./auth.test");
 });
 
-// describe('User API', () => {
-//   require('./users');
-// });
+describe("Customer API", () => {
+  require("./customer.test");
+});
 
 // describe('Consults API', () => {
 //   require('./consults');
