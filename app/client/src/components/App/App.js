@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import SignUp from "../../pages/SignUp/SignUp";
 import Cart from "../../pages/Cart/Cart";
-import Contact from "../../pages/Contact/Contact";
 import Footer from "../Footer/Footer";
 import News from "../../pages/News/News";
 import Dashboard from "../../pages/Dashboard/Dashboard";
@@ -17,6 +16,7 @@ import Genres from "../../pages/Genres/Genres";
 import { useAuth } from "../../context/AuthContext";
 import Account from "../../pages/Account/Account";
 import SearchResults from "../../pages/SearchResults/SearchResults";
+import Labels from "../../pages/Labels/Labels";
 
 const App = () => {
   const auth = useAuth();
@@ -43,7 +43,7 @@ const App = () => {
               <MainContainer>
                 <Route path="/signup" component={SignUp} />
                 <Route path="/cart" component={Cart} />
-                <Route path="/contact" component={Contact} />
+                <Route path="/labels" component={Labels} />
                 <Route path="/news" component={News} />
                 <Route path="/genres" component={Genres} />
                 <Route path="/account" component={Account} />
