@@ -16,29 +16,6 @@ const useStyles = makeStyles((theme) => {
       width: "100%",
       height: "100%",
     },
-    genresListContainer: {
-      width: "100%",
-      backgroundColor: primary.main,
-      borderRadius: 0,
-      padding: "1rem",
-      outline: `4px double ${secondary.main}`,
-      outlineOffset: "-3px",
-    },
-    genresList: {
-      columnCount: "5",
-    },
-    genreListItem: {
-      listStyle: "none",
-      fontSize: "1.3rem",
-      padding: 0,
-      margin: 0,
-      textTransform: "lowercase",
-      cursor: "pointer",
-
-      "&:hover": {
-        fontStyle: "italic",
-      },
-    },
     pageTitle: {
       color: secondary.main,
       marginTop: 0,

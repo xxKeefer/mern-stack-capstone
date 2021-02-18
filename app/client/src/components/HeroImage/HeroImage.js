@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const {
-    palette: { light },
+    palette: { primary },
     breakpoints,
   } = theme;
   return {
@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme) => {
       margin: "auto",
       width: "100%",
       height: "45vw",
-      backgroundColor: light.main,
+      backgroundColor: primary.main,
       [breakpoints.up("md")]: {
-        height: "30vw",
+        height: "25vw",
       },
     },
   };

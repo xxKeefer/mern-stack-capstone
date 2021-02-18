@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, makeStyles } from "@material-ui/core";
-
+import ContactModal from "../ContactModal/ContactModal";
 const useStyles = makeStyles((theme) => {
   const {
     breakpoints,
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => {
       paddingBottom: "5vh",
       [breakpoints.only("lg")]: {
         width: "80vw",
-      }, 
+      },
       [breakpoints.only("xl")]: {
         width: "70vw",
       },
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function Footer() {
   const classes = useStyles();
+  const [contactModal, setContactModal] = useState(false);
 
   return (
     <div className={classes.root}>
@@ -68,6 +69,19 @@ export default function Footer() {
         <h3>Socials</h3>
         <Link className={classes.socialsLinks}>Instagram</Link>
         <Link className={classes.socialsLinks}>Facebook</Link>
+      </div>
+      <div className={classes.footerContainer}>
+        <h3>Contact</h3>
+        <Link
+          className={classes.socialsLinks}
+          onClick={() => setContactModal(true)}
+        >
+          Contact
+        </Link>
+        <ContactModal
+          contactModal={contactModal}
+          setContactModal={setContactModal}
+        ></ContactModal>
       </div>
     </div>
   );

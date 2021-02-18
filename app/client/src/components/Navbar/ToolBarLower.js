@@ -42,14 +42,14 @@ export default function ToolBarLower() {
         <Link to="/" className={classes.navLinks}>
           new vinyl
         </Link>
+        <Link to="/labels" className={classes.navLinks}>
+          labels
+        </Link>
         <Link to="/genres" className={classes.navLinks}>
           genres
         </Link>
         <Link to="/news" className={classes.navLinks}>
           news
-        </Link>
-        <Link to="/contact" className={classes.navLinks}>
-          contact
         </Link>
       </div>
       <SearchField />

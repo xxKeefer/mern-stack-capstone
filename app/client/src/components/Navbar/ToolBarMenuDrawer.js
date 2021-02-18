@@ -10,6 +10,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import BoxFullDark from "../../icons/BoxFull";
 import { useCart } from "../../context/CartContext";
+import { useGlobal } from "../../context/GlobalState";
 
 const useStyles = makeStyles((theme) => {
   const {
@@ -58,22 +59,24 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function ToolBarDrawer(props) {
+export default function ToolBarMenuDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const {
     cartState: { cart },
   } = useCart();
+  const globe = useGlobal();
+  const { setMenuDrawer } = globe;
 
   const matchTabletOnly = useMediaQuery(theme.breakpoints.only("sm"));
 
-  const closeClick = (state) => {
-    props.handleClick(!state);
-  };
-
   return (
     <Toolbar className={classes.toolBarDrawer}>
-      <IconButton edge="start" aria-label="menuClose" onClick={closeClick}>
+      <IconButton
+        edge="start"
+        aria-label="menuClose"
+        onClick={() => setMenuDrawer(false)}
+      >
         <CloseIcon className={classes.closeIcon} />
       </IconButton>
       <h1 className={classes.catalogHeading}>catalog</h1>
@@ -83,14 +86,20 @@ export default function ToolBarDrawer(props) {
             <IconButton
               aria-label="account"
               className={classes.accountButton}
-              onClick={closeClick}
+              onClick={() => setMenuDrawer(false)}
             >
               <AccountCircleIcon className={classes.navIcons} />
             </IconButton>
           </Link>
         )}
         <Link to="/cart">
-          <IconButton edge="end" aria-label="cart" onClick={closeClick}>
+          <IconButton
+            edge="end"
+            aria-label="cart"
+            onClick={() => {
+              setMenuDrawer(false);
+            }}
+          >
             {cart.length > 0 ? (
               <div style={{ position: "relative" }}>
                 <BoxFullDark className={classes.navIcons} viewBox="0 0 60 60" />

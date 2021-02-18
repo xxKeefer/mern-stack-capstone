@@ -16,7 +16,10 @@ import { useAuth } from "../../context/AuthContext";
 import { useGlobal } from "../../context/GlobalState";
 import RecordModal from "../RecordModal/RecordModal";
 import { Redirect } from "react-router-dom";
-import { parseLabelData, abbreviateTitle } from "../../util/helpers/recordCardHelpers";
+import {
+  parseLabelData,
+  abbreviateTitle,
+} from "../../util/helpers/recordCardHelpers";
 
 export default function RecordCard(props) {
   const classes = useStyles();
@@ -32,7 +35,6 @@ export default function RecordCard(props) {
     image,
     labels,
     year,
-    description,
     review,
     variations: {
       stock: { price },
@@ -40,10 +42,11 @@ export default function RecordCard(props) {
     preloved,
   } = record;
   const globe = useGlobal();
-  const { setEditRecordId } = globe;
+  const { setEditRecordId, setSearchQuery } = globe;
   const [blur, setBlur] = useState("blur(0px)");
   const [display, setDisplay] = useState("none");
   const [editRedirect, setEditRedirect] = useState(false);
+  const [resultsRedirect, setResultsRedirect] = useState(false);
 
   const handleHover = (blurState, displayState) => {
     if (review.length > 0) {
@@ -55,6 +58,12 @@ export default function RecordCard(props) {
     }
   };
 
+  const resultsClick = (group, title) => {
+    const value = { group: group, title: title };
+    setSearchQuery(value);
+    setResultsRedirect(true);
+  };
+
   const handleEditClick = () => {
     setEditRecordId(record._id);
     setEditRedirect(true);
@@ -63,6 +72,8 @@ export default function RecordCard(props) {
   return (
     <Card className={classes.card} raised>
       {editRedirect && <Redirect to="/dashboard" />}
+      {resultsRedirect && <Redirect to="/results" />}
+
       {recordModalState && (
         <RecordModal
           record={record}
@@ -100,6 +111,7 @@ export default function RecordCard(props) {
             label="pre-loved"
             size="small"
             className={classes.preLovedChip}
+            onClick={() => resultsClick("preloved", true)}
           />
         )}
         {isSuper() ? (
@@ -120,7 +132,10 @@ export default function RecordCard(props) {
       </Box>
       <CardContent style={{ position: "relative", padding: "2px" }}>
         <div className={classes.flexedRow}>
-          <Typography className={classes.artistName}>
+          <Typography
+            className={classes.artistName}
+            onClick={() => resultsClick("artists", artist)}
+          >
             {abbreviateTitle(artist, 18)}
           </Typography>
           <Typography className={classes.recordPrice}>
@@ -132,14 +147,22 @@ export default function RecordCard(props) {
             {abbreviateTitle(releaseTitle, 21)}
           </Typography>
         </div>
-        <div className={classes.flexedRow}>
+        <div className={classes.labelAndYearRow}>
           <Typography className={classes.labelAndYear}>
-            {parseLabelData(labels)} • {year}
+            {parseLabelData(labels) + " • "}
+          </Typography>
+          <Typography
+            className={classes.labelAndYear}
+            onClick={() => resultsClick("year", year)}
+          >
+            {year}
           </Typography>
         </div>
         <div className={classes.flexedRow}>
           <Typography className={classes.cardGenres}>
-            {styles.length === 1 ? styles[0] : styles[0] + " / " + styles[1]}
+            {styles.length === 1
+              ? styles[0]
+              : <span>styles[0]</span> + " / " + styles[1]}
           </Typography>
         </div>
         <IconButton

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => {
   return {
     card: {
       backgroundColor: primary.main,
-      width: "100%",
+      width: "90vw",
       margin: "0.5rem auto",
       [breakpoints.only("sm")]: {
         width: "28vw",
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => {
       borderRadius: 0,
     },
     coverImage: {
-      width: "100%",
+      width: "90vw",
       filter: "blur(0px)",
       transition: "1s filter",
       [breakpoints.only("sm")]: {
@@ -34,16 +34,20 @@ const useStyles = makeStyles((theme) => {
         width: "20vw",
         height: "20vw",
       },
-      [breakpoints.only("lg")]: {
+      [breakpoints.up("lg")]: {
         height: "15vw",
         width: "15vw",
       },
     },
-    artistName: { margin: "0px", fontSize: "14px" },
+    artistName: { margin: "0px", fontSize: "14px", cursor: "pointer" },
     recordPrice: { fontSize: "14px", marginRight: "0.5rem" },
     recordTitle: { fontSize: "12px" },
     labelAndYear: { fontSize: "12px", color: "#808080" },
-    cardGenres: { textTransform: "uppercase", fontSize: "10px" },
+    cardGenres: {
+      textTransform: "uppercase",
+      fontSize: "10px",
+      cursor: "pointer",
+    },
 
     flexedRow: {
       display: "flex",
@@ -77,14 +81,14 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: fluro.main,
       position: "absolute",
       bottom: 0,
-      right: 0,
+      left: 0,
       margin: "1rem 0.5rem",
     },
     moreInfoChip: {
       color: secondary.main,
       position: "absolute",
       bottom: 0,
-      left: 0,
+      right: 0,
       margin: "1rem 0.5rem",
     },
     editChip: {
@@ -94,6 +98,7 @@ const useStyles = makeStyles((theme) => {
       left: 0,
       margin: "1rem 0.5rem",
     },
+    labelAndYearRow: { display: "flex", justifyContent: "flexStart" },
   };
 });
 
